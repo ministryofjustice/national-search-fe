@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ministryofjustice/ndelius-prototype.git"
+    "url": "https://github.com/ministryofjustice/national-search-fe.git"
   },
   "bugs": {
-    "url": "https://github.com/ministryofjustice/ndelius-prototype/issues"
+    "url": "https://github.com/ministryofjustice/national-search-fe/issues"
   },
   "private": true,
   "engines": {
