@@ -40,16 +40,25 @@ export default class Results extends Component {
 
         this.setState({
           hits: response.hits.total,
-          results: response.hits.hits
+          results: response.hits.hits,
+          serverError: false
         });
 
       } else {
-        this.setState({ serverError: true });
+        this.setState({
+          hits: 0,
+          results: [],
+          serverError: true
+        });
       }
     }.bind(this);
 
     request.onerror = function () {
-      this.setState({ serverError: true });
+      this.setState({
+        hits: 0,
+        results: [],
+        serverError: true
+      });
     }.bind(this);
 
     request.send(JSON.stringify({
@@ -74,6 +83,15 @@ export default class Results extends Component {
       age = today.getFullYear() - birthDate.getFullYear();
 
     return m < 0 || (m === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
+  };
+
+  /**
+   *
+   * @param string
+   * @returns {number}
+   */
+  pipeCase = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   /**
@@ -142,7 +160,8 @@ export default class Results extends Component {
                   <p className="form-label-bold no-margin bottom">Date of birth: {result._source.dateOfBirth}</p>
                   <p className="form-label-bold no-margin bottom">CRN: {result._source.crn}</p>
                   <p className="form-label-bold no-margin bottom">PNC: {result._source.pncNumber}</p>
-                  <p className="no-margin top">{result._source.gender}, {this.pipeAge(result._source.dateOfBirth)}, {result._source.nationality}</p>
+                  <p className="no-margin top">{this.pipeCase(result._source.gender)}, {this.pipeAge(result._source.dateOfBirth)}, {this.pipeCase(result._source.nationality)}</p>
+                  <p className="no-margin top">{this.pipeCase(result._source.currentRemandStatus)}</p>
                 </div>
                 <div>&nbsp;</div>
               </div>
