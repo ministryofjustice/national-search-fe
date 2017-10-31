@@ -10,6 +10,8 @@ export default class Results extends Component {
     super(props);
 
     this.state = {
+      serverError: false,
+      hits: 0,
       results: [],
       searchParams: props.location.state.searchParams || ''
     };
@@ -28,62 +30,35 @@ export default class Results extends Component {
   search() {
 
     const request = new XMLHttpRequest();
-    request.open('GET', '/fake', true);
+    request.open('POST', 'http://localhost:9200/offenders/_search');
+    request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
 
       if (request.status >= 200 && request.status < 400) {
 
+        const response = JSON.parse(request.responseText);
+
         this.setState({
-          results: [
-            {
-              forename: 'Peter',
-              surname: 'Roberts',
-              dateOfBirth: '01/03/1945',
-              crn: 'X087946',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'England'
-            },
-            {
-              forename: 'John',
-              surname: 'Roberts',
-              dateOfBirth: '23/03/1967',
-              crn: 'X087947',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'Scotland'
-            },
-            {
-              forename: 'Frank',
-              surname: 'Roberts',
-              dateOfBirth: '12/03/1989',
-              crn: 'X087948',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'Wales'
-            },
-            {
-              forename: 'Simon',
-              surname: 'Roberts',
-              dateOfBirth: '20/03/1954',
-              crn: 'X087949',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'Scotland'
-            }
-          ]
+          hits: response.hits.total,
+          results: response.hits.hits
         });
 
       } else {
-        console.error('SERVER ERROR');
+        this.setState({ serverError: true });
       }
     }.bind(this);
 
     request.onerror = function () {
-      console.error('SERVER ERROR');
-    };
+      this.setState({ serverError: true });
+    }.bind(this);
 
-    request.send();
+    request.send(JSON.stringify({
+      query: {
+        match: {
+          _all: this.state.searchParams
+        }
+      }
+    }));
   }
 
   /**
@@ -116,8 +91,8 @@ export default class Results extends Component {
    */
   handleClick = (event) => {
     event.preventDefault();
-    const selected = this.state.results[event.target.id];
-    console.info('Selected:', `${selected.forename} ${selected.surname}`);
+    const selected = this.state.results[event.target.id]['_source'];
+    console.info('Selected:', selected);
   };
 
   /**
@@ -126,6 +101,7 @@ export default class Results extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault();
+    this.search();
   };
 
   /**
@@ -141,38 +117,36 @@ export default class Results extends Component {
           <div className="column-one-third">
             <form onSubmit={this.handleSubmit}>
               <label>Search parameters
-                <input className="form-control" type="text" value={this.state.searchParams}
-                       onChange={this.handleChange}/>
+                <input className="form-control" type="text" value={this.state.searchParams} onChange={this.handleChange}/>
               </label>
             </form>
           </div>
           <div className="column-two-thirds">
 
-            {!this.state.results.length &&
+            <h2 className="heading-medium no-margin top">{this.state.hits} results found</h2>
+
+            <div className="margin-bottom">&nbsp;</div>
+
+            {!this.state.serverError && this.state.results.length <= 0 &&
               <p>Searching...</p>
             }
 
-            {this.state.results.length &&
-              <div>
-                <h2 className="heading-medium no-margin top">{this.state.results.length} results found</h2>
-
-                <div className="margin-bottom">&nbsp;</div>
-
-                {this.state.results.map((result, i) =>
-                  <div key={i}>
-                    <div className="panel panel-border-narrow">
-                      <a id={i} className="clickable heading-large no-underline"
-                         onClick={this.handleClick}>{result.surname}, {result.forename} - {result.dateOfBirth}</a>
-                      <p className="form-label-bold no-margin bottom">CRN: {result.crn}</p>
-                      <p
-                        className="no-margin top">{result.gender}, {this.pipeAge(result.dateOfBirth)}, {result.nationality}</p>
-                      <p className="no-margin top">Born in {result.birthPlace}</p>
-                    </div>
-                    <div>&nbsp;</div>
-                  </div>
-                )}
-              </div>
+            {this.state.serverError &&
+              <p className="error-message">The server has encountered an error.</p>
             }
+
+            {this.state.results.map((result, i) =>
+              <div key={i}>
+                <div className="panel panel-border-narrow">
+                  <a id={i} className="clickable heading-large no-underline" onClick={this.handleClick}>{result._source.surname}, {result._source.firstName}</a>
+                  <p className="form-label-bold no-margin bottom">Date of birth: {result._source.dateOfBirth}</p>
+                  <p className="form-label-bold no-margin bottom">CRN: {result._source.crn}</p>
+                  <p className="form-label-bold no-margin bottom">PNC: {result._source.pncNumber}</p>
+                  <p className="no-margin top">{result._source.gender}, {this.pipeAge(result._source.dateOfBirth)}, {result._source.nationality}</p>
+                </div>
+                <div>&nbsp;</div>
+              </div>
+            )}
 
           </div>
         </div>
