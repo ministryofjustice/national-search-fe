@@ -8,9 +8,9 @@ export default class Results extends Component {
    */
   constructor(props) {
     super(props);
-
     this.state = {
       serverError: false,
+      isSearching: true,
       hits: 0,
       results: [],
       searchParams: props.location.state.searchParams || ''
@@ -29,45 +29,85 @@ export default class Results extends Component {
    */
   search() {
 
-    const request = new XMLHttpRequest();
+    this.updateSearchState(0, [], false, true);
+
+    const searchParams = this.state.searchParams.split(' ').join(' + '),
+      request = new XMLHttpRequest();
+
     request.open('POST', 'http://localhost:9200/offenders/_search');
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
 
       if (request.status >= 200 && request.status < 400) {
-
         const response = JSON.parse(request.responseText);
-
-        this.setState({
-          hits: response.hits.total,
-          results: response.hits.hits,
-          serverError: false
-        });
-
+        this.updateSearchState(response.hits.total, response.hits.hits, false, false);
       } else {
-        this.setState({
-          hits: 0,
-          results: [],
-          serverError: true
-        });
+        this.updateSearchState(0, [], true, false);
       }
+
     }.bind(this);
 
     request.onerror = function () {
-      this.setState({
-        hits: 0,
-        results: [],
-        serverError: true
-      });
+      this.updateSearchState(0, [], true, false);
     }.bind(this);
 
     request.send(JSON.stringify({
       query: {
-        match: {
-          _all: this.state.searchParams
+        bool: {
+          must: {
+            match: {
+              _all: {
+                query: searchParams,
+                fuzziness: 'AUTO',
+                operator: 'and'
+              }
+            }
+          },
+          should: [
+            { match: {
+              crn: {
+                query: searchParams,
+                boost: 5
+              }
+            }},
+            { match: {
+              pncNumber: {
+                query: searchParams,
+                boost: 4
+              }
+            }},
+            { match: {
+              surname: {
+                query: searchParams,
+                boost: 3
+              }
+            }},
+            { match: {
+              firstName: {
+                query: searchParams,
+                boost: 2
+              }
+            }}
+          ]
         }
       }
     }));
+  }
+
+  /**
+   *
+   * @param hits int
+   * @param results Array
+   * @param error boolean
+   * @param searching boolean
+   */
+  updateSearchState(hits, results, error, searching) {
+    this.setState({
+      hits: hits,
+      results: results,
+      serverError: error,
+      isSearching: searching
+    });
   }
 
   /**
@@ -145,7 +185,7 @@ export default class Results extends Component {
 
             <div className="margin-bottom">&nbsp;</div>
 
-            {!this.state.serverError && this.state.results.length <= 0 &&
+            {this.state.isSearching &&
               <p>Searching...</p>
             }
 
