@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Result from './Result';
 
 export default class Results extends Component {
 
@@ -51,7 +52,7 @@ export default class Results extends Component {
       this.updateSearchState(0, [], true, false);
     }.bind(this);
 
-    request.send(JSON.stringify(this.buildQuery(searchParams)));
+    request.send(JSON.stringify(this.buildSearchQuery(searchParams)));
   }
 
   /**
@@ -59,7 +60,7 @@ export default class Results extends Component {
    * @param searchParams
    * @returns {Object}
    */
-  buildQuery(searchParams) {
+  buildSearchQuery(searchParams) {
     return {
       query: {
         bool: {
@@ -73,30 +74,38 @@ export default class Results extends Component {
             }
           },
           should: [
-            { match: {
-              crn: {
-                query: searchParams,
-                boost: 5
+            {
+              match: {
+                crn: {
+                  query: searchParams,
+                  boost: 5
+                }
               }
-            }},
-            { match: {
-              pncNumber: {
-                query: searchParams,
-                boost: 4
+            },
+            {
+              match: {
+                pncNumber: {
+                  query: searchParams,
+                  boost: 4
+                }
               }
-            }},
-            { match: {
-              surname: {
-                query: searchParams,
-                boost: 3
+            },
+            {
+              match: {
+                surname: {
+                  query: searchParams,
+                  boost: 3
+                }
               }
-            }},
-            { match: {
-              firstName: {
-                query: searchParams,
-                boost: 2
+            },
+            {
+              match: {
+                firstName: {
+                  query: searchParams,
+                  boost: 2
+                }
               }
-            }}
+            }
           ]
         }
       }
@@ -118,30 +127,6 @@ export default class Results extends Component {
       isSearching: searching
     });
   }
-
-  /**
-   * Calculate the offender age based on DD/MM/YYYY
-   * @param dateString
-   * @returns {number}
-   */
-  pipeAge = (dateString) => {
-    const today = new Date(),
-      splitDate = dateString.split('/'),
-      birthDate = new Date([splitDate[1], splitDate[0], splitDate[2]].join('/')),
-      m = today.getMonth() - birthDate.getMonth(),
-      age = today.getFullYear() - birthDate.getFullYear();
-
-    return m < 0 || (m === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
-  };
-
-  /**
-   *
-   * @param string
-   * @returns {number}
-   */
-  pipeCase = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
 
   /**
    *
@@ -204,15 +189,7 @@ export default class Results extends Component {
 
             {this.state.results.map((result, i) =>
               <div key={i}>
-                <div className="panel panel-border-narrow">
-                  <a id={i} className="clickable heading-large no-underline" onClick={this.handleClick}>{result._source.surname}, {result._source.firstName}</a>
-                  <p className="form-label-bold no-margin bottom">Date of birth: {result._source.dateOfBirth}</p>
-                  <p className="form-label-bold no-margin bottom">CRN: {result._source.crn}</p>
-                  <p className="form-label-bold no-margin bottom">PNC: {result._source.pncNumber}</p>
-                  <p className="no-margin top">{this.pipeCase(result._source.gender)}, {this.pipeAge(result._source.dateOfBirth)}, {this.pipeCase(result._source.nationality)}</p>
-                  <p className="no-margin top">{this.pipeCase(result._source.currentRemandStatus)}</p>
-                </div>
-                <div>&nbsp;</div>
+                <Result id={i} data={result._source} click={this.handleClick} />
               </div>
             )}
 
