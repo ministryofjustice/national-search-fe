@@ -31,7 +31,7 @@ export default class Results extends Component {
 
     this.updateSearchState(0, [], false, true);
 
-    const searchParams = this.state.searchParams.split(' ').join(' + '),
+    const searchParams = this.state.searchParams,
       request = new XMLHttpRequest();
 
     request.open('POST', 'http://localhost:9200/offenders/_search');
@@ -51,7 +51,16 @@ export default class Results extends Component {
       this.updateSearchState(0, [], true, false);
     }.bind(this);
 
-    request.send(JSON.stringify({
+    request.send(JSON.stringify(this.buildQuery(searchParams)));
+  }
+
+  /**
+   *
+   * @param searchParams
+   * @returns {Object}
+   */
+  buildQuery(searchParams) {
+    return {
       query: {
         bool: {
           must: {
@@ -91,7 +100,7 @@ export default class Results extends Component {
           ]
         }
       }
-    }));
+    };
   }
 
   /**
