@@ -32,8 +32,13 @@ export default class Results extends Component {
 
     this.updateSearchState(0, [], false, true);
 
-    const searchParams = this.state.searchParams,
-      request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
+
+    const searchParams = this.state.searchParams.split(' ').map((item) => {
+      return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
+    }).join(' ');
+
+    console.info('Searching for:', searchParams);
 
     request.open('POST', 'http://localhost:9200/offenders/_search');
     request.setRequestHeader('Content-Type', 'application/json');
@@ -76,7 +81,7 @@ export default class Results extends Component {
           should: [
             {
               match: {
-                crn: {
+                CRN: {
                   query: searchParams,
                   boost: 5
                 }
@@ -84,15 +89,7 @@ export default class Results extends Component {
             },
             {
               match: {
-                pncNumber: {
-                  query: searchParams,
-                  boost: 4
-                }
-              }
-            },
-            {
-              match: {
-                surname: {
+                SURNAME: {
                   query: searchParams,
                   boost: 3
                 }
@@ -100,7 +97,23 @@ export default class Results extends Component {
             },
             {
               match: {
-                firstName: {
+                POSTCODE: {
+                  query: searchParams,
+                  boost: 3
+                }
+              }
+            },
+            {
+              match: {
+                FIRST_NAME: {
+                  query: searchParams,
+                  boost: 2
+                }
+              }
+            },
+            {
+              match: {
+                TOWN_CITY: {
                   query: searchParams,
                   boost: 2
                 }
@@ -143,8 +156,8 @@ export default class Results extends Component {
    */
   handleClick = (event) => {
     event.preventDefault();
-    const selected = this.state.results[event.target.id]['_source'];
-    console.info('Selected:', selected);
+    const selected = this.state.results[event.target.parentElement.parentElement.id]['_source'];
+    console.info('Selected:', event.target.parentElement.parentElement.id, selected);
   };
 
   /**
@@ -189,7 +202,7 @@ export default class Results extends Component {
 
             {this.state.results.map((result, i) =>
               <div key={i}>
-                <Result id={i} data={result._source} click={this.handleClick} />
+                <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick} />
               </div>
             )}
 
