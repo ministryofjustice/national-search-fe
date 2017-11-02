@@ -38,8 +38,6 @@ export default class Results extends Component {
       return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
     }).join(' ');
 
-    console.info('Searching for:', searchParams);
-
     request.open('POST', 'http://localhost:9200/offenders/_search');
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
