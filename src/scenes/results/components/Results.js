@@ -14,7 +14,8 @@ export default class Results extends Component {
       isSearching: true,
       hits: 0,
       results: [],
-      searchParams: props.location.state.searchParams || ''
+      searchParams: props.location.state.searchParams || '',
+      currentPage: 1
     };
   }
 
@@ -30,6 +31,7 @@ export default class Results extends Component {
    */
   search() {
 
+    window.scrollTo(0, 0);
     this.updateSearchState(0, [], false, true);
 
     let request = new XMLHttpRequest();
@@ -64,7 +66,12 @@ export default class Results extends Component {
    * @returns {Object}
    */
   buildSearchQuery(searchParams) {
+
+    const page = this.state.currentPage;
+
     return {
+      from : page === 1 ? 0 : (page - 1) * 10,
+      size : 10,
       query: {
         bool: {
           must: {
@@ -145,7 +152,7 @@ export default class Results extends Component {
    */
   handleChange = (event) => {
     event.preventDefault();
-    this.setState({ searchParams: event.target.value });
+    this.setState({ searchParams: event.target.value, currentPage: 1 });
   };
 
   /**
@@ -155,7 +162,7 @@ export default class Results extends Component {
   handleClick = (event) => {
     event.preventDefault();
     const selected = this.state.results[event.target.parentElement.parentElement.id]['_source'];
-    console.info('Selected:', event.target.parentElement.parentElement.id, selected);
+    console.info('Selected:', selected);
   };
 
   /**
@@ -165,6 +172,38 @@ export default class Results extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.search();
+  };
+
+  /**
+   *
+   * @param event
+   */
+  previousPage = (event) => {
+    event.preventDefault();
+
+    if (this.state.currentPage > 1) {
+      this.setState((prevState) => {
+        return {
+          currentPage: prevState.currentPage > 1 ? prevState.currentPage - 1 : prevState.currentPage
+        };
+      }, this.search);
+    }
+  };
+
+  /**
+   *
+   * @param event
+   */
+  nextPage = (event) => {
+    event.preventDefault();
+
+    if (this.state.currentPage < Math.ceil(this.state.hits/10)) {
+      this.setState((prevState) => {
+        return {
+          currentPage: prevState.currentPage < prevState.hits / 10 ? prevState.currentPage + 1 : prevState.currentPage
+        };
+      }, this.search);
+    }
   };
 
   /**
@@ -205,6 +244,13 @@ export default class Results extends Component {
               <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick} />
             </div>
           )}
+
+        {this.state.hits > 10 &&
+          <div>
+            <a onClick={this.previousPage}>Previous</a> {this.state.currentPage + ' / ' + Math.ceil(this.state.hits/10)} &nbsp;
+            <a onClick={this.nextPage}>Next</a>
+          </div>
+        }
 
       </div>
     );
