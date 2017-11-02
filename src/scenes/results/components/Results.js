@@ -178,36 +178,36 @@ export default class Results extends Component {
     return (
       <div>
         <h1 className="heading-xlarge">Search results</h1>
-        <div className="grid-row">
-          <div className="column-one-third">
-            <form onSubmit={this.handleSubmit}>
-              <label>Search parameters
-                <input className="form-control" type="text" value={this.state.searchParams} onChange={this.handleChange}/>
-              </label>
-            </form>
+
+          <div className="grid-row">
+            <div className="column-two-thirds">
+
+              <form onSubmit={this.handleSubmit}>
+                <label>Search parameters
+                  <input className="form-control" type="text" value={this.state.searchParams} onChange={this.handleChange}/>
+                </label>
+              </form>
+
+            </div>
+            <div className="column-one-third">&nbsp;</div>
           </div>
-          <div className="column-two-thirds">
 
-            <h2 className="heading-medium no-margin top">{this.state.hits} results found</h2>
+          <h2 className="heading-medium margin-top medium">{this.state.hits} results found</h2>
 
-            <div className="margin-bottom">&nbsp;</div>
+          {this.state.isSearching &&
+            <p>Searching...</p>
+          }
 
-            {this.state.isSearching &&
-              <p>Searching...</p>
-            }
+          {this.state.serverError &&
+            <p className="error-message">The server has encountered an error.</p>
+          }
 
-            {this.state.serverError &&
-              <p className="error-message">The server has encountered an error.</p>
-            }
+          {this.state.results.map((result, i) =>
+            <div key={i}>
+              <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick} />
+            </div>
+          )}
 
-            {this.state.results.map((result, i) =>
-              <div key={i}>
-                <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick} />
-              </div>
-            )}
-
-          </div>
-        </div>
       </div>
     );
   }
