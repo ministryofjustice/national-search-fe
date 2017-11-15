@@ -15,3 +15,13 @@
 .error-invalid {
   color: $error-colour;
 }
+
+a {
+  mark {
+    color: $link-colour;
+  }
+}
+
+mark {
+  background-color: $yellow-25;
+}

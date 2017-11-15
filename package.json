@@ -13,24 +13,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ministryofjustice/ndelius-prototype.git"
+    "url": "https://github.com/ministryofjustice/national-search-fe.git"
   },
   "bugs": {
-    "url": "https://github.com/ministryofjustice/ndelius-prototype/issues"
+    "url": "https://github.com/ministryofjustice/national-search-fe/issues"
   },
   "private": true,
   "engines": {
     "node": ">=6.10.0 <7.0.0"
   },
   "dependencies": {
-    "enzyme": "3.1.0",
-    "jest-enzyme": "4.0.1",
     "node-sass-chokidar": "0.0.3",
-    "npm-run-all": "4.1.1",
-    "react": "16.0.0",
-    "react-dom": "16.0.0",
+    "npm-run-all": "4.1.2",
+    "react": "16.1.1",
+    "react-dom": "16.1.1",
+    "react-highlight-words": "^0.10.0",
     "react-router-dom": "4.2.2",
-    "react-scripts": "1.0.14",
-    "react-test-renderer": "16.0.0"
+    "react-scripts": "1.0.17",
+    "react-test-renderer": "16.1.1"
   }
 }

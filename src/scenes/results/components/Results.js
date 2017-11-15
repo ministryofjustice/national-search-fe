@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Result from './Result';
 
 export default class Results extends Component {
 
@@ -8,10 +9,12 @@ export default class Results extends Component {
    */
   constructor(props) {
     super(props);
-
     this.state = {
+      serverError: false,
+      hits: 0,
       results: [],
-      searchParams: props.location.state.searchParams || ''
+      searchParams: props.location.state.searchParams || '',
+      currentPage: 1
     };
   }
 
@@ -27,79 +30,118 @@ export default class Results extends Component {
    */
   search() {
 
-    const request = new XMLHttpRequest();
-    request.open('GET', '/fake', true);
+    window.scrollTo(0, 0);
+    this.updateSearchState(0, [], false, true);
+
+    let request = new XMLHttpRequest();
+
+    const searchParams = this.state.searchParams.split(' ').map((item) => {
+      return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
+    }).join(' ');
+
+    request.open('POST', 'http://localhost:9200/offenders/_search');
+    request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
 
       if (request.status >= 200 && request.status < 400) {
-
-        this.setState({
-          results: [
-            {
-              forename: 'Peter',
-              surname: 'Roberts',
-              dateOfBirth: '01/03/1945',
-              crn: 'X087946',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'England'
-            },
-            {
-              forename: 'John',
-              surname: 'Roberts',
-              dateOfBirth: '23/03/1967',
-              crn: 'X087947',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'Scotland'
-            },
-            {
-              forename: 'Frank',
-              surname: 'Roberts',
-              dateOfBirth: '12/03/1989',
-              crn: 'X087948',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'Wales'
-            },
-            {
-              forename: 'Simon',
-              surname: 'Roberts',
-              dateOfBirth: '20/03/1954',
-              crn: 'X087949',
-              gender: 'Male',
-              nationality: 'White British',
-              birthPlace: 'Scotland'
-            }
-          ]
-        });
-
+        const response = JSON.parse(request.responseText);
+        this.updateSearchState(response.hits.total, response.hits.hits, false, false);
       } else {
-        console.error('SERVER ERROR');
+        this.updateSearchState(0, [], true, false);
       }
+
     }.bind(this);
 
     request.onerror = function () {
-      console.error('SERVER ERROR');
-    };
+      this.updateSearchState(0, [], true, false);
+    }.bind(this);
 
-    request.send();
+    request.send(JSON.stringify(this.buildSearchQuery(searchParams)));
   }
 
   /**
-   * Calculate the offender age based on DD/MM/YYYY
-   * @param dateString
-   * @returns {number}
+   *
+   * @param searchParams
+   * @returns {Object}
    */
-  pipeAge = (dateString) => {
-    const today = new Date(),
-      splitDate = dateString.split('/'),
-      birthDate = new Date([splitDate[1], splitDate[0], splitDate[2]].join('/')),
-      m = today.getMonth() - birthDate.getMonth(),
-      age = today.getFullYear() - birthDate.getFullYear();
+  buildSearchQuery(searchParams) {
 
-    return m < 0 || (m === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
-  };
+    const page = this.state.currentPage;
+
+    return {
+      from : page === 1 ? 0 : (page - 1) * 10,
+      size : 10,
+      query: {
+        bool: {
+          must: {
+            match: {
+              _all: {
+                query: searchParams,
+                fuzziness: 'AUTO',
+                operator: 'and'
+              }
+            }
+          },
+          should: [
+            {
+              match: {
+                CRN: {
+                  query: searchParams,
+                  boost: 5
+                }
+              }
+            },
+            {
+              match: {
+                SURNAME: {
+                  query: searchParams,
+                  boost: 3
+                }
+              }
+            },
+            {
+              match: {
+                POSTCODE: {
+                  query: searchParams,
+                  boost: 3
+                }
+              }
+            },
+            {
+              match: {
+                FIRST_NAME: {
+                  query: searchParams,
+                  boost: 2
+                }
+              }
+            },
+            {
+              match: {
+                TOWN_CITY: {
+                  query: searchParams,
+                  boost: 2
+                }
+              }
+            }
+          ]
+        }
+      }
+    };
+  }
+
+  /**
+   *
+   * @param hits int
+   * @param results Array
+   * @param error boolean
+   */
+  updateSearchState(hits, results, error) {
+    this.setState({
+      hits: hits,
+      results: results,
+      serverError: error
+    });
+  }
 
   /**
    *
@@ -107,7 +149,7 @@ export default class Results extends Component {
    */
   handleChange = (event) => {
     event.preventDefault();
-    this.setState({ searchParams: event.target.value });
+    this.setState({ searchParams: event.target.value, currentPage: 1 }, this.search);
   };
 
   /**
@@ -116,16 +158,40 @@ export default class Results extends Component {
    */
   handleClick = (event) => {
     event.preventDefault();
-    const selected = this.state.results[event.target.id];
-    console.info('Selected:', `${selected.forename} ${selected.surname}`);
+    const selected = this.state.results[event.target.parentElement.parentElement.id]['_source'];
+    console.info('Selected:', selected);
   };
 
   /**
-   * Handle search parameters submission
+   *
    * @param event
    */
-  handleSubmit = (event) => {
+  previousPage = (event) => {
     event.preventDefault();
+
+    if (this.state.currentPage > 1) {
+      this.setState((prevState) => {
+        return {
+          currentPage: prevState.currentPage > 1 ? prevState.currentPage - 1 : prevState.currentPage
+        };
+      }, this.search);
+    }
+  };
+
+  /**
+   *
+   * @param event
+   */
+  nextPage = (event) => {
+    event.preventDefault();
+
+    if (this.state.currentPage < Math.ceil(this.state.hits/10)) {
+      this.setState((prevState) => {
+        return {
+          currentPage: prevState.currentPage < prevState.hits / 10 ? prevState.currentPage + 1 : prevState.currentPage
+        };
+      }, this.search);
+    }
   };
 
   /**
@@ -137,45 +203,39 @@ export default class Results extends Component {
     return (
       <div>
         <h1 className="heading-xlarge">Search results</h1>
-        <div className="grid-row">
-          <div className="column-one-third">
-            <form onSubmit={this.handleSubmit}>
-              <label>Search parameters
-                <input className="form-control" type="text" value={this.state.searchParams}
-                       onChange={this.handleChange}/>
-              </label>
-            </form>
+
+          <div className="grid-row">
+            <div className="column-two-thirds">
+
+              <form>
+                <label>Search parameters
+                  <input className="form-control" type="text" value={this.state.searchParams} onChange={this.handleChange}/>
+                </label>
+              </form>
+
+            </div>
+            <div className="column-one-third">&nbsp;</div>
           </div>
-          <div className="column-two-thirds">
 
-            {!this.state.results.length &&
-              <p>Searching...</p>
-            }
+          <h2 className="heading-medium margin-top medium">{this.state.hits} results found</h2>
 
-            {this.state.results.length &&
-              <div>
-                <h2 className="heading-medium no-margin top">{this.state.results.length} results found</h2>
+          {this.state.serverError &&
+            <p className="error-message">The server has encountered an error.</p>
+          }
 
-                <div className="margin-bottom">&nbsp;</div>
+          {this.state.results.map((result, i) =>
+            <div key={i}>
+              <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick} />
+            </div>
+          )}
 
-                {this.state.results.map((result, i) =>
-                  <div key={i}>
-                    <div className="panel panel-border-narrow">
-                      <a id={i} className="clickable heading-large no-underline"
-                         onClick={this.handleClick}>{result.surname}, {result.forename} - {result.dateOfBirth}</a>
-                      <p className="form-label-bold no-margin bottom">CRN: {result.crn}</p>
-                      <p
-                        className="no-margin top">{result.gender}, {this.pipeAge(result.dateOfBirth)}, {result.nationality}</p>
-                      <p className="no-margin top">Born in {result.birthPlace}</p>
-                    </div>
-                    <div>&nbsp;</div>
-                  </div>
-                )}
-              </div>
-            }
-
+        {this.state.hits > 10 &&
+          <div>
+            <a onClick={this.previousPage}>Previous</a> {this.state.currentPage + ' / ' + Math.ceil(this.state.hits/10)} &nbsp;
+            <a onClick={this.nextPage}>Next</a>
           </div>
-        </div>
+        }
+
       </div>
     );
   }

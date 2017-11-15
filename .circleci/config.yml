@@ -22,5 +22,8 @@ jobs:
             - ~/.cache/yarn
             - ./node_modules
       - run:
+          name: Unit test
+          command: yarn test
+      - run:
           name: Build
           command: yarn build
