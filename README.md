@@ -6,6 +6,12 @@
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master)
 
+---
+
+**N.B. This is *NOT* production code and is used entirely for the rapid prototyping of new features.**
+
+---
+
 Install elasticsearch:
 
 https://www.elastic.co/downloads/elasticsearch
