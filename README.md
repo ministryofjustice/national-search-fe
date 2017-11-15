@@ -31,7 +31,7 @@ Navigate to the ***national-search-fe*** folder in a separate Terminal window.
 
 Add the sample/test data to the elasticsearch database: 
 
-``` curl -H "Content-Type: application/json" -XPOST 'localhost:9200/offenders/_bulk?pretty&refresh' --data-binary "@working.json" ``` 
+``` curl -H "Content-Type: application/json" -XPOST 'localhost:9200/offenders/_bulk?pretty&refresh' --data-binary "@stub.json" ``` 
 
 **N.B. The above only needs to be done the first time you do this.**
 
