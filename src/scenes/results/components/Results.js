@@ -11,7 +11,6 @@ export default class Results extends Component {
     super(props);
     this.state = {
       serverError: false,
-      isSearching: true,
       hits: 0,
       results: [],
       searchParams: props.location.state.searchParams || '',
@@ -135,14 +134,12 @@ export default class Results extends Component {
    * @param hits int
    * @param results Array
    * @param error boolean
-   * @param searching boolean
    */
-  updateSearchState(hits, results, error, searching) {
+  updateSearchState(hits, results, error) {
     this.setState({
       hits: hits,
       results: results,
-      serverError: error,
-      isSearching: searching
+      serverError: error
     });
   }
 
@@ -152,7 +149,7 @@ export default class Results extends Component {
    */
   handleChange = (event) => {
     event.preventDefault();
-    this.setState({ searchParams: event.target.value, currentPage: 1 });
+    this.setState({ searchParams: event.target.value, currentPage: 1 }, this.search);
   };
 
   /**
@@ -163,15 +160,6 @@ export default class Results extends Component {
     event.preventDefault();
     const selected = this.state.results[event.target.parentElement.parentElement.id]['_source'];
     console.info('Selected:', selected);
-  };
-
-  /**
-   * Handle search parameters submission
-   * @param event
-   */
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.search();
   };
 
   /**
@@ -219,7 +207,7 @@ export default class Results extends Component {
           <div className="grid-row">
             <div className="column-two-thirds">
 
-              <form onSubmit={this.handleSubmit}>
+              <form>
                 <label>Search parameters
                   <input className="form-control" type="text" value={this.state.searchParams} onChange={this.handleChange}/>
                 </label>
@@ -230,10 +218,6 @@ export default class Results extends Component {
           </div>
 
           <h2 className="heading-medium margin-top medium">{this.state.hits} results found</h2>
-
-          {this.state.isSearching &&
-            <p>Searching...</p>
-          }
 
           {this.state.serverError &&
             <p className="error-message">The server has encountered an error.</p>

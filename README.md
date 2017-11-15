@@ -1,5 +1,11 @@
 # New Probation Services: National Search
 
+[![GitHub version](https://badge.fury.io/gh/ministryofjustice%2Fnational-search-fe.svg)](https://badge.fury.io/gh/ministryofjustice%2Fnational-search-fe)
+[![Dependencies](https://david-dm.org/ministryofjustice/national-search-fe.svg)](https://david-dm.org/ministryofjustice/national-search-fe)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+
+[![CircleCI](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master)
+
 Install elasticsearch:
 
 https://www.elastic.co/downloads/elasticsearch
