@@ -24,7 +24,9 @@ export default class Feedback extends Component {
 
     return (
       <div>
+
         <h1 className="heading-xlarge">Give feedback</h1>
+
         <div className="grid-row">
           <div className="column-one-third">
             <nav>

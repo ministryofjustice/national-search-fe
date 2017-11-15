@@ -5,3 +5,9 @@
   background: transparent;
   text-align: left;
 }
+
+.govuk-box-highlight {
+  &.blue {
+    background: $govuk-blue;
+  }
+}
