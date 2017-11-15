@@ -52,13 +52,18 @@ export default class Result extends Component {
 
           <a id={this.props.id} className="clickable heading-large no-underline" onClick={this.props.click}><Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.SURNAME + ', ' + data.FIRST_NAME + ' - ' + this.pipeDate(data.DATE_OF_BIRTH_DATE)} /></a>
 
-          <p className="form-label-bold no-margin bottom">CRN: <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.CRN} /></p>
-          <p className="form-label-bold no-margin bottom">PNC: <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.PNC_NUMBER.toString()} /></p>
-          <p className="no-margin top"><Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={this.pipeGender(data.GENDER_ID) + ', ' + this.pipeAge(data.DATE_OF_BIRTH_DATE)} /></p>
+          <p className="no-margin bottom">
+            <span className="bold">CRN: <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.CRN} /></span>
+            &nbsp;&nbsp;
+            {data.CURRENT_HIGHEST_RISK_COLOUR !== null &&
+              <span>Risk <span className={'risk-icon risk' + data.CURRENT_HIGHEST_RISK_COLOUR}> </span>&nbsp;|&nbsp;</span>
+            }
+            {data.CURRENT_REMAND_STATUS &&
+              <span>{data.CURRENT_REMAND_STATUS}&nbsp;|&nbsp;</span>
+            }
 
-          {data.CURRENT_HIGHEST_RISK_COLOUR &&
-            <p>Risk: {data.CURRENT_HIGHEST_RISK_COLOUR}</p>
-          }
+            <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={this.pipeGender(data.GENDER_ID) + ', ' + this.pipeAge(data.DATE_OF_BIRTH_DATE)} />
+          </p>
 
         </div>
         <div>&nbsp;</div>

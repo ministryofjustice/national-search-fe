@@ -14,7 +14,8 @@ export default class Search extends Component {
       hits: 0,
       results: [],
       searchParams: '',
-      currentPage: 1
+      currentPage: 1,
+      suggestion: 'John Smith'
     };
   }
 
@@ -30,7 +31,9 @@ export default class Search extends Component {
 
     const searchParams = this.state.searchParams.split(' ').map((item) => {
       return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
-    }).join(' ');
+    }).join(' ') + '*';
+
+    console.info(searchParams.length);
 
     request.open('POST', 'http://localhost:9200/offenders/_search');
     request.setRequestHeader('Content-Type', 'application/json');
@@ -38,6 +41,7 @@ export default class Search extends Component {
 
       if (request.status >= 200 && request.status < 400) {
         const response = JSON.parse(request.responseText);
+        console.info('Response:', response);
         this.updateSearchState(response.hits.total, response.hits.hits, false, false);
       } else {
         this.updateSearchState(0, [], true, false);
@@ -159,6 +163,17 @@ export default class Search extends Component {
    *
    * @param event
    */
+  handleSuggestion = (event) => {
+    event.preventDefault();
+      this.setState((prevState) => {
+        return { searchParams: prevState.suggestion };
+      }, this.search);
+  };
+
+  /**
+   *
+   * @param event
+   */
   previousPage = (event) => {
     event.preventDefault();
 
@@ -205,6 +220,10 @@ export default class Search extends Component {
               <input className="form-control padded" placeholder="Find names, addresses, date of birth, CRN and more..." type="text" value={this.state.searchParams} onChange={this.handleChange}/>
             </label>
           </form>
+
+            {this.state.searchParams.length > 0 &&
+              <p className="margin-top medium no-margin-bottom">Did you mean <a className="white" onClick={this.handleSuggestion}>{this.state.suggestion}</a>?</p>
+            }
 
         </div>
 
