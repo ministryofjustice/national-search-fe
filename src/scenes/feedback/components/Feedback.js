@@ -42,7 +42,7 @@ export default class Feedback extends Component {
                 <fieldset>
 
                   <legend>
-                    <span className="form-label-bold">Overall, how did you feel about the Short Format Pre-sentence Report service you used today?</span>
+                    <span className="form-label-bold">Overall, how did you feel about the National offender search service you used today?</span>
                   </legend>
 
                   <div className="multiple-choice margin-top medium">

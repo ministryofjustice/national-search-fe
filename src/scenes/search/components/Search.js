@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Result from './Result';
 import Suggestions from './Suggestions';
 import Pagination from './Pagination';
@@ -12,13 +13,23 @@ export default class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            searchParams: '',
             serverError: false,
             hits: 0,
             results: [],
-            searchParams: '',
-            currentPage: 1,
-            suggestions: ''
+            suggestions: [],
+            currentPage: 1
         };
+    }
+
+    /**
+     *
+     */
+    componentDidMount() {
+        const searched = this.props.location.search;
+        if (searched && searched.length) {
+            this.setState({ searchParams: searched.substr(searched.indexOf('=') + 1).split('%20').join(' ') }, this.search);
+        }
     }
 
     /**
@@ -28,6 +39,12 @@ export default class Search extends Component {
 
         window.scrollTo(0, 0);
         this.updateSearchState(0, [], false, true);
+
+        // Update querystring
+        this.props.history.push({
+            pathname: '',
+            search: '?search=' + this.state.searchParams
+        });
 
         let request = new XMLHttpRequest();
 
@@ -256,7 +273,7 @@ export default class Search extends Component {
 
                     <h1 className="heading-xlarge no-margin-top margin-bottom medium">National offender search</h1>
 
-                    <form className="padding-left-right">
+                    <form className="padding-left-right" onSubmit={(event) => { event.preventDefault(); }}>
                         <label>
                             <input className="form-control padded" placeholder="Find names, addresses, date of birth, CRN and more..." type="text" value={this.state.searchParams} onChange={this.handleChange}/>
                         </label>
