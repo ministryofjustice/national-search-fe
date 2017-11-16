@@ -114,17 +114,17 @@ export default class Search extends Component {
                         },
                         {
                             match: {
-                                POSTCODE: {
+                                DATE_OF_BIRTH_DATE: {
                                     query: searchParams,
-                                    fuzziness: 0,
                                     boost: 3
                                 }
                             }
                         },
                         {
                             match: {
-                                DATE_OF_BIRTH_DATE: {
+                                'ADDRESSES.POSTCODE': {
                                     query: searchParams,
+                                    fuzziness: 0,
                                     boost: 3
                                 }
                             }
@@ -147,9 +147,33 @@ export default class Search extends Component {
                         },
                         {
                             match: {
+                                'ALIASES.FIRST_NAME': {
+                                    query: searchParams,
+                                    boost: 2
+                                }
+                            }
+                        },
+                        {
+                            match: {
+                                'ALIASES.SURNAME': {
+                                    query: searchParams,
+                                    boost: 2
+                                }
+                            }
+                        },
+                        {
+                            match: {
                                 'ADDRESSES.TOWN': {
                                     query: searchParams,
                                     boost: 2
+                                }
+                            }
+                        },
+                        {
+                            match: {
+                                'ADDRESSES.STREET_NAME': {
+                                    query: searchParams,
+                                    boost: 1
                                 }
                             }
                         }
