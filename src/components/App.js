@@ -1,7 +1,6 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Redirect, Route } from 'react-router-dom'
 
-import NoMatch from './NoMatch';
 import PhaseBanner from './PhaseBanner';
 
 import Search from '../scenes/search/components/Search';
@@ -13,7 +12,7 @@ const App = () => (
     <Switch>
       <Route exact path='/' component={Search}/>
       <Route exact path='/feedback' component={Feedback}/>
-      <Route component={NoMatch}/>
+      <Redirect to='/'/>
     </Switch>
   </main>
 );

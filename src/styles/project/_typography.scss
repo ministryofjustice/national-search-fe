@@ -1,43 +1,5 @@
-.font-xxsmall {
-  @include core-14();
-}
-
-.bold-xxsmall {
-  @include bold-14();
-}
-
-.saved-tag {
-  @include phase-tag();
-  background-color: $govuk-blue;
-  margin: 0;
-}
-
-.risk-icon {
-
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  margin: 0;
-  padding: 0;
-
-  &.riskGreen {
-    background: $green;
-  }
-  &.riskAmber {
-    background: $yellow;
-  }
-  &.riskRed {
-    background: $red;
-  }
-}
-
-.error-invalid {
-  color: $error-colour;
-}
-
 a {
-  mark {
+  mark, span {
     color: $link-colour;
   }
   &.white {

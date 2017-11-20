@@ -26,7 +26,7 @@ export default class Search extends Component {
      *
      */
     componentDidMount() {
-        const searched = this.props.location.search;
+        const searched = this.props.hasOwnProperty('location') && this.props.location.hasOwnProperty('search') ? this.props.location.search : void 0;
         if (searched && searched.length) {
             this.setState({ searchParams: searched.substr(searched.indexOf('=') + 1).split('%20').join(' ') }, this.search);
         }
