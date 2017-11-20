@@ -54,23 +54,27 @@ const renderTestSequence = ({
     render(<Test/>, div);
 };
 
-it('navigates to Feedback', (done) => {
+describe('App', () => {
 
-    renderTestSequence({
+    it('navigates from search to Feedback', (done) => {
 
-        subject: App,
+        renderTestSequence({
 
-        steps: [
+            subject: App,
 
-            ({ history, div }) => {
-                console.assert(div.querySelector('h1').innerHTML.match(/National offender search/));
-                history.push('/feedback');
-            },
+            steps: [
 
-            ({ div }) => {
-                console.assert(div.querySelector('h1').innerHTML.match(/Give feedback/));
-                done();
-            }
-        ]
+                ({ history, div }) => {
+                    console.assert(div.querySelector('h1').innerHTML.match(/National offender search/));
+                    history.push('/feedback');
+                },
+
+                ({ div }) => {
+                    console.assert(div.querySelector('h1').innerHTML.match(/Give feedback/));
+                    done();
+                }
+            ]
+        });
     });
+
 });

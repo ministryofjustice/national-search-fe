@@ -262,26 +262,22 @@ export default class Search extends Component {
      *
      */
     previousPage = () => {
-        if (this.state.currentPage > 1) {
-            this.setState((prevState) => {
-                return {
-                    currentPage: prevState.currentPage > 1 ? prevState.currentPage - 1 : prevState.currentPage
-                };
-            }, this.search);
-        }
+        this.setState((prevState) => {
+            return {
+                currentPage: prevState.currentPage > 1 ? prevState.currentPage - 1 : prevState.currentPage
+            };
+        }, this.search);
     };
 
     /**
      *
      */
     nextPage = () => {
-        if (this.state.currentPage < Math.ceil(this.state.hits / 10)) {
-            this.setState((prevState) => {
-                return {
-                    currentPage: prevState.currentPage < prevState.hits / 10 ? prevState.currentPage + 1 : prevState.currentPage
-                };
-            }, this.search);
-        }
+        this.setState((prevState) => {
+            return {
+                currentPage: prevState.currentPage < prevState.hits / 10 ? prevState.currentPage + 1 : prevState.currentPage
+            };
+        }, this.search);
     };
 
     /**

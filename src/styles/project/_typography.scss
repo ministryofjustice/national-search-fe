@@ -1,5 +1,5 @@
 a {
-  mark, span {
+  mark, span, &.clickable {
     color: $link-colour;
   }
   &.white {
