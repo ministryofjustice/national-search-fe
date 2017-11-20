@@ -9,6 +9,9 @@ export default class Result extends Component {
    * @returns {number}
    */
   pipeAge = (dateString) => {
+    if (!dateString) {
+      return;
+    }
     const today = new Date(),
       splitDate = dateString.substr(0, 10).split('-'),
       birthDate = new Date([splitDate[1], splitDate[2], splitDate[0]].join('/')),
