@@ -1,16 +1,3 @@
-.govuk-box-border {
-  border: 10px solid $turquoise;
-  margin: 1em 0;
-  padding: 2em 2em;
-  background: transparent;
-  text-align: left;
-}
-
-.govuk-box-highlight {
-
-  padding: 1em;
-
-  &.blue {
-    background: $govuk-blue;
-  }
+.govuk-box-highlight.blue {
+  background: $govuk-blue;
 }
