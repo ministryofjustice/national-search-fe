@@ -6,16 +6,9 @@ $path: "/images/";
 @import "./styles/govuk/govuk-elements";
 
 // Import the project specific styles
-@import "./styles/project/box";
 @import "./styles/project/components";
 @import "./styles/project/forms";
 @import "./styles/project/icon";
-@import "./styles/project/iframe";
-@import "./styles/project/layout";
-@import "./styles/project/lists";
-@import "./styles/project/logo";
-@import "./styles/project/navigation";
 @import "./styles/project/spacing";
 @import "./styles/project/utils";
-@import "./styles/project/date-picker";
 @import "./styles/project/typography";
