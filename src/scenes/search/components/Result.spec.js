@@ -13,7 +13,7 @@ it('renders successfully', () => {
             CRN: 'D12345678',
             GENDER_ID: 545,
             CURRENT_HIGHEST_RISK_COLOUR: 'Green',
-            CURRENT_REMAND_STATUS: ''
+            CURRENT_REMAND_STATUS: 'Remanded in custody'
         };
 
     ReactDOM.render(<Result params={params} data={data} />, div);

@@ -70,14 +70,14 @@ export default class Feedback extends Component {
                 <hr />
 
                 <label className="form-label-bold">How could we improve this service?
-                  <textarea className="form-control wide" placeholder="Start typing here..." type="text" value={this.state.feedback || ''} onChange={this.handleChange}/>
+                  <textarea name="feedback" className="form-control wide" placeholder="Start typing here..." type="text" value={this.state.feedback || ''} onChange={this.handleChange}/>
                 </label>
 
               </div>
 
               <div className="margin-top large">&nbsp;</div>
 
-              <input className="button button-start" type="submit" value="Submit feedback"/>
+              <button className="button button-start" type="submit">Submit feedback</button>
 
             </form>
 

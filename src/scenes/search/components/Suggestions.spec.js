@@ -5,5 +5,5 @@ import Suggestions from './Suggestions';
 
 it('renders successfully', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Suggestions suggestions={[]} />, div);
+    ReactDOM.render(<Suggestions suggestions={[{ text: 'John', option: 'Johns' }]} />, div);
 });
