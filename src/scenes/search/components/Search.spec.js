@@ -4,10 +4,14 @@ import { MemoryRouter } from 'react-router-dom';
 
 import Search from './Search';
 
-it('renders successfully', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(
-        <MemoryRouter>
-            <Search />
-        </MemoryRouter>, div);
+describe('Search', () => {
+
+    it('renders successfully', () => {
+        const div = document.createElement('div');
+        ReactDOM.render(
+            <MemoryRouter>
+                <Search/>
+            </MemoryRouter>, div);
+    });
+
 });

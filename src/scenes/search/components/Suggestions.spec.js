@@ -3,7 +3,16 @@ import ReactDOM from 'react-dom';
 
 import Suggestions from './Suggestions';
 
-it('renders successfully', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Suggestions suggestions={[{ text: 'John', option: 'Johns' }]} />, div);
+describe('Suggestions', () => {
+
+    it('renders successfully', () => {
+        const div = document.createElement('div'),
+            suggestions = [
+                { text: 'John', option: 'Johns' },
+                { text: 'Smit', option: 'Smith' }
+            ];
+
+        ReactDOM.render(<Suggestions suggestions={suggestions}/>, div);
+    });
+
 });
