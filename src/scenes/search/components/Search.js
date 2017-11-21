@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Query from '../model/Query';
 import Result from './Result';
 import Suggestions from './Suggestions';
 import Pagination from './Pagination';
@@ -52,7 +53,7 @@ export default class Search extends Component {
             return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
         }).join(' ');
 
-        request.open('POST', 'http://localhost:9200/offenders/_search?pretty');
+        request.open('POST', 'http://localhost:9200/offenders/_search');
         request.setRequestHeader('Content-Type', 'application/json');
         request.onload = function () {
 
@@ -69,131 +70,9 @@ export default class Search extends Component {
             this.updateSearchState(0, void 0, true, false);
         }.bind(this);
 
-        request.send(JSON.stringify(this.buildSearchQuery(searchParams)));
-    }
+        const query = Query(searchParams, this.state.currentPage);
 
-    /**
-     *
-     * @param searchParams
-     * @returns {Object}
-     */
-    buildSearchQuery(searchParams) {
-
-        const page = this.state.currentPage;
-
-        return {
-            from: page === 1 ? 0 : (page - 1) * 10,
-            size: 10,
-            query: {
-                bool: {
-                    must: {
-                        match: {
-                            _all: {
-                                query: searchParams,
-                                fuzziness: 1,
-                                operator: 'and'
-                            }
-                        }
-                    },
-                    should: [
-                        {
-                            match: {
-                                CRN: {
-                                    query: searchParams,
-                                    boost: 5
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                SURNAME: {
-                                    query: searchParams,
-                                    boost: 3
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                DATE_OF_BIRTH_DATE: {
-                                    query: searchParams,
-                                    boost: 3
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                'ADDRESSES.POSTCODE': {
-                                    query: searchParams,
-                                    fuzziness: 0,
-                                    boost: 3
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                FIRST_NAME: {
-                                    query: searchParams,
-                                    boost: 2
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                TOWN_CITY: {
-                                    query: searchParams,
-                                    boost: 2
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                'ALIASES.FIRST_NAME': {
-                                    query: searchParams,
-                                    boost: 2
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                'ALIASES.SURNAME': {
-                                    query: searchParams,
-                                    boost: 2
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                'ADDRESSES.TOWN': {
-                                    query: searchParams,
-                                    boost: 2
-                                }
-                            }
-                        },
-                        {
-                            match: {
-                                'ADDRESSES.STREET_NAME': {
-                                    query: searchParams,
-                                    boost: 1
-                                }
-                            }
-                        }
-                    ]
-                }
-            },
-            suggest: {
-                text: searchParams,
-                firstName: {
-                    term: {
-                        field: 'FIRST_NAME'
-                    }
-                },
-                surname: {
-                    term: {
-                        field: 'SURNAME'
-                    }
-                }
-            }
-        };
+        request.send(query);
     }
 
     /**
@@ -246,9 +125,18 @@ export default class Search extends Component {
     };
 
     /**
+     * Handle offender add contact
+     * @param event
+     */
+    handleContact = (event) => {
+        const selected = this.state.results[event.target.id.substr(event.target.id.indexOf('-') + 1)]['_source'];
+        console.info('Add contact:', selected);
+    };
+
+    /**
      *
-     * @param text
-     * @param suggestion
+     * @param text {String}
+     * @param suggestion {String}
      */
     handleSuggestion = (text, suggestion) => {
         this.setState((prevState) => {
@@ -260,24 +148,10 @@ export default class Search extends Component {
 
     /**
      *
+     * @param page {Number}
      */
-    previousPage = () => {
-        this.setState((prevState) => {
-            return {
-                currentPage: prevState.currentPage > 1 ? prevState.currentPage - 1 : prevState.currentPage
-            };
-        }, this.search);
-    };
-
-    /**
-     *
-     */
-    nextPage = () => {
-        this.setState((prevState) => {
-            return {
-                currentPage: prevState.currentPage < prevState.hits / 10 ? prevState.currentPage + 1 : prevState.currentPage
-            };
-        }, this.search);
+    changePage = (page) => {
+        this.setState({ currentPage: page }, this.search);
     };
 
     /**
@@ -291,7 +165,7 @@ export default class Search extends Component {
 
                 <div className="govuk-box-highlight blue">
 
-                    <h1 className="heading-xlarge no-margin-top margin-bottom medium">National offender search</h1>
+                    <h1 className="heading-large no-margin-top margin-bottom medium">National offender search</h1>
 
                     <form className="padding-left-right" onSubmit={(event) => { event.preventDefault(); }}>
                         <label>
@@ -316,12 +190,12 @@ export default class Search extends Component {
 
                     {this.state.results.map((result, i) =>
                         <div key={i}>
-                            <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick}/>
+                            <Result id={i} params={this.state.searchParams} data={result._source} click={this.handleClick} contact={this.handleContact}/>
                         </div>
                     )}
 
                     {this.state.hits > 10 &&
-                        <Pagination previousPage={this.previousPage} nextPage={this.nextPage} state={this.state}/>
+                        <Pagination state={this.state} changePage={this.changePage}/>
                     }
 
                 </div>

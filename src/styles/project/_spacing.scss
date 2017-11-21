@@ -20,6 +20,9 @@
 
 .padding-left-right {
   padding: 0 40px 0 40px;
+  @include media(mobile) {
+    padding: 0 10px 0 10px;
+  }
 }
 
 .no-margin-top {

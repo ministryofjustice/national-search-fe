@@ -16,6 +16,13 @@ Install elasticsearch:
 
 https://www.elastic.co/downloads/elasticsearch
 
+Or with [homebrew](https://brew.sh/):
+
+```
+    brew update
+    brew install elasticsearch
+```
+
 Edit the configuration file:
 
 ``` sudo nano /usr/local/etc/elasticsearch/elasticsearch.yml ```
@@ -35,12 +42,22 @@ In Terminal start elasticsearch:
 
 Navigate to the ***national-search-fe*** folder in a separate Terminal window.
 
-Add the sample/test data to the elasticsearch database: 
+Add the sample/test data to the elasticsearch database:
+ 
+**N.B. You only have to add sample/test data once; if you have done this already you can skip this step**
 
-``` curl -H "Content-Type: application/json" -XPOST 'localhost:9200/offenders/_bulk?pretty&refresh' --data-binary "@stub.json" ``` 
-
-**N.B. The above only needs to be done the first time you do this.**
+``` curl -H "Content-Type: application/json" -XPOST 'localhost:9200/offenders/_bulk?pretty&refresh' --data-binary "@stub.json" ```
 
 Now start the application
 
 ``` npm start ```
+
+## Advanced options
+
+Delete all offender records from your elasticsearch database:
+
+``` curl -XDELETE 'localhost:9200/offenders?pretty' ```
+
+Add the sample/test data **with aliases** to to the elasticsearch database:
+
+``` curl -H "Content-Type: application/json" -XPOST 'localhost:9200/offenders/_bulk?pretty&refresh' --data-binary "@stub_aliases.json" ``` 

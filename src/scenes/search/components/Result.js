@@ -59,14 +59,15 @@ export default class Result extends Component {
             <span className="bold">CRN: <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.CRN} /></span>
             &nbsp;&nbsp;
             {data.CURRENT_HIGHEST_RISK_COLOUR !== null &&
-              <span>Risk <span className={'risk-icon risk' + data.CURRENT_HIGHEST_RISK_COLOUR}> </span>&nbsp;|&nbsp;</span>
+              <span>Risk <span className={'risk-icon risk-' + data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()}> </span>&nbsp;|&nbsp;</span>
             }
-            {data.CURRENT_REMAND_STATUS &&
-              <span>{data.CURRENT_REMAND_STATUS}&nbsp;|&nbsp;</span>
+            {data.CURRENT_DISPOSAL > 0 &&
+              <span>Current offender&nbsp;|&nbsp;</span>
             }
-
             <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={this.pipeGender(data.GENDER_ID) + ', ' + this.pipeAge(data.DATE_OF_BIRTH_DATE)} />
           </p>
+
+          <p><a id={'contact-' + this.props.id} className="clickable" onClick={this.props.contact}>Add contact</a></p>
 
         </div>
         <div>&nbsp;</div>

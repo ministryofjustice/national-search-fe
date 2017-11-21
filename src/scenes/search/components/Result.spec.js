@@ -15,7 +15,7 @@ describe('Result', () => {
                 CRN: 'D12345678',
                 GENDER_ID: 545,
                 CURRENT_HIGHEST_RISK_COLOUR: 'Green',
-                CURRENT_REMAND_STATUS: 'Remanded in custody'
+                CURRENT_DISPOSAL: 0
             };
 
         ReactDOM.render(<Result params={params} data={data}/>, div);
