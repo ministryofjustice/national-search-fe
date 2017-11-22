@@ -27,7 +27,7 @@ const Query = (searchParams, page) => {
                         match: {
                             SURNAME: {
                                 query: searchParams,
-                                boost: 3
+                                boost: 4
                             }
                         }
                     },
@@ -35,7 +35,7 @@ const Query = (searchParams, page) => {
                         match: {
                             DATE_OF_BIRTH_DATE: {
                                 query: searchParams,
-                                boost: 3
+                                boost: 4
                             }
                         }
                     },
@@ -58,13 +58,21 @@ const Query = (searchParams, page) => {
                     },
                     {
                         match: {
+                            PREVIOUS_SURNAME: {
+                                query: searchParams,
+                                boost: 2
+                            }
+                        }
+                    },
+                    {
+                        match: {
                             TOWN_CITY: {
                                 query: searchParams,
                                 boost: 2
                             }
                         }
                     },
-                    /*{
+                    {
                         match: {
                             'ALIASES.FIRST_NAME': {
                                 query: searchParams,
@@ -76,10 +84,10 @@ const Query = (searchParams, page) => {
                         match: {
                             'ALIASES.SURNAME': {
                                 query: searchParams,
-                                boost: 2
+                                boost: 3
                             }
                         }
-                    },*/
+                    },
                     {
                         match: {
                             'ADDRESSES.TOWN': {
