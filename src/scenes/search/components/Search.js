@@ -50,10 +50,6 @@ export default class Search extends Component {
             search: '?search=' + splitParams.join('%20')
         });
 
-        const searchParams = splitParams.map((item) => {
-            return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
-        }).join(' ');
-
         request.open('POST', 'http://localhost:9200/offenders/_search');
         request.setRequestHeader('Content-Type', 'application/json');
         request.onload = function () {
@@ -71,7 +67,7 @@ export default class Search extends Component {
             this.updateSearchState(0, void 0, true, false);
         }.bind(this);
 
-        const query = Query(searchParams, this.state.currentPage);
+        const query = Query(splitParams.join(' '), this.state.currentPage);
 
         request.send(query);
     }
