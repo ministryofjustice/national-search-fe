@@ -6,21 +6,18 @@
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master)
 
----
+## Status
 
-**N.B. This is *NOT* production code and is used entirely for the rapid prototyping of new features.**
+* The project is not production code and is used entirely for the rapid prototyping of new features.
+* It uses [elasticsearch](https://www.elastic.co) and [React](https://reactjs.net)
 
----
+## Setup
 
-Install elasticsearch:
-
-https://www.elastic.co/downloads/elasticsearch
-
-Or with [homebrew](https://brew.sh/):
+Install elasticsearch (v5.6) with [homebrew](https://brew.sh/):
 
 ```
     brew update
-    brew install elasticsearch
+    brew install elasticsearch@5.6
 ```
 
 Edit the configuration file:
