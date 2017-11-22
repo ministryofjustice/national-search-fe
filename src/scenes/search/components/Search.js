@@ -39,17 +39,18 @@ export default class Search extends Component {
     search() {
 
         window.scrollTo(0, 0);
-        this.updateSearchState(0, [], false, true);
+        this.updateSearchState(0, this.state.results, false, true);
+
+        let request = new XMLHttpRequest(),
+            splitParams = this.state.searchParams.trim().split(' ');
 
         // Update querystring
         this.props.history.push({
             pathname: '',
-            search: '?search=' + this.state.searchParams
+            search: '?search=' + splitParams.join('%20')
         });
 
-        let request = new XMLHttpRequest();
-
-        const searchParams = this.state.searchParams.split(' ').map((item) => {
+        const searchParams = splitParams.map((item) => {
             return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
         }).join(' ');
 

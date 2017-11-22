@@ -30,7 +30,7 @@ export default class Feedback extends Component {
         <div className="grid-row">
           <div className="column-one-third">
             <nav>
-              - <Link to="/" className="nav-item">Return to search</Link>
+              - <Link to="" className="nav-item">Return to search</Link>
             </nav>
           </div>
           <div className="column-two-thirds">
