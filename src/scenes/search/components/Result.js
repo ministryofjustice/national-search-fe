@@ -54,7 +54,7 @@ export default class Result extends Component {
         function findTerm(source, term) {
             let isFound = false;
             source.forEach((item) => {
-                isFound = term.length > 1 && item.toLowerCase().includes(term.toLowerCase()) || isFound;
+                isFound = (term.length > 1 && item.toLowerCase().includes(term.toLowerCase())) || isFound;
             });
             return isFound;
         }
