@@ -27,8 +27,8 @@ export default class Search extends Component {
      *
      */
     componentDidMount() {
-        const searched = this.props.hasOwnProperty('location') && this.props.location.hasOwnProperty('search') ? this.props.location.search : void 0;
-        if (searched && searched.length) {
+        const searched = this.props.hasOwnProperty('location') && this.props.location.hasOwnProperty('search') ? this.props.location.search : '';
+        if (searched.length) {
             this.setState({ searchParams: searched.substr(searched.indexOf('=') + 1).split('%20').join(' ') }, this.search);
         }
     }
@@ -39,15 +39,13 @@ export default class Search extends Component {
     search() {
 
         window.scrollTo(0, 0);
-        this.updateSearchState(0, this.state.results, false, true);
 
         let request = new XMLHttpRequest(),
-            splitParams = this.state.searchParams.trim().split(' ');
+            trimmedParams = this.state.searchParams.trim();
 
-        // Update querystring
         this.props.history.push({
             pathname: '',
-            search: '?search=' + splitParams.join('%20')
+            search: '?search=' + trimmedParams.split(' ').join('%20')
         });
 
         request.open('POST', 'http://localhost:9200/offenders/_search');
@@ -67,9 +65,7 @@ export default class Search extends Component {
             this.updateSearchState(0, void 0, true, false);
         }.bind(this);
 
-        const query = Query(splitParams.join(' '), this.state.currentPage);
-
-        request.send(query);
+        request.send(Query(trimmedParams, this.state.currentPage));
     }
 
     /**
@@ -126,7 +122,8 @@ export default class Search extends Component {
      * @param event
      */
     handleContact = (event) => {
-        const selected = this.state.results[event.target.id.substr(event.target.id.indexOf('-') + 1)]['_source'];
+        const id = event.target.id,
+            selected = this.state.results[id.substr(id.indexOf('-') + 1)]['_source'];
         console.info('Add contact:', selected);
     };
 
