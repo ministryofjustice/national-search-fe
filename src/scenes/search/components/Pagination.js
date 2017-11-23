@@ -58,8 +58,7 @@ export default class Pagination extends Component {
                 <a className={this.state.currentPage !== 1 ? 'clickable' : ''} onClick={this.previousPage}>&lt; Previous</a>&nbsp;-&nbsp;
                 {this.totalPages <= this.maxPages && this.pagesArray.map((item, i) =>
                     <span key={i}>
-                        <a id={'page-' + item} className={item !== this.state.currentPage ? 'clickable' : ''}
-                           onClick={this.changePage}>{item}</a>&nbsp;
+                        <a id={'page-' + item} className={item !== this.state.currentPage ? 'clickable' : ''} onClick={this.changePage}>{item}</a>&nbsp;
                     </span>
                 )}
                 {this.totalPages > this.maxPages &&

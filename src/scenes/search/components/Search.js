@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Query from '../model/Query';
-import Result from './Result';
 import Suggestions from './Suggestions';
+import Result from './Result';
 import Pagination from './Pagination';
 
 export default class Search extends Component {
@@ -34,6 +34,17 @@ export default class Search extends Component {
     }
 
     /**
+     *
+     * @param params
+     */
+    updateQuerystring(params) {
+        this.props.history.push({
+            pathname: '',
+            search: '?search=' + params.split(' ').join('%20')
+        });
+    }
+
+    /**
      * Perform the search
      */
     search() {
@@ -43,10 +54,7 @@ export default class Search extends Component {
         let request = new XMLHttpRequest(),
             trimmedParams = this.state.searchParams.trim();
 
-        this.props.history.push({
-            pathname: '',
-            search: '?search=' + trimmedParams.split(' ').join('%20')
-        });
+        this.updateQuerystring(trimmedParams);
 
         request.open('POST', 'http://localhost:9200/offenders/_search');
         request.setRequestHeader('Content-Type', 'application/json');
