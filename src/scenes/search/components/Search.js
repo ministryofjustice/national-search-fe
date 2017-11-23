@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Query from '../model/Query';
+import Query from '../data/Query';
 import Suggestions from './Suggestions';
 import Result from './Result';
 import Pagination from './Pagination';
