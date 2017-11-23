@@ -44,9 +44,9 @@ export default class Result extends Component {
      *
      * @returns {Array}
      */
-    additional = () => {
+    additionalResults = () => {
 
-        const searched = this.props.params.split(' '),
+        const searched = this.props.params.trim().split(' '),
             data = this.props.data;
 
         let deepItems = new Set();
@@ -54,9 +54,7 @@ export default class Result extends Component {
         function findTerm(source, term) {
             let isFound = false;
             source.forEach((item) => {
-                if (term !== '' && item.toLowerCase().includes(term.toLowerCase())) {
-                    isFound = true;
-                }
+                isFound = (term.length > 1 && item.toLowerCase().includes(term.toLowerCase())) || isFound;
             });
             return isFound;
         }
@@ -94,8 +92,7 @@ export default class Result extends Component {
     render() {
 
         const data = this.props.data,
-            searched = this.props.params.split(' '),
-            additional = this.additional();
+            searched = this.props.params.trim().split(' ');
 
         return (
             <div>
@@ -109,8 +106,7 @@ export default class Result extends Component {
                         <span className="bold">CRN: <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.CRN}/></span>
                         &nbsp;&nbsp;
                         {data.CURRENT_HIGHEST_RISK_COLOUR !== null &&
-                        <span>Risk <span
-                            className={'risk-icon risk-' + data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()}> </span>&nbsp;|&nbsp;</span>
+                        <span>Risk <span className={'risk-icon risk-' + data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()}> </span>&nbsp;|&nbsp;</span>
                         }
                         {data.CURRENT_DISPOSAL > 0 &&
                         <span>Current offender&nbsp;|&nbsp;</span>
@@ -118,7 +114,7 @@ export default class Result extends Component {
                         <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={this.pipeGender(data.GENDER_ID) + ', ' + this.pipeAge(data.DATE_OF_BIRTH_DATE)}/>
                     </p>
 
-                    {additional.map((item, i) =>
+                    {this.additionalResults().map((item, i) =>
                         <div key={i}>
                             <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={item}/>
                         </div>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Query from '../model/Query';
-import Result from './Result';
+import Query from '../data/Query';
 import Suggestions from './Suggestions';
+import Result from './Result';
 import Pagination from './Pagination';
 
 export default class Search extends Component {
@@ -27,10 +27,21 @@ export default class Search extends Component {
      *
      */
     componentDidMount() {
-        const searched = this.props.hasOwnProperty('location') && this.props.location.hasOwnProperty('search') ? this.props.location.search : void 0;
-        if (searched && searched.length) {
+        const searched = this.props.hasOwnProperty('location') && this.props.location.hasOwnProperty('search') ? this.props.location.search : '';
+        if (searched.length) {
             this.setState({ searchParams: searched.substr(searched.indexOf('=') + 1).split('%20').join(' ') }, this.search);
         }
+    }
+
+    /**
+     *
+     * @param params
+     */
+    updateQuerystring(params) {
+        this.props.history.push({
+            pathname: '',
+            search: '?search=' + params.split(' ').join('%20')
+        });
     }
 
     /**
@@ -39,19 +50,11 @@ export default class Search extends Component {
     search() {
 
         window.scrollTo(0, 0);
-        this.updateSearchState(0, [], false, true);
 
-        // Update querystring
-        this.props.history.push({
-            pathname: '',
-            search: '?search=' + this.state.searchParams
-        });
+        let request = new XMLHttpRequest(),
+            trimmedParams = this.state.searchParams.trim();
 
-        let request = new XMLHttpRequest();
-
-        const searchParams = this.state.searchParams.split(' ').map((item) => {
-            return item.toLowerCase() === 'male' ? 545 : item.toLowerCase() === 'female' ? 546 : item;
-        }).join(' ');
+        this.updateQuerystring(trimmedParams);
 
         request.open('POST', 'http://localhost:9200/offenders/_search');
         request.setRequestHeader('Content-Type', 'application/json');
@@ -70,9 +73,7 @@ export default class Search extends Component {
             this.updateSearchState(0, void 0, true, false);
         }.bind(this);
 
-        const query = Query(searchParams, this.state.currentPage);
-
-        request.send(query);
+        request.send(Query(trimmedParams, this.state.currentPage));
     }
 
     /**
@@ -129,7 +130,8 @@ export default class Search extends Component {
      * @param event
      */
     handleContact = (event) => {
-        const selected = this.state.results[event.target.id.substr(event.target.id.indexOf('-') + 1)]['_source'];
+        const id = event.target.id,
+            selected = this.state.results[id.substr(id.indexOf('-') + 1)]['_source'];
         console.info('Add contact:', selected);
     };
 
