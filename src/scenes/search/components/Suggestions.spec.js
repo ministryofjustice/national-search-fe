@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
 
 import Suggestions from './Suggestions';
 
@@ -12,7 +12,7 @@ describe('Suggestions', () => {
                 { text: 'Smit', option: 'Smith' }
             ];
 
-        ReactDOM.render(<Suggestions suggestions={suggestions}/>, div);
+        shallow(<Suggestions suggestions={suggestions}/>, div);
     });
 
 });

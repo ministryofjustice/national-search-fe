@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
 
 import Result from './Result';
 
@@ -36,7 +36,7 @@ describe('Result', () => {
                 ]
             };
 
-        ReactDOM.render(<Result params={params} data={data} contact={() => ({})} click={() => ({})}/>, div);
+        shallow(<Result params={params} data={data} contact={() => ({})} click={() => ({})}/>, div);
     });
 
 });

@@ -4,12 +4,7 @@ import { Route, MemoryRouter } from 'react-router-dom';
 
 import App from './App';
 
-const renderTestSequence = ({
-                                initialEntries,
-                                initialIndex,
-                                subject: Subject,
-                                steps
-                            }) => {
+const renderTestSequence = ({ initialEntries, initialIndex, subject: Subject, steps }) => {
 
     const div = document.createElement('div');
 
@@ -56,7 +51,7 @@ const renderTestSequence = ({
 
 describe('App', () => {
 
-    it('navigates from search to Feedback', (done) => {
+    it('navigates from initial search page to Feedback', (done) => {
 
         renderTestSequence({
 

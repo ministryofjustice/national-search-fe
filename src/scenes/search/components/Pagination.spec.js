@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
 
 import Pagination from './Pagination';
 
@@ -11,7 +11,7 @@ describe('Pagination', () => {
                 currentPage: 1,
                 hits: 10
             };
-        ReactDOM.render(<Pagination state={state} />, div);
+        shallow(<Pagination state={state} />, div);
     });
 
 });
