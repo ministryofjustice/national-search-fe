@@ -5,20 +5,29 @@ export default class Feedback extends Component {
 
   constructor() {
     super();
+
     this.state = {
+      satisfaction: '',
       feedback: '',
       doRedirect: false
     };
+
+    this.handleRadio = this.handleRadio.bind(this);
+    this.handleText = this.handleText.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = (event) => {
-    this.setState({ feedback: event.target.value });
-  };
+  handleRadio(event) {
+    this.setState({ satisfaction: event.target.value });
+  }
 
-  handleSubmit = (event) => {
+  handleText(event) {
+    this.setState({ feedback: event.target.value });
+  }
+
+  handleSubmit() {
     this.setState({ doRedirect: true });
-    event.preventDefault();
-  };
+  }
 
   render() {
 
@@ -46,22 +55,22 @@ export default class Feedback extends Component {
                   </legend>
 
                   <div className="multiple-choice margin-top medium">
-                    <input id="radio-1" name="radio" type="radio" value="Very satisfied" />
+                    <input id="radio-1" name="radio" type="radio" value="Very satisfied" checked={this.state.satisfaction === 'Very satisfied'} onChange={this.handleRadio} />
                     <label htmlFor="radio-1">Very satisfied</label>
                   </div>
 
                   <div className="multiple-choice">
-                    <input id="radio-2" name="radio" type="radio" value="Satisfied" />
+                    <input id="radio-2" name="radio" type="radio" value="Satisfied" checked={this.state.satisfaction === 'Satisfied'} onChange={this.handleRadio} />
                     <label htmlFor="radio-2">Satisfied</label>
                   </div>
 
                   <div className="multiple-choice">
-                    <input id="radio-3" name="radio" type="radio" value="Dissatisfied" />
+                    <input id="radio-3" name="radio" type="radio" value="Dissatisfied" checked={this.state.satisfaction === 'Dissatisfied'} onChange={this.handleRadio} />
                     <label htmlFor="radio-3">Dissatisfied</label>
                   </div>
 
                   <div className="multiple-choice">
-                    <input id="radio-4" name="radio" type="radio" value="Very dissatisfied" />
+                    <input id="radio-4" name="radio" type="radio" value="Very dissatisfied" checked={this.state.satisfaction === 'Very dissatisfied'} onChange={this.handleRadio} />
                     <label htmlFor="radio-4">Very dissatisfied</label>
                   </div>
 
@@ -70,7 +79,7 @@ export default class Feedback extends Component {
                 <hr />
 
                 <label className="form-label-bold">How could we improve this service?
-                  <textarea name="feedback" className="form-control wide" placeholder="Start typing here..." type="text" value={this.state.feedback || ''} onChange={this.handleChange}/>
+                  <textarea id="feedback" name="feedback" className="form-control wide" placeholder="Start typing here..." type="text" value={this.state.feedback || ''} onChange={this.handleText}/>
                 </label>
 
               </div>

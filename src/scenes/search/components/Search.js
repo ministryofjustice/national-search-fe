@@ -21,6 +21,12 @@ export default class Search extends Component {
             suggestions: [],
             currentPage: 1
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleContact = this.handleContact.bind(this);
+        this.handleSuggestion = this.handleSuggestion.bind(this);
+        this.changePage = this.changePage.bind(this);
     }
 
     /**
@@ -112,47 +118,47 @@ export default class Search extends Component {
      *
      * @param event
      */
-    handleChange = (event) => {
+    handleChange(event) {
         this.setState({ searchParams: event.target.value, currentPage: 1 }, this.search);
-    };
+    }
 
     /**
      * Handle offender selection
      * @param event
      */
-    handleClick = (event) => {
+    handleClick(event) {
         const selected = this.state.results[event.target.parentElement.parentElement.id]['_source'];
         console.info('Selected:', selected);
-    };
+    }
 
     /**
      * Handle offender add contact
      * @param event
      */
-    handleContact = (event) => {
+    handleContact(event) {
         const id = event.target.id,
             selected = this.state.results[id.substr(id.indexOf('-') + 1)]['_source'];
         console.info('Add contact:', selected);
-    };
+    }
 
     /**
      *
      * @param text {String}
      * @param suggestion {String}
      */
-    handleSuggestion = (text, suggestion) => {
+    handleSuggestion(text, suggestion) {
         this.setState((prevState) => {
             return { searchParams: prevState.searchParams.split(' ').map((item) => {
               return item.toLowerCase() === text.toLowerCase() ? suggestion : item;
             }).join(' ')};
         }, this.search);
-    };
+    }
 
     /**
      *
      * @param page {Number}
      */
-    changePage = (page) => {
+    changePage(page) {
         this.setState({ currentPage: page }, this.search);
     };
 
@@ -171,7 +177,7 @@ export default class Search extends Component {
 
                     <form className="padding-left-right" onSubmit={(event) => { event.preventDefault(); }}>
                         <label>
-                            <input className="form-control padded" placeholder="Find names, addresses, date of birth, CRN and more..." type="text" value={this.state.searchParams} onChange={this.handleChange}/>
+                            <input id="searchParams" className="form-control padded" placeholder="Find names, addresses, date of birth, CRN and more..." type="text" value={this.state.searchParams} onChange={this.handleChange}/>
                         </label>
                     </form>
 
