@@ -104,7 +104,7 @@ export default class Result extends Component {
             <div>
                 <div className="panel panel-border-narrow">
 
-                    <a id={this.props.id} className="clickable heading-large no-underline" onClick={this.props.click}>
+                    <a className="clickable heading-large no-underline" onClick={() => { this.props.click(this.props.id) }}>
                         <Highlighter highlightClassName="highlight" searchWords={searched} autoEscape={true} textToHighlight={data.SURNAME + ', ' + data.FIRST_NAME + ' - ' + Result.pipeDate(data.DATE_OF_BIRTH_DATE)}/>
                     </a>
 

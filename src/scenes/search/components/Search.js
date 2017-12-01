@@ -124,10 +124,10 @@ export default class Search extends Component {
 
     /**
      * Handle offender selection
-     * @param event
+     * @param id
      */
-    handleClick(event) {
-        const selected = this.state.results[event.target.parentElement.parentElement.id]['_source'];
+    handleClick(id) {
+        const selected = this.state.results[id]['_source'];
         console.info('Selected:', selected);
     }
 
@@ -136,6 +136,9 @@ export default class Search extends Component {
      * @param event
      */
     handleContact(event) {
+
+        console.info(event);
+
         const id = event.target.id,
             selected = this.state.results[id.substr(id.indexOf('-') + 1)]['_source'];
         console.info('Add contact:', selected);
