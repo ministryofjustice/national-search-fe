@@ -44,6 +44,16 @@ In Terminal start elasticsearch:
 
 `elasticsearch`
 
+If this produces an error, try:
+
+`brew link elasticsearch`
+
+If this produces an error, try:
+
+`brew doctor`
+
+And follow instructions.
+
 Navigate to the **_national-search-fe_** folder in a separate Terminal window.
 
 Add the sample/test data to the elasticsearch database:
