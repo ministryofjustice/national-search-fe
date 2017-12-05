@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { Client } from 'elasticsearch';
 
 import Query from '../data/Query';
 import Suggestions from './Suggestions';
@@ -20,6 +21,8 @@ type State = {
 };
 
 export default class Search extends Component<Props, State> {
+  esClient = new Client({ host: 'localhost:9200' });
+
   /**
    *
    * @param props
@@ -81,27 +84,23 @@ export default class Search extends Component<Props, State> {
   search() {
     window.scrollTo(0, 0);
 
-    let request = new XMLHttpRequest(),
-      trimmedParams = this.state.searchParams.trim();
+    let trimmedParams = this.state.searchParams.trim();
 
     this.updateQuerystring(trimmedParams);
 
-    request.open('POST', 'http://localhost:9200/offenders/_search');
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        const response = JSON.parse(request.responseText);
-        this.updateSearchState(response.hits.total, response, false);
-      } else {
-        this.updateSearchState(0, void 0, true);
-      }
-    }.bind(this);
-
-    request.onerror = function() {
-      this.updateSearchState(0, void 0, true);
-    }.bind(this);
-
-    request.send(Query(trimmedParams, this.state.currentPage));
+    this.esClient
+      .search({
+        index: 'offenders',
+        body: Query(trimmedParams, this.state.currentPage)
+      })
+      .then(
+        response => {
+          this.updateSearchState(response.hits.total, response, false);
+        },
+        () => {
+          this.updateSearchState(0, void 0, true);
+        }
+      );
   }
 
   /**

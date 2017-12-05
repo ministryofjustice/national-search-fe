@@ -39,6 +39,7 @@
     "react-scripts": "1.0.17"
   },
   "devDependencies": {
+    "elasticsearch": "14.0.0",
     "enzyme": "3.2.0",
     "enzyme-adapter-react-16": "1.1.0",
     "flow-bin": "0.60.1",
@@ -47,6 +48,7 @@
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "4.1.2",
     "prettier": "1.9.0",
+    "proxyquire": "1.8.0",
     "react-test-renderer": "16.2.0",
     "sinon": "4.1.2"
   }

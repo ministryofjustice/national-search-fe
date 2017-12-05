@@ -38,7 +38,14 @@ export default class Pagination extends Component<Props, State> {
    */
   previousPage() {
     if (this.state.currentPage > 1) {
-      this.props.changePage(this.state.currentPage - 1);
+      this.setState(
+        previousState => {
+          return { currentPage: --previousState.currentPage };
+        },
+        () => {
+          this.props.changePage(this.state.currentPage);
+        }
+      );
     }
   }
 
@@ -47,7 +54,14 @@ export default class Pagination extends Component<Props, State> {
    */
   nextPage() {
     if (this.state.currentPage < this.totalPages) {
-      this.props.changePage(this.state.currentPage + 1);
+      this.setState(
+        previousState => {
+          return { currentPage: ++previousState.currentPage };
+        },
+        () => {
+          this.props.changePage(this.state.currentPage);
+        }
+      );
     }
   }
 
