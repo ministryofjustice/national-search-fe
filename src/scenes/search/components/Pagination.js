@@ -1,26 +1,36 @@
+// @flow
 import React, { Component } from 'react';
 
-export default class Pagination extends Component {
+type Props = {
+  state: State,
+  pageSize?: number,
+  changePage: Function
+};
+type State = {
+  hits: number,
+  currentPage: number
+};
+
+export default class Pagination extends Component<Props, State> {
   pagesArray = [];
   totalPages = 0;
   maxPages = 9;
 
   /**
    * @constructor
-   * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
-    this.state = this.props.state;
+    this.state = props.state;
     this.totalPages = Math.ceil(this.state.hits / (props.pageSize || 10));
     for (let i = 0, len = this.totalPages; i < len; i++) {
       this.pagesArray.push(i + 1);
     }
 
-    this.previousPage = this.previousPage.bind(this);
-    this.nextPage = this.nextPage.bind(this);
-    this.changePage = this.changePage.bind(this);
+    (this: any).previousPage = this.previousPage.bind(this);
+    (this: any).nextPage = this.nextPage.bind(this);
+    (this: any).changePage = this.changePage.bind(this);
   }
 
   /**
@@ -45,7 +55,7 @@ export default class Pagination extends Component {
    *
    * @param event
    */
-  changePage(event) {
+  changePage(event: SyntheticInputEvent<HTMLInputElement>) {
     const id = parseInt(
       event.target.id.substr(event.target.id.indexOf('-') + 1),
       10

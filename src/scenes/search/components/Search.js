@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 
 import Query from '../data/Query';
@@ -5,12 +6,25 @@ import Suggestions from './Suggestions';
 import Result from './Result';
 import Pagination from './Pagination';
 
-export default class Search extends Component {
+type Props = {
+  location: any,
+  history: Array<any>
+};
+type State = {
+  searchParams: string,
+  serverError: boolean,
+  hits: number,
+  results: any,
+  suggestions: Array<any>,
+  currentPage: number
+};
+
+export default class Search extends Component<Props, State> {
   /**
    *
    * @param props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       searchParams: '',
@@ -21,11 +35,11 @@ export default class Search extends Component {
       currentPage: 1
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleContact = this.handleContact.bind(this);
-    this.handleSuggestion = this.handleSuggestion.bind(this);
-    this.changePage = this.changePage.bind(this);
+    (this: any).handleChange = this.handleChange.bind(this);
+    (this: any).handleClick = this.handleClick.bind(this);
+    (this: any).handleContact = this.handleContact.bind(this);
+    (this: any).handleSuggestion = this.handleSuggestion.bind(this);
+    (this: any).changePage = this.changePage.bind(this);
   }
 
   /**
@@ -54,7 +68,7 @@ export default class Search extends Component {
    *
    * @param params
    */
-  updateQuerystring(params) {
+  updateQuerystring(params: string) {
     this.props.history.push({
       pathname: '',
       search: '?search=' + params.split(' ').join('%20')
@@ -77,14 +91,14 @@ export default class Search extends Component {
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         const response = JSON.parse(request.responseText);
-        this.updateSearchState(response.hits.total, response, false, false);
+        this.updateSearchState(response.hits.total, response, false);
       } else {
-        this.updateSearchState(0, void 0, true, false);
+        this.updateSearchState(0, void 0, true);
       }
     }.bind(this);
 
     request.onerror = function() {
-      this.updateSearchState(0, void 0, true, false);
+      this.updateSearchState(0, void 0, true);
     }.bind(this);
 
     request.send(Query(trimmedParams, this.state.currentPage));
@@ -96,7 +110,7 @@ export default class Search extends Component {
    * @param results Array
    * @param error boolean
    */
-  updateSearchState(hits, results, error) {
+  updateSearchState(hits: number, results?: Object, error: boolean) {
     let suggestions = [];
 
     if (results && results.hasOwnProperty('suggest')) {
@@ -134,7 +148,7 @@ export default class Search extends Component {
    *
    * @param event
    */
-  handleChange(event) {
+  handleChange(event: SyntheticInputEvent<HTMLInputElement>) {
     this.setState(
       { searchParams: event.target.value, currentPage: 1 },
       this.search
@@ -145,7 +159,7 @@ export default class Search extends Component {
    * Handle offender selection
    * @param id
    */
-  handleClick(id) {
+  handleClick(id: number) {
     const selected = this.state.results[id]['_source'];
     console.info('Selected:', selected.OFFENDER_ID);
   }
@@ -154,7 +168,7 @@ export default class Search extends Component {
    * Handle offender add contact
    * @param event
    */
-  handleContact(event) {
+  handleContact(event: SyntheticInputEvent<HTMLInputElement>) {
     const id = event.target.id,
       selected = this.state.results[id.substr(id.indexOf('-') + 1)]['_source'];
     console.info('Add contact:', selected.OFFENDER_ID);
@@ -165,7 +179,7 @@ export default class Search extends Component {
    * @param text {String}
    * @param suggestion {String}
    */
-  handleSuggestion(text, suggestion) {
+  handleSuggestion(text: string, suggestion: string) {
     this.setState(prevState => {
       return {
         searchParams: prevState.searchParams
@@ -184,7 +198,7 @@ export default class Search extends Component {
    *
    * @param page {Number}
    */
-  changePage(page) {
+  changePage(page: number) {
     this.setState({ currentPage: page }, this.search);
   }
 

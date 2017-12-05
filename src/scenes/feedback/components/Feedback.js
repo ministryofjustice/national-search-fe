@@ -1,7 +1,15 @@
+// @flow
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
-export default class Feedback extends Component {
+type Props = {};
+type State = {
+  satisfaction: string,
+  feedback: string,
+  doRedirect: boolean
+};
+
+export default class Feedback extends Component<Props, State> {
   constructor() {
     super();
 
@@ -11,16 +19,16 @@ export default class Feedback extends Component {
       doRedirect: false
     };
 
-    this.handleRadio = this.handleRadio.bind(this);
-    this.handleText = this.handleText.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    (this: any).handleRadio = this.handleRadio.bind(this);
+    (this: any).handleText = this.handleText.bind(this);
+    (this: any).handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleRadio(event) {
+  handleRadio(event: SyntheticInputEvent<HTMLInputElement>) {
     this.setState({ satisfaction: event.target.value });
   }
 
-  handleText(event) {
+  handleText(event: SyntheticInputEvent<HTMLInputElement>) {
     this.setState({ feedback: event.target.value });
   }
 

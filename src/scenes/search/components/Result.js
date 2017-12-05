@@ -1,21 +1,30 @@
+// @flow
 import React, { Component } from 'react';
 import Highlighter from 'react-highlight-words';
 
-export default class Result extends Component {
-  constructor(props) {
+type Props = {
+  id: number,
+  params: string,
+  data: any,
+  contact: Function,
+  click: Function
+};
+
+export default class Result extends Component<Props> {
+  constructor(props: Props) {
     super(props);
 
-    this.additionalResults = this.additionalResults.bind(this);
+    (this: any).additionalResults = this.additionalResults.bind(this);
   }
 
   /**
    * Calculate the offender age based on DD/MM/YYYY
    * @param dateString
-   * @returns {number}
+   * @returns {number}d
    */
-  static pipeAge(dateString) {
+  static pipeAge(dateString: string): number {
     if (!dateString) {
-      return;
+      return 0;
     }
     const today = new Date(),
       splitDate = dateString.substr(0, dateString.indexOf(' ')).split('-'),
@@ -35,7 +44,7 @@ export default class Result extends Component {
    * @param dateString
    * @returns {string}
    */
-  static pipeDate(dateString) {
+  static pipeDate(dateString: string): string {
     const splitDate = dateString.substr(0, dateString.indexOf(' ')).split('-');
     return [splitDate[2], splitDate[1], splitDate[0]].join('/');
   }
@@ -45,7 +54,7 @@ export default class Result extends Component {
    * @param num
    * @returns {string}
    */
-  static pipeGender(num) {
+  static pipeGender(num: number) {
     return num === 545 ? 'Male' : 'Female';
   }
 

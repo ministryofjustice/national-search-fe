@@ -1,6 +1,12 @@
+// @flow
 import React from 'react';
 
-const Suggestions = props => (
+type Props = {
+  suggestions: Array<any>,
+  click: Function
+};
+
+const Suggestions = (props: Props) => (
   <span>
     {props.suggestions.map((suggestion, i) => (
       <span key={i}>

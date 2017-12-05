@@ -38,7 +38,7 @@ describe('Result', () => {
 
   describe('should expose static methods', () => {
     it('pipeAge method should return the numerical age based on DOB', () => {
-      expect(Result.pipeAge()).toEqual(void 0);
+      expect(Result.pipeAge()).toEqual(0);
       expect(typeof Result.pipeAge('1997-02-05 00:00:00')).toEqual('number');
     });
 
