@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 type Props = {
-  state: State,
+  state: any,
   pageSize?: number,
   changePage: Function
 };
