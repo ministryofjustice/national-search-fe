@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
+    "precommit": "lint-staged",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
@@ -23,11 +25,20 @@
     "node": ">=8.9.0 <9.0.0"
   },
   "dependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-highlight-words": "0.10.0",
     "react-router-dom": "4.2.2",
     "react-scripts": "1.0.17"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,css,scss}": [
+      "prettier --single-quote --jsx-bracket-same-line --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "enzyme": "3.2.0",

@@ -12,7 +12,6 @@
 //  Although there is a lot of duplication within this file, as long
 //  as you GZIP your CSS it shouldnt cause any bloat.
 
-
 // CORE FONTS - NEW TRANSPORT
 
 // Allow uppercase letters in font stack variable names
@@ -27,7 +26,7 @@ $is-print: false !default;
     font-family: $Print-reset;
   } @else {
     font-family: $toolkit-font-stack;
-    @if $toolkit-font-stack == "$NTA-Light" {
+    @if $toolkit-font-stack == '$NTA-Light' {
       @if $font-weight > 400 {
         font-size-adjust: 0.525;
       } @else {
@@ -41,7 +40,6 @@ $is-print: false !default;
   @if $is-print {
     font-size: $font-size-print;
     line-height: $line-height;
-
   } @else {
     font-size: $font-size-640;
     line-height: $line-height-640;

@@ -86,7 +86,6 @@ main {
     display: block;
     color: $secondary-text-colour;
   }
-
 }
 
 .heading-large {
@@ -106,7 +105,6 @@ main {
     display: block;
     color: $secondary-text-colour;
   }
-
 }
 
 .heading-medium {
@@ -119,7 +117,6 @@ main {
     margin-top: em(45, 24);
     margin-bottom: em(20, 24);
   }
-
 }
 
 .heading-small {
@@ -131,7 +128,6 @@ main {
   @include media(tablet) {
     margin-top: em(20, 19);
   }
-
 }
 
 // Text
@@ -144,7 +140,6 @@ p,
     margin-top: em(5);
     margin-bottom: em(20);
   }
-
 }
 
 .body-text {
@@ -230,9 +225,8 @@ p,
   // IE7 doesn't support pseudo-elements, let's fallback to an image instead.
   // Ref: http://caniuse.com/#search=%3Abefore, http://caniuse.com/#search=rgba
   @include ie-lte(8) {
-    background: file-url("icon-arrow-left.png") no-repeat 0 4px;
+    background: file-url('icon-arrow-left.png') no-repeat 0 4px;
   }
-
 }
 
 // Code styles

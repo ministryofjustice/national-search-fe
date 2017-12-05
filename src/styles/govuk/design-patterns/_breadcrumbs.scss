@@ -1,7 +1,7 @@
-@import "../colours";
-@import "../typography";
-@import "../shims";
-@import "../url-helpers";
+@import '../colours';
+@import '../typography';
+@import '../shims';
+@import '../url-helpers';
 
 // Breadcrumbs usage:
 //
@@ -10,7 +10,6 @@
 // }
 
 @mixin breadcrumbs {
-
   padding-top: 0.75em;
   padding-bottom: 0.75em;
 
@@ -22,10 +21,10 @@
     @include core-16;
     float: left;
 
-    background-image: file-url("separator.png");
+    background-image: file-url('separator.png');
 
     @include device-pixel-ratio() {
-      background-image: file-url("separator-2x.png");
+      background-image: file-url('separator-2x.png');
       background-size: 6px 11px;
     }
 
@@ -43,11 +42,9 @@
       margin-left: 0;
       padding-left: 0;
     }
-
   }
 
   a {
     color: $text-colour;
   }
-
 }
