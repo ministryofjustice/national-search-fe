@@ -32,6 +32,7 @@
     ]
   },
   "dependencies": {
+    "elasticsearch": "14.0.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-highlight-words": "0.10.0",
@@ -39,7 +40,6 @@
     "react-scripts": "1.0.17"
   },
   "devDependencies": {
-    "elasticsearch": "14.0.0",
     "enzyme": "3.2.0",
     "enzyme-adapter-react-16": "1.1.0",
     "flow-bin": "0.60.1",
@@ -47,7 +47,7 @@
     "lint-staged": "6.0.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "4.1.2",
-    "prettier": "1.9.0",
+    "prettier": "1.9.1",
     "react-test-renderer": "16.2.0",
     "sinon": "4.1.2"
   }

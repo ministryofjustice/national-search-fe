@@ -1,20 +1,31 @@
-import React from 'react';
-import sinon from 'sinon';
 import fs from 'fs';
 import path from 'path';
 
+import React from 'react';
+import sinon from 'sinon';
+
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
+
+const mockData = fs.readFileSync(
+  path.join(__dirname, '..', 'data', 'Results.stub.json'),
+  'utf8'
+);
+
+jest.mock('elasticsearch', () => ({
+  Client: class {
+    search = () => {
+      return new Promise(resolve => {
+        resolve(JSON.parse(mockData));
+      });
+    };
+  }
+}));
 
 import Search from './Search';
 
 describe('Search', () => {
   let wrapper, handleChangeSpy, searchInstance;
-
-  const stubData = fs.readFileSync(
-    path.join(__dirname, '..', 'data', 'Results.stub.json'),
-    'utf8'
-  );
 
   describe('', () => {
     beforeEach(() => {
@@ -35,7 +46,7 @@ describe('Search', () => {
       expect(wrapper.find('h1').text()).toEqual('National offender search');
     });
 
-    xit('should search based on user input parameters', () => {
+    it('should search based on user input parameters', () => {
       wrapper
         .find('#searchParams')
         .simulate('change', { target: { value: 'John Smith' } });
@@ -44,13 +55,13 @@ describe('Search', () => {
       expect(searchInstance.state.searchParams).toEqual('John Smith');
     });
 
-    xit('should allow the user to change the search results page', () => {
+    it('should allow the user to change the search results page', () => {
       expect(searchInstance.state.currentPage).toEqual(1);
       searchInstance.changePage(2);
       expect(searchInstance.state.currentPage).toEqual(2);
     });
 
-    xit('should allow the user to select suggested search parameters', () => {
+    it('should allow the user to select suggested search parameters', () => {
       wrapper
         .find('#searchParams')
         .simulate('change', { target: { value: 'John Smith' } });
@@ -60,17 +71,15 @@ describe('Search', () => {
       expect(searchInstance.state.searchParams).toEqual('John Smit');
     });
 
-    xit('should allow the user to select the contact option on each result', () => {
+    it('should allow the user to select the contact option on each result', async () => {
       // Trigger the search and mock the response
-      searchInstance.handleChange({ target: { value: 'John Smith' } });
-
+      await searchInstance.handleChange({ target: { value: 'John Smith' } });
       searchInstance.handleContact({ target: { id: 'contact-1' } });
     });
 
-    xit('should allow the user to select the offender', () => {
+    it('should allow the user to select the offender', async () => {
       // Trigger the search and mock the response
-      searchInstance.handleChange({ target: { value: 'John Smith' } });
-
+      await searchInstance.handleChange({ target: { value: 'John Smith' } });
       searchInstance.handleClick(0);
     });
   });

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Client } from 'elasticsearch';
+import elasticsearch from 'elasticsearch';
 
 import Query from '../data/Query';
 import Suggestions from './Suggestions';
@@ -21,7 +21,7 @@ type State = {
 };
 
 export default class Search extends Component<Props, State> {
-  esClient = new Client({ host: 'localhost:9200' });
+  esClient = new elasticsearch.Client({ host: 'localhost:9200' });
 
   /**
    *
