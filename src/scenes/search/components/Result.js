@@ -80,11 +80,13 @@ export default class Result extends Component<Props> {
     }
 
     searched.forEach(term => {
-      data.ALIASES.forEach(alias => {
-        if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
-          deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
-        }
-      });
+      if (data.hasOwnProperty('ALIASES')) {
+        data.ALIASES.forEach(alias => {
+          if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
+            deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
+          }
+        });
+      }
 
       if (findTerm([data.SECOND_NAME, data.THIRD_NAME], term)) {
         deepItems.add(
@@ -96,31 +98,33 @@ export default class Result extends Component<Props> {
         deepItems.add('Previous surname: ' + data.PREVIOUS_SURNAME);
       }
 
-      data.ADDRESSES.forEach(address => {
-        if (
-          findTerm(
-            [
-              address.TOWN_CITY,
-              address.STREET_NAME,
-              address.COUNTY,
-              address.POSTCODE
-            ],
-            term
-          )
-        ) {
-          deepItems.add(
-            address.ADDRESS_NUMBER +
-              ' ' +
-              address.STREET_NAME +
-              ', ' +
-              address.TOWN_CITY +
-              ', ' +
-              address.COUNTY +
-              '. ' +
-              address.POSTCODE
-          );
-        }
-      });
+      if (data.hasOwnProperty('ADDRESSES')) {
+        data.ADDRESSES.forEach(address => {
+          if (
+            findTerm(
+              [
+                address.TOWN_CITY,
+                address.STREET_NAME,
+                address.COUNTY,
+                address.POSTCODE
+              ],
+              term
+            )
+          ) {
+            deepItems.add(
+              address.ADDRESS_NUMBER +
+                ' ' +
+                address.STREET_NAME +
+                ', ' +
+                address.TOWN_CITY +
+                ', ' +
+                address.COUNTY +
+                '. ' +
+                address.POSTCODE
+            );
+          }
+        });
+      }
     });
 
     return Array.from(deepItems);
@@ -132,7 +136,8 @@ export default class Result extends Component<Props> {
    */
   render() {
     const data = this.props.data,
-      searched = this.props.params.trim().split(' ');
+      searched = this.props.params.trim().split(' '),
+      restricted = data.CURRENT_RESTRICTION || data.CURRENT_EXCLUSION;
 
     return (
       <div>
@@ -147,11 +152,13 @@ export default class Result extends Component<Props> {
               searchWords={searched}
               autoEscape={true}
               textToHighlight={
-                data.SURNAME +
-                ', ' +
-                data.FIRST_NAME +
-                ' - ' +
-                Result.pipeDate(data.DATE_OF_BIRTH_DATE)
+                !restricted
+                  ? data.SURNAME +
+                    ', ' +
+                    data.FIRST_NAME +
+                    ' - ' +
+                    Result.pipeDate(data.DATE_OF_BIRTH_DATE)
+                  : 'Restricted access'
               }
             />
           </a>
@@ -176,34 +183,44 @@ export default class Result extends Component<Props> {
                     data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
                   }>
                   {' '}
-                </span>&nbsp;|&nbsp;
+                </span>
               </span>
             )}
-            {data.CURRENT_DISPOSAL > 0 && (
-              <span id="currentDisposal">Current offender&nbsp;|&nbsp;</span>
+            {!restricted &&
+              data.CURRENT_DISPOSAL > 0 && (
+                <span>
+                  &nbsp;|&nbsp;
+                  <span id="currentDisposal">Current offender</span>
+                </span>
+              )}
+            {!restricted && (
+              <span>
+                &nbsp;|&nbsp;
+                <Highlighter
+                  highlightClassName="highlight"
+                  searchWords={searched}
+                  autoEscape={true}
+                  textToHighlight={
+                    Result.pipeGender(data.GENDER_ID) +
+                    ', ' +
+                    Result.pipeAge(data.DATE_OF_BIRTH_DATE)
+                  }
+                />
+              </span>
             )}
-            <Highlighter
-              highlightClassName="highlight"
-              searchWords={searched}
-              autoEscape={true}
-              textToHighlight={
-                Result.pipeGender(data.GENDER_ID) +
-                ', ' +
-                Result.pipeAge(data.DATE_OF_BIRTH_DATE)
-              }
-            />
           </p>
 
-          {this.additionalResults().map((item, i) => (
-            <div key={i}>
-              <Highlighter
-                highlightClassName="highlight"
-                searchWords={searched}
-                autoEscape={true}
-                textToHighlight={item}
-              />
-            </div>
-          ))}
+          {!restricted &&
+            this.additionalResults().map((item, i) => (
+              <div key={i}>
+                <Highlighter
+                  highlightClassName="highlight"
+                  searchWords={searched}
+                  autoEscape={true}
+                  textToHighlight={item}
+                />
+              </div>
+            ))}
 
           <p>
             <a

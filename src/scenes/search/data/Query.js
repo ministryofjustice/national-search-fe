@@ -1,5 +1,5 @@
 // @flow
-const Query = (searchParams: string, page: number) => {
+const Query = (searchParams: string, page: number, options?: Object) => {
   const searchQuery = {
     from: page === 1 ? 0 : (page - 1) * 10,
     size: 10,
@@ -121,6 +121,12 @@ const Query = (searchParams: string, page: number) => {
       }
     }
   };
+
+  if (options && options.hasOwnProperty('excludes')) {
+    searchQuery._source = {
+      excludes: options.excludes
+    };
+  }
 
   return JSON.stringify(searchQuery);
 };
