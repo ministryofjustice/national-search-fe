@@ -66,6 +66,11 @@ export default class Result extends Component<Props> {
     const searched = this.props.params.trim().split(' '),
       data = this.props.data;
 
+    // Restricted or excluded record
+    if (data.CURRENT_RESTRICTION || data.CURRENT_EXCLUSION) {
+      return [];
+    }
+
     let deepItems = new Set();
 
     function findTerm(source, term) {
@@ -152,20 +157,20 @@ export default class Result extends Component<Props> {
               searchWords={searched}
               autoEscape={true}
               textToHighlight={
-                !restricted
-                  ? data.SURNAME +
+                restricted
+                  ? 'Restricted access'
+                  : data.SURNAME +
                     ', ' +
                     data.FIRST_NAME +
                     ' - ' +
                     Result.pipeDate(data.DATE_OF_BIRTH_DATE)
-                  : 'Restricted access'
               }
             />
           </a>
 
           <p className="no-margin bottom">
             <span className="bold">
-              CRN:{' '}
+              CRN:&nbsp;
               <Highlighter
                 highlightClassName="highlight"
                 searchWords={searched}
@@ -176,14 +181,13 @@ export default class Result extends Component<Props> {
             &nbsp;&nbsp;
             {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
               <span id="risk">
-                Risk{' '}
+                Risk&nbsp;
                 <span
                   className={
                     'risk-icon risk-' +
                     data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
-                  }>
-                  {' '}
-                </span>
+                  }
+                />
               </span>
             )}
             {!restricted &&
@@ -191,36 +195,31 @@ export default class Result extends Component<Props> {
                 <span>
                   &nbsp;|&nbsp;
                   <span id="currentDisposal">Current offender</span>
+                  &nbsp;|&nbsp;
+                  <Highlighter
+                    highlightClassName="highlight"
+                    searchWords={searched}
+                    autoEscape={true}
+                    textToHighlight={
+                      Result.pipeGender(data.GENDER_ID) +
+                      ', ' +
+                      Result.pipeAge(data.DATE_OF_BIRTH_DATE)
+                    }
+                  />
                 </span>
               )}
-            {!restricted && (
-              <span>
-                &nbsp;|&nbsp;
-                <Highlighter
-                  highlightClassName="highlight"
-                  searchWords={searched}
-                  autoEscape={true}
-                  textToHighlight={
-                    Result.pipeGender(data.GENDER_ID) +
-                    ', ' +
-                    Result.pipeAge(data.DATE_OF_BIRTH_DATE)
-                  }
-                />
-              </span>
-            )}
           </p>
 
-          {!restricted &&
-            this.additionalResults().map((item, i) => (
-              <div key={i}>
-                <Highlighter
-                  highlightClassName="highlight"
-                  searchWords={searched}
-                  autoEscape={true}
-                  textToHighlight={item}
-                />
-              </div>
-            ))}
+          {this.additionalResults().map((item, i) => (
+            <div key={i}>
+              <Highlighter
+                highlightClassName="highlight"
+                searchWords={searched}
+                autoEscape={true}
+                textToHighlight={item}
+              />
+            </div>
+          ))}
 
           <p>
             <a
