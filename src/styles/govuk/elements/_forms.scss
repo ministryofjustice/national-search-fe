@@ -37,7 +37,6 @@ textarea {
   display: block;
 }
 
-
 // 2. Form wrappers
 // ==========================================================================
 
@@ -78,7 +77,6 @@ textarea {
 .form-group-compound {
   margin-bottom: 10px;
 }
-
 
 // 3. Form labels
 // ==========================================================================
@@ -154,7 +152,6 @@ textarea {
   @include media(tablet) {
     width: 50%;
   }
-
 }
 
 // Allow a qualifying element, remove rounded corners from inputs and textareas
@@ -172,7 +169,6 @@ textarea.form-control {
   background-image: none;
 }
 // scss-lint:enable QualifyingElement
-
 
 // 6. Form control widths
 // ==========================================================================

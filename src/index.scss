@@ -1,13 +1,13 @@
 // Path to assets for use with the file-url function
 // in the govuk frontend toolkit's url-helpers partial
-$path: "/images/";
+$path: '/images/';
 
 // Import all the govuk-elements partials listed in _govuk-elements.scss
-@import "./styles/govuk/govuk-elements";
+@import './styles/govuk/govuk-elements';
 
 // Import the project specific styles
-@import "./styles/project/components";
-@import "./styles/project/forms";
-@import "./styles/project/spacing";
-@import "./styles/project/utils";
-@import "./styles/project/typography";
+@import './styles/project/components';
+@import './styles/project/forms';
+@import './styles/project/spacing';
+@import './styles/project/utils';
+@import './styles/project/typography';

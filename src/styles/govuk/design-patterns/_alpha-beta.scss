@@ -1,7 +1,7 @@
-@import "../colours";
-@import "../typography";
-@import "../shims";
-@import "../grid_layout";
+@import '../colours';
+@import '../typography';
+@import '../shims';
+@import '../grid_layout';
 
 // Phase banner usage:
 //
@@ -10,7 +10,6 @@
 // }
 
 @mixin phase-banner($state: '') {
-
   @if $state != '' {
     @warn 'Passing a phase to the alpha/beta banners is deprecated';
   }
@@ -48,7 +47,6 @@
 // }
 
 @mixin phase-tag($state: '') {
-
   @if $state != '' {
     @warn 'Passing a phase to the phase-tag mixin is deprecated';
   }

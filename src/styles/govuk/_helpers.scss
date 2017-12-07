@@ -3,7 +3,6 @@ $base-font-size: 16;
 
 // Convert pixels to em
 @function pem($px, $base: $base-font-size) {
-
   @if (unitless($px)) {
     $px: $px * 1px;
   }

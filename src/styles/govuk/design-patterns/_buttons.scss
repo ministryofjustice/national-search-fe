@@ -19,7 +19,6 @@
 //   @include button($red);
 // }
 
-
 @mixin button($colour: $button-colour) {
   // Colour
   background-color: $colour;
@@ -27,7 +26,7 @@
   // Size and shape
   position: relative;
   @include inline-block;
-  padding: .526315em .789473em .263157em; // 10px 15px 5px
+  padding: 0.526315em 0.789473em 0.263157em; // 10px 15px 5px
   border: none;
   @include border-radius(0);
   outline: 1px solid transparent; // keep some button appearance when changing colour settings in browsers
@@ -65,7 +64,7 @@
 
   // Disabled button styles
   &.disabled,
-  &[disabled="disabled"],
+  &[disabled='disabled'],
   &[disabled] {
     @include opacity(0.5);
     &:hover {
@@ -108,7 +107,7 @@
   // making the click target bigger than the button
   // (and fill the space made when the button moves)
   &:before {
-    content: "";
+    content: '';
     height: 110%;
     width: 100%;
     display: block;
@@ -132,13 +131,13 @@
 
   // Fixes a bug where IE puts a black border around certain elements
   @include ie-lte(8) {
-    &[type="submit"],
-    &[type="reset"],
-    &[type="button"] {
+    &[type='submit'],
+    &[type='reset'],
+    &[type='button'] {
       filter: chroma(color = $black);
     }
 
-    &[type=submit].button {
+    &[type='submit'].button {
       filter: none;
     }
   }

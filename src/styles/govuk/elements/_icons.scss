@@ -3,23 +3,21 @@
 
 // Icon mixin
 @mixin icon($icon-name, $icon-width, $icon-height, $icon-sub-folder:false) {
-
   width: #{$icon-width}px;
   height: #{$icon-height}px;
 
   @if $icon-sub-folder {
-    background-image: file-url("#{$icon-sub-folder}/#{$icon-name}.png");
+    background-image: file-url('#{$icon-sub-folder}/#{$icon-name}.png');
 
     @include device-pixel-ratio() {
-      background-image: file-url("#{$icon-sub-folder}/#{$icon-name}-2x.png");
+      background-image: file-url('#{$icon-sub-folder}/#{$icon-name}-2x.png');
       background-size: 100%;
     }
-
   } @else {
-    background-image: file-url("#{$icon-name}.png");
+    background-image: file-url('#{$icon-name}.png');
 
     @include device-pixel-ratio() {
-      background-image: file-url("#{$icon-name}-2x.png");
+      background-image: file-url('#{$icon-name}-2x.png');
       background-size: 100%;
     }
   }
@@ -64,7 +62,6 @@
 .icon-search {
   @include icon(icon-search, 30, 22);
 }
-
 
 // GOV.UK step icons
 @for $i from 1 through 14 {

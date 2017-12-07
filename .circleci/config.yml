@@ -8,7 +8,7 @@ jobs:
   build:
     working_directory: ~/hmpps-national-search-fe
     docker:
-      - image: circleci/node:6-browsers
+      - image: circleci/node:8.9.1-browsers
     steps:
       - checkout
       - restore_cache:
@@ -21,6 +21,9 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ./node_modules
+      - run:
+          name: Flow
+          command: yarn flow-check
       - run:
           name: Unit test
           command: yarn test
