@@ -1,30 +1,34 @@
-import React from 'react';
-import sinon from 'sinon';
 import fs from 'fs';
 import path from 'path';
+
+import React from 'react';
+import sinon from 'sinon';
 
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
+const mockData = fs.readFileSync(
+  path.join(__dirname, '..', 'data', 'Results.stub.json'),
+  'utf8'
+);
+
+jest.mock('elasticsearch', () => ({
+  Client: class {
+    search = () => {
+      return new Promise(resolve => {
+        resolve(JSON.parse(mockData));
+      });
+    };
+  }
+}));
+
 import Search from './Search';
 
 describe('Search', () => {
-  let xhr, requests, wrapper, handleChangeSpy, searchInstance;
-
-  const stubData = fs.readFileSync(
-    path.join(__dirname, '..', 'data', 'Results.stub.json'),
-    'utf8'
-  );
+  let wrapper, handleChangeSpy, searchInstance;
 
   describe('', () => {
     beforeEach(() => {
-      requests = [];
-      xhr = sinon.useFakeXMLHttpRequest();
-
-      xhr.onCreate = function(xhr) {
-        requests.push(xhr);
-      };
-
       handleChangeSpy = sinon.spy(Search.prototype, 'handleChange');
       wrapper = mount(
         <MemoryRouter>
@@ -35,7 +39,6 @@ describe('Search', () => {
     });
 
     afterEach(() => {
-      xhr.restore();
       handleChangeSpy.restore();
     });
 
@@ -68,19 +71,15 @@ describe('Search', () => {
       expect(searchInstance.state.searchParams).toEqual('John Smit');
     });
 
-    it('should allow the user to select the contact option on each result', () => {
+    it('should allow the user to select the contact option on each result', async () => {
       // Trigger the search and mock the response
-      searchInstance.handleChange({ target: { value: 'John Smith' } });
-      requests[0].respond(200, {}, stubData);
-
+      await searchInstance.handleChange({ target: { value: 'John Smith' } });
       searchInstance.handleContact({ target: { id: 'contact-1' } });
     });
 
-    it('should allow the user to select the offender', () => {
+    it('should allow the user to select the offender', async () => {
       // Trigger the search and mock the response
-      searchInstance.handleChange({ target: { value: 'John Smith' } });
-      requests[0].respond(200, {}, stubData);
-
+      await searchInstance.handleChange({ target: { value: 'John Smith' } });
       searchInstance.handleClick(0);
     });
   });
