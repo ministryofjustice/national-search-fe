@@ -86,6 +86,7 @@ export default class Search extends Component<Props, State> {
 
     let trimmedParams = this.state.searchParams.trim();
 
+    this.setState({ hits: 0 }); // Reset pagination
     this.updateQuerystring(trimmedParams);
 
     this.esClient
