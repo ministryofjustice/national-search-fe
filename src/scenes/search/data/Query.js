@@ -20,7 +20,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               CRN: {
                 query: searchParams,
-                boost: 5
+                boost: 10
               }
             }
           },
@@ -28,7 +28,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               SURNAME: {
                 query: searchParams,
-                boost: 4
+                boost: 6
               }
             }
           },
@@ -36,7 +36,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               DATE_OF_BIRTH_DATE: {
                 query: searchParams,
-                boost: 4
+                boost: 6
               }
             }
           },
@@ -53,7 +53,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               FIRST_NAME: {
                 query: searchParams,
-                boost: 2
+                boost: 5
               }
             }
           },
@@ -61,7 +61,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               PREVIOUS_SURNAME: {
                 query: searchParams,
-                boost: 2
+                boost: 3
               }
             }
           },
@@ -77,7 +77,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               'ALIASES.FIRST_NAME': {
                 query: searchParams,
-                boost: 2
+                boost: 3
               }
             }
           },
@@ -85,7 +85,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               'ALIASES.SURNAME': {
                 query: searchParams,
-                boost: 3
+                boost: 4
               }
             }
           },
