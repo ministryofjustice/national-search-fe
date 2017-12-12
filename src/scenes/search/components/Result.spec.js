@@ -116,7 +116,7 @@ describe('Result', () => {
       expect(additionalResults[1]).toEqual('Previous surname: Jones');
       expect(additionalResults[2]).toEqual('Other names: Simon, Gareth');
       expect(additionalResults[3]).toEqual(
-        '1 Some Street, Sheffield, South Yorkshire. S1 1AA'
+        'Address: 1 Some Street, Sheffield, South Yorkshire. S1 1AA'
       );
     });
   });
