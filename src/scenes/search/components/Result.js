@@ -66,6 +66,11 @@ export default class Result extends Component<Props> {
     const searched = this.props.params.trim().split(' '),
       data = this.props.data;
 
+    // Restricted or excluded record
+    if (data.CURRENT_RESTRICTION || data.CURRENT_EXCLUSION) {
+      return [];
+    }
+
     let deepItems = new Set();
 
     function findTerm(source, term) {
@@ -80,11 +85,13 @@ export default class Result extends Component<Props> {
     }
 
     searched.forEach(term => {
-      data.ALIASES.forEach(alias => {
-        if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
-          deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
-        }
-      });
+      if (data.hasOwnProperty('ALIASES')) {
+        data.ALIASES.forEach(alias => {
+          if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
+            deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
+          }
+        });
+      }
 
       if (findTerm([data.SECOND_NAME, data.THIRD_NAME], term)) {
         deepItems.add(
@@ -96,31 +103,33 @@ export default class Result extends Component<Props> {
         deepItems.add('Previous surname: ' + data.PREVIOUS_SURNAME);
       }
 
-      data.ADDRESSES.forEach(address => {
-        if (
-          findTerm(
-            [
-              address.TOWN_CITY,
-              address.STREET_NAME,
-              address.COUNTY,
-              address.POSTCODE
-            ],
-            term
-          )
-        ) {
-          deepItems.add(
-            address.ADDRESS_NUMBER +
-              ' ' +
-              address.STREET_NAME +
-              ', ' +
-              address.TOWN_CITY +
-              ', ' +
-              address.COUNTY +
-              '. ' +
-              address.POSTCODE
-          );
-        }
-      });
+      if (data.hasOwnProperty('ADDRESSES')) {
+        data.ADDRESSES.forEach(address => {
+          if (
+            findTerm(
+              [
+                address.TOWN_CITY,
+                address.STREET_NAME,
+                address.COUNTY,
+                address.POSTCODE
+              ],
+              term
+            )
+          ) {
+            deepItems.add(
+              address.ADDRESS_NUMBER +
+                ' ' +
+                address.STREET_NAME +
+                ', ' +
+                address.TOWN_CITY +
+                ', ' +
+                address.COUNTY +
+                '. ' +
+                address.POSTCODE
+            );
+          }
+        });
+      }
     });
 
     return Array.from(deepItems);
@@ -132,7 +141,8 @@ export default class Result extends Component<Props> {
    */
   render() {
     const data = this.props.data,
-      searched = this.props.params.trim().split(' ');
+      searched = this.props.params.trim().split(' '),
+      restricted = data.CURRENT_RESTRICTION || data.CURRENT_EXCLUSION;
 
     return (
       <div>
@@ -147,18 +157,20 @@ export default class Result extends Component<Props> {
               searchWords={searched}
               autoEscape={true}
               textToHighlight={
-                data.SURNAME +
-                ', ' +
-                data.FIRST_NAME +
-                ' - ' +
-                Result.pipeDate(data.DATE_OF_BIRTH_DATE)
+                restricted
+                  ? 'Restricted access'
+                  : data.SURNAME +
+                    ', ' +
+                    data.FIRST_NAME +
+                    ' - ' +
+                    Result.pipeDate(data.DATE_OF_BIRTH_DATE)
               }
             />
           </a>
 
           <p className="no-margin bottom">
             <span className="bold">
-              CRN:{' '}
+              CRN:&nbsp;
               <Highlighter
                 highlightClassName="highlight"
                 searchWords={searched}
@@ -169,29 +181,33 @@ export default class Result extends Component<Props> {
             &nbsp;&nbsp;
             {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
               <span id="risk">
-                Risk{' '}
+                Risk&nbsp;
                 <span
                   className={
                     'risk-icon risk-' +
                     data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
-                  }>
-                  {' '}
-                </span>&nbsp;|&nbsp;
+                  }
+                />
               </span>
             )}
-            {data.CURRENT_DISPOSAL > 0 && (
-              <span id="currentDisposal">Current offender&nbsp;|&nbsp;</span>
-            )}
-            <Highlighter
-              highlightClassName="highlight"
-              searchWords={searched}
-              autoEscape={true}
-              textToHighlight={
-                Result.pipeGender(data.GENDER_ID) +
-                ', ' +
-                Result.pipeAge(data.DATE_OF_BIRTH_DATE)
-              }
-            />
+            {!restricted &&
+              data.CURRENT_DISPOSAL > 0 && (
+                <span>
+                  &nbsp;|&nbsp;
+                  <span id="currentDisposal">Current offender</span>
+                  &nbsp;|&nbsp;
+                  <Highlighter
+                    highlightClassName="highlight"
+                    searchWords={searched}
+                    autoEscape={true}
+                    textToHighlight={
+                      Result.pipeGender(data.GENDER_ID) +
+                      ', ' +
+                      Result.pipeAge(data.DATE_OF_BIRTH_DATE)
+                    }
+                  />
+                </span>
+              )}
           </p>
 
           {this.additionalResults().map((item, i) => (
