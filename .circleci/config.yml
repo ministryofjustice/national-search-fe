@@ -22,7 +22,7 @@ jobs:
             - ~/.cache/yarn
             - ./node_modules
       - run:
-          name: Flow
+          name: Flow check
           command: yarn flow-check
       - run:
           name: Unit test
