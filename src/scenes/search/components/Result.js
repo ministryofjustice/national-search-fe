@@ -117,7 +117,8 @@ export default class Result extends Component<Props> {
             )
           ) {
             deepItems.add(
-              address.ADDRESS_NUMBER +
+              'Address: ' +
+                address.ADDRESS_NUMBER +
                 ' ' +
                 address.STREET_NAME +
                 ', ' +
