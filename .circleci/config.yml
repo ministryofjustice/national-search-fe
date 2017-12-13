@@ -1,11 +1,10 @@
 version: 2
-general:
-  branches:
-    only:
-      - master
-      - develop
 jobs:
-  build:
+  build-job:
+    filters:
+      branches:
+        only:
+          - develop
     working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.1-browsers
@@ -30,3 +29,28 @@ jobs:
       - run:
           name: Build
           command: yarn build
+  deploy-job:
+    filters:
+      branches:
+        only: master
+    working_directory: ~/hmpps-national-search-fe
+      docker:
+        - image: circleci/node:8.9.1-browsers
+      steps:
+        - checkout
+        - restore_cache:
+            key: dependency-cache-{{ checksum "yarn.lock" }}
+        - run:
+            name: Install dependencies
+            command: yarn install
+        - save_cache:
+            key: dependency-cache-{{ checksum "yarn.lock" }}
+            paths:
+              - ~/.cache/yarn
+              - ./node_modules
+        - run:
+            name: Build
+            command: yarn build
+        - run:
+          name: Deploy
+          command: aws s3 sync build/ s3://${bucket} --region eu-west-2
