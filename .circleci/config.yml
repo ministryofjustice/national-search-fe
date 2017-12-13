@@ -10,14 +10,6 @@ jobs:
     docker:
       - image: circleci/node:8.9.1-browsers
     steps:
-      - run:
-          name: Install pip and awscli
-          command: |
-            sudo apt-get -y -qq update
-            sudo apt-get -y -qq install python3.4-dev
-            curl -O https://bootstrap.pypa.io/get-pip.py
-            python3.4 get-pip.py --user
-            sudo pip install awscli --upgrade --user
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
@@ -38,6 +30,3 @@ jobs:
       - run:
           name: Build
           command: yarn build
-      - run:
-          name: Deploy
-          command: aws s3 sync build/ s3://${bucket} --region eu-west-2 --delete
