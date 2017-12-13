@@ -30,25 +30,6 @@ jobs:
       - run:
           name: Build
           command: yarn build
-  deploy:
-    working_directory: ~/hmpps-national-search-fe
-      docker:
-        - image: circleci/node:8.9.1-browsers
-      steps:
-        - checkout
-        - restore_cache:
-            key: dependency-cache-{{ checksum "yarn.lock" }}
-        - run:
-            name: Install dependencies
-            command: yarn install
-        - save_cache:
-            key: dependency-cache-{{ checksum "yarn.lock" }}
-            paths:
-              - ~/.cache/yarn
-              - ./node_modules
-        - run:
-            name: Build
-            command: yarn build
-        - run:
+      - run:
           name: Deploy
           command: aws s3 sync build/ s3://${bucket} --region eu-west-2 --delete
