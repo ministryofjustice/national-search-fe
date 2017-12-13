@@ -5,7 +5,7 @@ general:
       - master
       - develop
 jobs:
-  build-job:
+  build:
     working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.1-browsers
@@ -30,8 +30,8 @@ jobs:
       - run:
           name: Build
           command: yarn build
-          
-  deploy-job:
+
+  deploy:
     working_directory: ~/hmpps-national-search-fe
       docker:
         - image: circleci/node:8.9.1-browsers
@@ -52,16 +52,16 @@ jobs:
             command: yarn build
         - run:
           name: Deploy
-          command: aws s3 sync build/ s3://${bucket} --region eu-west-2
+          command: aws s3 sync build/ s3://${bucket} --region eu-west-2 --delete
 
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - build-job
-      - deploy-job:
+      - build
+      - deploy:
           requires:
-            - build-job
+            - build
           filters:
             branches:
               only: master
