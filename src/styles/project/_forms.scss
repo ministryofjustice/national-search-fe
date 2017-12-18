@@ -1,4 +1,16 @@
-.form-control.padded {
-  width: 100%;
-  padding: 10px 20px 10px 20px;
+.form-control {
+  &.padded {
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+  }
+  &.wide {
+    width: 100%;
+  }
+}
+
+textarea {
+  &.wide {
+    min-height: 200px;
+    resize: none;
+  }
 }
