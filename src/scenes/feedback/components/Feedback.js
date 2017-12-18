@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 type Props = {};
 type State = {
