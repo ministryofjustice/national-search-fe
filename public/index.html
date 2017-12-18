@@ -1,31 +1,68 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
 
     <title> HMPPS - National Search </title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="theme-color" content="#0b0c0c">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico">
 
-  </head>
-  <body>
+</head>
+<body>
 
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
+<div>
 
-    <main id="content">
+    <header>
+        <span class="title">National Delius</span>
+    </header>
 
-        <!-- REACT APP -->
-        <div id="root"></div>
+    <div class="grid-flex">
 
-        <div class="margin-top medium">&nbsp;</div>
+        <div class="column-flex navigation omit-mobile">
 
-    </main>
+            <nav>
+                <ul>
+                    <li><span class="far fa-home"></span> Home</li>
+                    <li class="current"><span class="far fa-search"></span> National Offender Search</li>
+                    <li><span class="far fa-eye"></span> National Custody Search</li>
+                    <li><span class="far fa-history"></span> Recently Viewed</li>
+                    <li><span class="far fa-briefcase"></span> Case Management</li>
+                    <li><span class="far fa-calendar"></span> Officer Diary</li>
+                    <li><span class="far fa-bank"></span> Court Diary</li>
+                    <li><span class="far fa-bed"></span> Approved Premises Diary</li>
+                    <li><span class="far fa-book"></span> UPW Project Diary</li>
+                    <li><span class="far fa-paint-brush"></span> UPW Projects</li>
+                    <li><span class="far fa-wrench"></span> Data Maintenance</li>
+                    <li><span class="far fa-database"></span> Reference Data</li>
+                    <li><span class="far fa-user"></span> User Administration</li>
+                    <li><span class="far fa-cog"></span> User Preferences</li>
+                    <li><span class="far fa-power-off"></span> Exit</li>
+                </ul>
+            </nav>
 
-  </body>
+        </div>
+        <div class="column-flex">
+
+            <main id="content">
+
+                <noscript>
+                    You need to enable JavaScript to run this app.
+                </noscript>
+
+                <!-- REACT APP -->
+                <div id="root"></div>
+
+                <div class="margin-top medium">&nbsp;</div>
+
+            </main>
+
+        </div>
+    </div>
+</div>
+
+</body>
 </html>
