@@ -33,6 +33,11 @@ export default class Feedback extends Component<Props, State> {
   }
 
   handleSubmit() {
+    window.location.href =
+      'mailto:nick.gallon@digital.justice.gov.uk?subject=National%20Search%20Feedback&body=Overall%20' +
+      this.state.satisfaction +
+      '%20-%20' +
+      this.state.feedback;
     this.setState({ doRedirect: true });
   }
 
