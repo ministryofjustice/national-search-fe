@@ -5,9 +5,42 @@ $path: '/images/';
 // Import all the govuk-elements partials listed in _govuk-elements.scss
 @import './styles/govuk/govuk-elements';
 
+@import './styles/fontawesome/variables';
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  src: url('#{$fa-font-path}/fontawesome-webfont.eot');
+  src: url('#{$fa-font-path}/fontawesome-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('#{$fa-font-path}/fontawesome-webfont.woff2') format('woff2'),
+    url('#{$fa-font-path}/fontawesome-webfont.woff') format('woff'),
+    url('#{$fa-font-path}/fontawesome-webfont.ttf') format('truetype'),
+    url('#{$fa-font-path}/fontawesome-webfont.svg#fontawesome') format('svg');
+}
+
+.far {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 400;
+}
+
+@import './styles/fontawesome/mixins';
+@import './styles/fontawesome/core';
+@import './styles/fontawesome/larger';
+@import './styles/fontawesome/fixed-width';
+@import './styles/fontawesome/list';
+@import './styles/fontawesome/bordered-pulled';
+@import './styles/fontawesome/animated';
+@import './styles/fontawesome/rotated-flipped';
+@import './styles/fontawesome/stacked';
+@import './styles/fontawesome/icons';
+@import './styles/fontawesome/screen-reader';
+
 // Import the project specific styles
 @import './styles/project/components';
 @import './styles/project/forms';
+@import './styles/project/layout';
 @import './styles/project/spacing';
 @import './styles/project/utils';
 @import './styles/project/typography';

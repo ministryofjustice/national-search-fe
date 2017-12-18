@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PhaseBanner = () => (
-  <div className="phase-banner">
+  <div className="phase-banner mobile-pad">
     <p>
       <strong className="phase-tag">PROTOTYPE</strong>
       <span>

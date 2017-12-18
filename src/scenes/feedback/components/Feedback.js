@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 type Props = {};
 type State = {
@@ -43,7 +43,7 @@ export default class Feedback extends Component<Props, State> {
 
   render() {
     return (
-      <div>
+      <div className="mobile-pad">
         <h1 className="heading-xlarge">Give feedback</h1>
 
         <div className="grid-row">

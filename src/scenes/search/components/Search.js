@@ -244,7 +244,7 @@ export default class Search extends Component<Props, State> {
             </p>
           )}
         </div>
-        <div className="padded">
+        <div className="padded mobile-pad">
           {this.state.searchParams.length > 0 && (
             <h2 className="heading-medium margin-top medium">
               {this.state.hits} results found
