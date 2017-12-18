@@ -7,11 +7,15 @@ import { MemoryRouter } from 'react-router-dom';
 import Feedback from './Feedback';
 
 describe('Feedback', () => {
-  let feedbackInstance, radioChangeSpy, textChangeSpy, submitSpy, wrapper;
+  let feedbackInstance,
+    impressionsChangeSpy,
+    feedbackChangeSpy,
+    submitSpy,
+    wrapper;
 
   beforeEach(() => {
-    radioChangeSpy = sinon.spy(Feedback.prototype, 'handleRadio');
-    textChangeSpy = sinon.spy(Feedback.prototype, 'handleText');
+    impressionsChangeSpy = sinon.spy(Feedback.prototype, 'handleImpressions');
+    feedbackChangeSpy = sinon.spy(Feedback.prototype, 'handleFeedback');
     submitSpy = sinon.spy(Feedback.prototype, 'handleSubmit');
     wrapper = mount(
       <MemoryRouter>
@@ -22,25 +26,18 @@ describe('Feedback', () => {
   });
 
   afterEach(() => {
-    radioChangeSpy.restore();
-    textChangeSpy.restore();
+    impressionsChangeSpy.restore();
+    feedbackChangeSpy.restore();
     submitSpy.restore();
   });
 
-  it('should update the state when the user selects a radio button', () => {
-    const radioButtons = [
-      'Very satisfied',
-      'Satisfied',
-      'Dissatisfied',
-      'Very dissatisfied'
-    ];
+  it('should update the state when the user enters some impressions text', () => {
+    wrapper
+      .find('#impressions')
+      .simulate('change', { target: { value: 'Some impressions text' } });
 
-    radioButtons.forEach((item, index) => {
-      wrapper.find('#radio-' + (index + 1)).simulate('change');
-      expect(feedbackInstance.state.satisfaction).toEqual(item);
-    });
-
-    expect(radioChangeSpy.callCount).toEqual(4);
+    expect(impressionsChangeSpy.calledOnce).toEqual(true);
+    expect(feedbackInstance.state.impressions).toEqual('Some impressions text');
   });
 
   it('should update the state when the user enters some feedback text', () => {
@@ -48,7 +45,7 @@ describe('Feedback', () => {
       .find('#feedback')
       .simulate('change', { target: { value: 'Some feedback text' } });
 
-    expect(textChangeSpy.calledOnce).toEqual(true);
+    expect(feedbackChangeSpy.calledOnce).toEqual(true);
     expect(feedbackInstance.state.feedback).toEqual('Some feedback text');
   });
 

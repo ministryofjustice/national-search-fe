@@ -21,7 +21,10 @@ type State = {
 };
 
 export default class Search extends Component<Props, State> {
-  esClient = new elasticsearch.Client({ host: 'localhost:9200' });
+  esClient = new elasticsearch.Client({
+    host:
+      'https://search-prototype-national-search-ba2pawzzqktd6k3dljz3wjf43i.eu-west-2.es.amazonaws.com'
+  });
 
   /**
    *
@@ -241,7 +244,7 @@ export default class Search extends Component<Props, State> {
             </p>
           )}
         </div>
-        <div className="padded">
+        <div className="padded mobile-pad">
           {this.state.searchParams.length > 0 && (
             <h2 className="heading-medium margin-top medium">
               {this.state.hits} results found
