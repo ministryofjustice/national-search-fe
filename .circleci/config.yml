@@ -4,7 +4,6 @@ general:
     only:
       - master
       - develop
-
 jobs:
   build-job:
     working_directory: ~/hmpps-national-search-fe
@@ -32,10 +31,7 @@ jobs:
           name: Build
           command: yarn build
       - persist_to_workspace:
-          root: workspace
-          paths:
-            - build
-
+          root: build
   deploy-job:
       working_directory: ~/hmpps-national-search-fe
       docker:
@@ -50,7 +46,7 @@ jobs:
             at: /tmp/workspace
         - run:
             name: Deploy to AWS
-            command: aws s3 sync /tmp/workspace/build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
+            command: aws s3 sync ~/hmpps-national-search-fe/build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
 
 workflows:
   version: 2
