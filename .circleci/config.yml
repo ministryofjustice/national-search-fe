@@ -30,6 +30,9 @@ jobs:
       - run:
           name: Build
           command: yarn build
+      - run:
+          name: Deploy to AWS
+          command: aws s3 sync build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
 
   deploy-job:
       working_directory: ~/hmpps-national-search-fe
