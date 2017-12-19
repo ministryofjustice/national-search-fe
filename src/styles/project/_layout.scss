@@ -2,23 +2,6 @@ html {
   background: #222222;
 }
 
-nav {
-  position: fixed;
-  top: 50px;
-  width: 250px;
-  background: #1e3460;
-  color: white;
-
-  li {
-    font-size: 14px;
-    padding: 8px 10px;
-
-    &.current {
-      background: $govuk-blue;
-    }
-  }
-}
-
 #content {
   padding: 0 15px;
   @include media(tablet) {
