@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: circleci/node:8.9.3
     working_directory: ~/hmpps-national-search-fe
-    branches:
-      ignore:
-        - /feature-.*/
     steps:
       - checkout
       - restore_cache:
