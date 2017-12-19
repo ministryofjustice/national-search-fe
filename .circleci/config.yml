@@ -1,6 +1,11 @@
 version: 2
+general:
+  branches:
+    only:
+      - master
+      - develop
 jobs:
-  build:
+  build-job:
     working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.1-browsers
@@ -49,15 +54,10 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+      - build-job
       - deploy-job:
           requires:
-            - build
+            - build-job
           filters:
             branches:
               only: master
