@@ -26,7 +26,7 @@ jobs:
           name: Build
           command: yarn build
       - persist_to_workspace:
-          root: ~/hmpps-national-search-fe
+          root: ~/tmp
           paths:
             - build
   deploy-job:
@@ -39,10 +39,10 @@ jobs:
               sudo apt install python-pip python-dev
               sudo pip install awscli
         - attach_workspace:
-            at: ~/hmpps-national-search-fe
+            at: ~/tmp
         - run:
             name: Deploy to AWS
-            command: aws s3 sync ~/hmpps-national-search-fe/build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
+            command: aws s3 sync ~/tmp/build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
 
 workflows:
   version: 2
