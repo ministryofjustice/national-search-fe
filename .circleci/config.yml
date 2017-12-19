@@ -1,14 +1,9 @@
 version: 2
-general:
-  branches:
-    only:
-      - master
-      - develop
 jobs:
   build-job:
-    working_directory: ~/hmpps-national-search-fe
     docker:
-      - image: circleci/node:8.9.1-browsers
+      - image: circleci/node:8.9.3
+    working_directory: ~/hmpps-national-search-fe
     steps:
       - checkout
       - restore_cache:
@@ -36,7 +31,7 @@ jobs:
             - build
   deploy-job:
       docker:
-        - image: circleci/node:8.9.1-browsers
+        - image: circleci/node:8.9.3
       steps:
         - run:
             name: Install awscli
