@@ -11,14 +11,17 @@ jobs:
       - image: circleci/node:8.9.1-browsers
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
-          name: Install dependencies
+          name: Install awscli
           command: |
             sudo apt install python-pip python-dev
             sudo pip install awscli
-            yarn install
+            aws --version
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+        name: Install dependencies
+        command: yarn install
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
