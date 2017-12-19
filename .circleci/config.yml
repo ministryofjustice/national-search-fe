@@ -5,7 +5,7 @@ general:
       - master
       - develop
 jobs:
-  build:
+  build-job:
     working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.1-browsers
