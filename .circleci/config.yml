@@ -1,9 +1,4 @@
 version: 2
-general:
-  branches:
-    only:
-      - master
-      - develop
 jobs:
   build:
     working_directory: ~/hmpps-national-search-fe
@@ -55,6 +50,11 @@ workflows:
   build-deploy:
     jobs:
       - build
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - deploy-job:
           requires:
             - build
