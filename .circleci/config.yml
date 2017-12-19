@@ -31,7 +31,8 @@ jobs:
           name: Build
           command: yarn build
       - persist_to_workspace:
-          root: build
+          paths:
+            - build
   deploy-job:
       working_directory: ~/hmpps-national-search-fe
       docker:
@@ -53,6 +54,11 @@ workflows:
   build-deploy:
     jobs:
       - build-job
+          filters:
+          branches:
+            only:
+              - master
+              - develop
       - deploy-job:
           requires:
             - build-job
