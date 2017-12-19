@@ -1,14 +1,13 @@
 version: 2
-general:
-  branches:
-    only:
-      - master
-      - develop
 jobs:
   build-job:
-    working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.3
+    working_directory: ~/hmpps-national-search-fe
+    branches:
+        only:
+          - master
+          - develop
     steps:
       - checkout
       - restore_cache:
