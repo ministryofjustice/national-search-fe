@@ -5,17 +5,12 @@ general:
       - master
       - develop
 jobs:
-  build-job:
+  build:
     working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.1-browsers
     steps:
       - checkout
-      - run:
-          name: Install awscli
-          command: |
-            sudo apt install python-pip python-dev
-            sudo pip install awscli
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
@@ -35,9 +30,6 @@ jobs:
       - run:
           name: Build
           command: yarn build
-      - run:
-          name: Deploy to AWS
-          command: aws s3 sync build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
 
   deploy-job:
       working_directory: ~/hmpps-national-search-fe
@@ -60,12 +52,6 @@ jobs:
             paths:
               - ~/.cache/yarn
               - ./node_modules
-        - run:
-            name: Flow check
-            command: yarn flow-check
-        - run:
-            name: Unit test
-            command: yarn test
         - run:
             name: Build
             command: yarn build
