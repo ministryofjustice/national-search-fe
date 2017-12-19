@@ -191,24 +191,27 @@ export default class Result extends Component<Props> {
                 />
               </span>
             )}
-            {!restricted &&
-              data.CURRENT_DISPOSAL > 0 && (
-                <span>
-                  &nbsp;|&nbsp;
-                  <span id="currentDisposal">Current offender</span>
-                  &nbsp;|&nbsp;
-                  <Highlighter
-                    highlightClassName="highlight"
-                    searchWords={searched}
-                    autoEscape={true}
-                    textToHighlight={
-                      Result.pipeGender(data.GENDER_ID) +
-                      ', ' +
-                      Result.pipeAge(data.DATE_OF_BIRTH_DATE)
-                    }
-                  />
-                </span>
-              )}
+            {!restricted && (
+              <span>
+                {data.CURRENT_DISPOSAL > 0 && (
+                  <span>
+                    &nbsp;|&nbsp;
+                    <span id="currentDisposal">Current offender</span>
+                    &nbsp;|&nbsp;
+                  </span>
+                )}
+                <Highlighter
+                  highlightClassName="highlight"
+                  searchWords={searched}
+                  autoEscape={true}
+                  textToHighlight={
+                    Result.pipeGender(data.GENDER_ID) +
+                    ', ' +
+                    Result.pipeAge(data.DATE_OF_BIRTH_DATE)
+                  }
+                />
+              </span>
+            )}
           </p>
 
           {this.additionalResults().map((item, i) => (
