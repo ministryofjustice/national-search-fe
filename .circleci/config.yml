@@ -31,6 +31,7 @@ jobs:
           name: Build
           command: yarn build
       - persist_to_workspace:
+          root: ~/hmpps-national-search-fe
           paths:
             - build
   deploy-job:
