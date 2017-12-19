@@ -263,12 +263,13 @@ export default class Search extends Component<Props, State> {
           </p>
         </div>
         <div className="padded mobile-pad">
-          {this.state.searchParams.length > 0 &&
-            this.state.hits !== -1 && (
-              <h2 className="heading-medium margin-top medium">
-                {this.state.hits} results found
-              </h2>
-            )}
+          <h2 className="heading-medium margin-top medium">
+            {this.state.searchParams.length > 0 &&
+              this.state.hits !== -1 && (
+                <span>{this.state.hits} results found</span>
+              )}
+            &nbsp;
+          </h2>
 
           {this.state.serverError && (
             <p className="error-message">
