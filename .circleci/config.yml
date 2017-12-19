@@ -5,9 +5,9 @@ jobs:
       - image: circleci/node:8.9.3
     working_directory: ~/hmpps-national-search-fe
     branches:
-        only:
-          - master
-          - develop
+      only:
+        - master
+        - develop
     steps:
       - checkout
       - restore_cache:
