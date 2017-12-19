@@ -35,7 +35,6 @@ jobs:
           paths:
             - build
   deploy-job:
-      working_directory: ~/hmpps-national-search-fe
       docker:
         - image: circleci/node:8.9.1-browsers
       steps:
@@ -45,7 +44,7 @@ jobs:
               sudo apt install python-pip python-dev
               sudo pip install awscli
         - attach_workspace:
-            at: /tmp/workspace
+            at: ~/hmpps-national-search-fe
         - run:
             name: Deploy to AWS
             command: aws s3 sync ~/hmpps-national-search-fe/build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
