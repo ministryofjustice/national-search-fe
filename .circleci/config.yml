@@ -5,7 +5,7 @@ general:
       - master
       - develop
 jobs:
-  build-job:
+  build:
     working_directory: ~/hmpps-national-search-fe
     docker:
       - image: circleci/node:8.9.3
@@ -34,7 +34,7 @@ jobs:
           root: ~/hmpps-national-search-fe
           paths:
             - build
-  deploy-job:
+  deploy:
       docker:
         - image: circleci/node:8.9.3
       steps:
@@ -53,15 +53,15 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build-job
+      - build
           filters:
-          tags:
+          branches:
             only:
               - develop
               - master
-      - deploy-job:
+      - deploy:
           requires:
-            - build-job
+            - build
           filters:
             branches:
               only: master
