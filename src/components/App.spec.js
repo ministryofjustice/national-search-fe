@@ -64,7 +64,7 @@ describe('App', () => {
       steps: [
         ({ history, div }) => {
           console.assert(
-            div.querySelector('h1').innerHTML.match(/National offender search/)
+            div.querySelector('h1').innerHTML.match(/Search for an offender/)
           );
           history.push('/feedback');
         },

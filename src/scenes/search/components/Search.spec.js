@@ -43,7 +43,7 @@ describe('Search', () => {
     });
 
     it('renders successfully', () => {
-      expect(wrapper.find('h1').text()).toEqual('National offender search');
+      expect(wrapper.find('h1').text()).toEqual('Search for an offender');
     });
 
     it('should search based on user input parameters', () => {

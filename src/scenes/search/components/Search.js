@@ -23,7 +23,9 @@ type State = {
 export default class Search extends Component<Props, State> {
   esClient = new elasticsearch.Client({
     host:
-      'https://search-prototype-national-search-ba2pawzzqktd6k3dljz3wjf43i.eu-west-2.es.amazonaws.com'
+      process.env.REACT_APP_HOST_ENV === 'dev'
+        ? 'http://localhost:9200'
+        : 'https://search-prototype-national-search-ba2pawzzqktd6k3dljz3wjf43i.eu-west-2.es.amazonaws.com'
   });
 
   /**
@@ -89,7 +91,7 @@ export default class Search extends Component<Props, State> {
 
     let trimmedParams = this.state.searchParams.trim();
 
-    this.setState({ hits: 0 }); // Reset pagination
+    this.setState({ hits: -1 }); // Reset pagination
     this.updateQuerystring(trimmedParams);
 
     this.esClient
@@ -199,6 +201,13 @@ export default class Search extends Component<Props, State> {
 
   /**
    *
+   */
+  handleNewOffenderClick() {
+    console.info('New offender');
+  }
+
+  /**
+   *
    * @param page {Number}
    */
   changePage(page: number) {
@@ -214,7 +223,7 @@ export default class Search extends Component<Props, State> {
       <div>
         <div className="govuk-box-highlight blue">
           <h1 className="heading-large no-margin-top margin-bottom medium">
-            National offender search
+            Search for an offender
           </h1>
 
           <form
@@ -243,13 +252,23 @@ export default class Search extends Component<Props, State> {
               />?
             </p>
           )}
+
+          <p className="bold margin-top medium no-margin-bottom">
+            Can't find who you are looking for?{' '}
+            <a
+              className="clickable white"
+              onClick={this.handleNewOffenderClick}>
+              Add a new offender
+            </a>
+          </p>
         </div>
         <div className="padded mobile-pad">
-          {this.state.searchParams.length > 0 && (
-            <h2 className="heading-medium margin-top medium">
-              {this.state.hits} results found
-            </h2>
-          )}
+          {this.state.searchParams.length > 0 &&
+            this.state.hits !== -1 && (
+              <h2 className="heading-medium margin-top medium">
+                {this.state.hits} results found
+              </h2>
+            )}
 
           {this.state.serverError && (
             <p className="error-message">
