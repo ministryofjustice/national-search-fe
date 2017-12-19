@@ -4,6 +4,7 @@ general:
     only:
       - master
       - develop
+
 jobs:
   build-job:
     working_directory: ~/hmpps-national-search-fe
@@ -30,34 +31,26 @@ jobs:
       - run:
           name: Build
           command: yarn build
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - build
 
   deploy-job:
       working_directory: ~/hmpps-national-search-fe
       docker:
         - image: circleci/node:8.9.1-browsers
       steps:
-        - checkout
         - run:
             name: Install awscli
             command: |
               sudo apt install python-pip python-dev
               sudo pip install awscli
-        - restore_cache:
-            key: dependency-cache-{{ checksum "yarn.lock" }}
-        - run:
-            name: Install dependencies
-            command: yarn install
-        - save_cache:
-            key: dependency-cache-{{ checksum "yarn.lock" }}
-            paths:
-              - ~/.cache/yarn
-              - ./node_modules
-        - run:
-            name: Build
-            command: yarn build
+        - attach_workspace:
+            at: /tmp/workspace
         - run:
             name: Deploy to AWS
-            command: aws s3 sync build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
+            command: aws s3 sync /tmp/workspace/build/ s3://moj-studio.dnt --acl public-read --sse AES256 --delete
 
 workflows:
   version: 2
