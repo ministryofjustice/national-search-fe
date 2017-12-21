@@ -78,6 +78,7 @@ export default class Result extends Component<Props> {
       source.forEach(item => {
         isFound =
           (term.length > 1 &&
+            item &&
             item.toLowerCase().includes(term.toLowerCase())) ||
           isFound;
       });
