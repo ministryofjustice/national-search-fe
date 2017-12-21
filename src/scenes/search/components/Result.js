@@ -90,6 +90,14 @@ export default class Result extends Component<Props> {
           if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
             deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
           }
+          if (findTerm([alias.SECOND_NAME, alias.THIRD_NAME], term)) {
+            deepItems.add(
+              'Alias other names: ' +
+                alias.SECOND_NAME +
+                ', ' +
+                alias.THIRD_NAME
+            );
+          }
         });
       }
 
