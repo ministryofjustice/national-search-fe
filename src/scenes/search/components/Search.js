@@ -166,7 +166,7 @@ export default class Search extends Component<Props, State> {
    */
   handleClick(id: number) {
     const selected = this.state.results[id]['_source'];
-    console.info('Selected:', selected.OFFENDER_ID);
+    console.info('Selected:', selected.OFFENDER_ID, selected);
   }
 
   /**
@@ -176,7 +176,7 @@ export default class Search extends Component<Props, State> {
   handleContact(event: SyntheticInputEvent<HTMLInputElement>) {
     const id = event.target.id,
       selected = this.state.results[id.substr(id.indexOf('-') + 1)]['_source'];
-    console.info('Add contact:', selected.OFFENDER_ID);
+    console.info('Add contact:', selected.OFFENDER_ID, selected);
   }
 
   /**
