@@ -2,16 +2,25 @@ nav {
   position: fixed;
   top: 50px;
   width: 250px;
-  background: #1e3460;
+  background: #162c58;
   color: white;
+  z-index: 1;
 
   li {
     font-size: 14px;
     padding: 8px 10px;
 
-    &.current {
+    &.sub-item {
+      background: #1b3873;
+      padding-left: 30px;
+    }
+
+    &.active {
       background: #e0e0e0;
       color: black;
     }
   }
+}
+
+.top-nav {
 }

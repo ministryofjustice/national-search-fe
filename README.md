@@ -71,7 +71,3 @@ Now start the application
 Delete all offender records from your elasticsearch database:
 
 `curl -XDELETE 'localhost:9200/offenders?pretty'`
-
-Add the sample/test data **with aliases** to to the elasticsearch database:
-
-`curl -H "Content-Type: application/json" -XPOST 'localhost:9200/offenders/_bulk?pretty&refresh' --data-binary "@stub_aliases.json"`
