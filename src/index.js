@@ -1,3 +1,7 @@
+/* polyfills.js */
+
+import 'core-js/fn/array/from';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
