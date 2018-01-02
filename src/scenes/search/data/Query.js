@@ -20,6 +20,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               CRN: {
                 query: searchParams,
+                fuzziness: 0,
                 boost: 10
               }
             }
@@ -28,6 +29,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               SURNAME: {
                 query: searchParams,
+                fuzziness: 3,
                 boost: 6
               }
             }
@@ -36,6 +38,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               DATE_OF_BIRTH_DATE: {
                 query: searchParams,
+                fuzziness: 2,
                 boost: 6
               }
             }
@@ -53,6 +56,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               FIRST_NAME: {
                 query: searchParams,
+                fuzziness: 3,
                 boost: 5
               }
             }
@@ -61,6 +65,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               PREVIOUS_SURNAME: {
                 query: searchParams,
+                fuzziness: 3,
                 boost: 3
               }
             }
@@ -69,6 +74,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               TOWN_CITY: {
                 query: searchParams,
+                fuzziness: 1,
                 boost: 2
               }
             }
@@ -77,6 +83,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               'ALIASES.FIRST_NAME': {
                 query: searchParams,
+                fuzziness: 3,
                 boost: 3
               }
             }
@@ -85,6 +92,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
             match: {
               'ALIASES.SURNAME': {
                 query: searchParams,
+                fuzziness: 3,
                 boost: 4
               }
             }
