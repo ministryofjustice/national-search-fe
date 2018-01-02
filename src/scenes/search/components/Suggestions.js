@@ -7,10 +7,6 @@ type Props = {
 };
 
 export default class Suggestions extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   render() {
     let filteredSuggestions = this.props.suggestions.filter(
       (suggestion, index, self) =>
