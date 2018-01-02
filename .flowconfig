@@ -1,4 +1,6 @@
 [ignore]
+; Used for editing the generated offender records before updating ./stub.json
+.*/working.json
 
 [include]
 

@@ -6,6 +6,8 @@
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master)
 
+With special thanks to [BrowserStack](https://www.browserstack.com) for providing cross browser testing.
+
 ## Status
 
 * The project is not production code and is used entirely for the rapid prototyping of new features.
