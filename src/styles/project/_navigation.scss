@@ -20,6 +20,17 @@ nav {
       color: black;
     }
   }
+
+  &.top-nav {
+    position: relative;
+    top: 14px;
+    right: 20px;
+    background: transparent;
+    width: auto;
+    color: gray;
+    font-size: 14px;
+    float: right;
+  }
 }
 
 .top-nav {
