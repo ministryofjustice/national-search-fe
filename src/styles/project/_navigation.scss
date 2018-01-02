@@ -30,6 +30,10 @@ nav {
     color: gray;
     font-size: 14px;
     float: right;
+
+    @include media(mobile) {
+      display: none;
+    }
   }
 }
 
