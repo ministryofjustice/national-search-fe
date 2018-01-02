@@ -6,6 +6,8 @@
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master)
 
+![Browserstack](browserstack-logo.png)
+
 With special thanks to [BrowserStack](https://www.browserstack.com) for providing cross browser testing.
 
 ## Status
