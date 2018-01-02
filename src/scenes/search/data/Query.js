@@ -36,6 +36,15 @@ const Query = (searchParams: string, page: number, options?: Object) => {
           },
           {
             match: {
+              FIRST_NAME: {
+                query: searchParams,
+                fuzziness: 3,
+                boost: 6
+              }
+            }
+          },
+          {
+            match: {
               DATE_OF_BIRTH_DATE: {
                 query: searchParams,
                 fuzziness: 2,
@@ -49,15 +58,6 @@ const Query = (searchParams: string, page: number, options?: Object) => {
                 query: searchParams,
                 fuzziness: 0,
                 boost: 3
-              }
-            }
-          },
-          {
-            match: {
-              FIRST_NAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 5
               }
             }
           },
@@ -84,7 +84,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
               'ALIASES.FIRST_NAME': {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 3
+                boost: 4
               }
             }
           },
