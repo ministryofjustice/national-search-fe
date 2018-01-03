@@ -1,6 +1,5 @@
 /* polyfills */
-import 'core-js/fn/array/from';
-import 'core-js/fn/string/includes';
+import 'babel-polyfill';
 
 import React from 'react';
 import { render } from 'react-dom';
