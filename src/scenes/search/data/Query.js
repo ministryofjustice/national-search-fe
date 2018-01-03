@@ -39,7 +39,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
               FIRST_NAME: {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 6
+                boost: 5
               }
             }
           },
@@ -66,7 +66,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
               PREVIOUS_SURNAME: {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 3
+                boost: 4
               }
             }
           },
@@ -93,7 +93,7 @@ const Query = (searchParams: string, page: number, options?: Object) => {
               'ALIASES.SURNAME': {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 4
+                boost: 5
               }
             }
           },

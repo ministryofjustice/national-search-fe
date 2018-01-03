@@ -1,5 +1,6 @@
 /* polyfills */
 import 'core-js/fn/array/from';
+import 'core-js/fn/array/find-index';
 import 'core-js/fn/string/includes';
 
 import React from 'react';
