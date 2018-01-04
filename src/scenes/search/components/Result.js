@@ -79,7 +79,10 @@ export default class Result extends Component<Props> {
         isFound =
           (term.length > 1 &&
             item &&
-            item.toLowerCase().includes(term.toLowerCase())) ||
+            item
+              .toString()
+              .toLowerCase()
+              .includes(term.toLowerCase())) ||
           isFound;
       });
       return isFound;
@@ -100,6 +103,10 @@ export default class Result extends Component<Props> {
             );
           }
         });
+      }
+
+      if (findTerm([data.PNC_NUMBER], term)) {
+        deepItems.add('PNC: ' + data.PNC_NUMBER);
       }
 
       if (findTerm([data.SECOND_NAME, data.THIRD_NAME], term)) {
