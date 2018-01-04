@@ -21,6 +21,8 @@ type State = {
 };
 
 export default class Search extends Component<Props, State> {
+  pageSize: number = 10;
+
   esClient = new elasticsearch.Client({
     host:
       process.env.REACT_APP_HOST_ENV === 'dev'
@@ -54,18 +56,24 @@ export default class Search extends Component<Props, State> {
    *
    */
   componentDidMount() {
-    const searched =
-      this.props.hasOwnProperty('location') &&
-      this.props.location.hasOwnProperty('search')
-        ? this.props.location.search
-        : '';
-    if (searched.length) {
+    function getParameterByName(name) {
+      const regex = new RegExp(
+          '[?&]' + name.replace(/[[]]/g, '\\$&') + '(=([^&#]*)|&|#|$)'
+        ),
+        results = regex.exec(window.location.href);
+      return !results
+        ? null
+        : !results[2] ? '' : decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    const searched = getParameterByName('search'),
+      page = parseInt(getParameterByName('page'), 10);
+
+    if (searched && searched.length) {
       this.setState(
         {
-          searchParams: searched
-            .substr(searched.indexOf('=') + 1)
-            .split('%20')
-            .join(' ')
+          searchParams: searched,
+          currentPage: page || 1
         },
         this.search
       );
@@ -79,7 +87,10 @@ export default class Search extends Component<Props, State> {
   updateQuerystring(params: string) {
     this.props.history.push({
       pathname: '',
-      search: '?search=' + params.split(' ').join('%20')
+      search:
+        '?search=' +
+        encodeURIComponent(params) +
+        (this.state.currentPage > 1 ? '&page=' + this.state.currentPage : '')
     });
   }
 
@@ -97,7 +108,7 @@ export default class Search extends Component<Props, State> {
     this.esClient
       .search({
         index: 'offenders',
-        body: Query(trimmedParams, this.state.currentPage)
+        body: Query(trimmedParams, this.state.currentPage, this.pageSize)
       })
       .then(
         response => {
@@ -263,6 +274,19 @@ export default class Search extends Component<Props, State> {
           </p>
         </div>
         <div className="padded mobile-pad">
+          {this.state.hits > this.pageSize && (
+            <div className="font-xsmall pull-right">
+              Showing results{' '}
+              {this.state.currentPage === 1
+                ? 1
+                : (this.state.currentPage - 1) * this.pageSize + 1}{' '}
+              to{' '}
+              {this.state.currentPage * this.pageSize > this.state.hits
+                ? this.state.hits
+                : this.state.currentPage * this.pageSize}
+            </div>
+          )}
+
           <h2 className="heading-medium margin-top medium">
             {this.state.searchParams.length > 0 &&
               this.state.hits !== -1 && (
@@ -289,8 +313,12 @@ export default class Search extends Component<Props, State> {
             </div>
           ))}
 
-          {this.state.hits > 10 && (
-            <Pagination state={this.state} changePage={this.changePage} />
+          {this.state.hits > this.pageSize && (
+            <Pagination
+              state={this.state}
+              pageSize={this.pageSize}
+              changePage={this.changePage}
+            />
           )}
         </div>
       </div>
