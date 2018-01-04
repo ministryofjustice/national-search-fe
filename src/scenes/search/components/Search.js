@@ -105,6 +105,12 @@ export default class Search extends Component<Props, State> {
     this.setState({ hits: -1 }); // Reset pagination
     this.updateQuerystring(trimmedParams);
 
+    // Don't search under 2 chars
+    if (trimmedParams.length < 2) {
+      this.setState({ hits: 0, results: [], suggestions: [] });
+      return;
+    }
+
     this.esClient
       .search({
         index: 'offenders',
