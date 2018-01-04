@@ -274,23 +274,24 @@ export default class Search extends Component<Props, State> {
           </p>
         </div>
         <div className="padded mobile-pad">
-          {this.state.hits > this.pageSize && (
-            <div className="font-xsmall pull-right">
-              Showing results{' '}
-              {this.state.currentPage === 1
-                ? 1
-                : (this.state.currentPage - 1) * this.pageSize + 1}{' '}
-              to{' '}
-              {this.state.currentPage * this.pageSize > this.state.hits
-                ? this.state.hits
-                : this.state.currentPage * this.pageSize}
-            </div>
-          )}
-
           <h2 className="heading-medium margin-top medium">
             {this.state.searchParams.length > 0 &&
               this.state.hits !== -1 && (
-                <span>{this.state.hits} results found</span>
+                <span>
+                  {this.state.hits} results found
+                  {this.state.hits > this.pageSize && (
+                    <span>
+                      , showing{' '}
+                      {this.state.currentPage === 1
+                        ? 1
+                        : (this.state.currentPage - 1) * this.pageSize + 1}{' '}
+                      to{' '}
+                      {this.state.currentPage * this.pageSize > this.state.hits
+                        ? this.state.hits
+                        : this.state.currentPage * this.pageSize}
+                    </span>
+                  )}
+                </span>
               )}
             &nbsp;
           </h2>
