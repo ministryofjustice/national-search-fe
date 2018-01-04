@@ -109,6 +109,14 @@ export default class Result extends Component<Props> {
         deepItems.add('PNC: ' + data.PNC_NUMBER);
       }
 
+      if (findTerm([data.NOMS_NUMBER], term)) {
+        deepItems.add('NOMS: ' + data.NOMS_NUMBER);
+      }
+
+      if (findTerm([data.CRO_NUMBER], term)) {
+        deepItems.add('CRO: ' + data.CRO_NUMBER);
+      }
+
       if (findTerm([data.SECOND_NAME, data.THIRD_NAME], term)) {
         deepItems.add(
           'Other names: ' + data.SECOND_NAME + ', ' + data.THIRD_NAME
