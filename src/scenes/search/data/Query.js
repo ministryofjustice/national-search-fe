@@ -1,9 +1,14 @@
 // @flow
-const Query = (searchParams: string, page: number, options?: Object) => {
+const Query = (
+  searchParams: string,
+  page: number,
+  pageSize?: number = 10,
+  options?: Object
+) => {
   const searchQuery = {
     _source: {},
-    from: page === 1 ? 0 : (page - 1) * 10,
-    size: 10,
+    from: page === 1 ? 0 : (page - 1) * pageSize,
+    size: pageSize,
     query: {
       bool: {
         must: {
