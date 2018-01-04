@@ -7,6 +7,7 @@ const Query = (
 ) => {
   const searchQuery = {
     _source: {},
+    min_score: 15,
     from: page === 1 ? 0 : (page - 1) * pageSize,
     size: pageSize,
     query: {
@@ -35,7 +36,7 @@ const Query = (
               SURNAME: {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 6
+                boost: 10
               }
             }
           },
@@ -44,7 +45,7 @@ const Query = (
               FIRST_NAME: {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 5
+                boost: 10
               }
             }
           },
@@ -89,7 +90,7 @@ const Query = (
               'ALIASES.FIRST_NAME': {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 4
+                boost: 6
               }
             }
           },
@@ -98,7 +99,7 @@ const Query = (
               'ALIASES.SURNAME': {
                 query: searchParams,
                 fuzziness: 3,
-                boost: 5
+                boost: 6
               }
             }
           },
