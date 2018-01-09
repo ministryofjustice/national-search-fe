@@ -183,7 +183,10 @@ export default class Search extends Component<Props, State> {
    */
   handleClick(id: number) {
     const selected = this.state.results[id]['_source'];
-    console.info('Selected:', selected.OFFENDER_ID, selected);
+    this.props.history.push({
+      pathname: '/details',
+      state: { offender: selected }
+    });
   }
 
   /**
