@@ -90,6 +90,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 941941347,
               "FIRST_NAME": "Bowers",
               "SECOND_NAME": "Maynard",
@@ -102,6 +103,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1325108845,
               "FIRST_NAME": "Craig",
               "SECOND_NAME": "Jimenez",
@@ -256,6 +258,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 224468800,
               "FIRST_NAME": "Perry",
               "SECOND_NAME": "Alvarado",
@@ -268,6 +271,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1853377303,
               "FIRST_NAME": "Norton",
               "SECOND_NAME": "Pratt",
@@ -283,6 +287,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2688028144,
               "FIRST_NAME": "Santos",
               "SECOND_NAME": "Wolfe",
@@ -296,6 +301,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 573353711,
               "FIRST_NAME": "Small",
               "SECOND_NAME": "Lowery",
@@ -309,6 +315,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2818139996,
               "FIRST_NAME": "Freeman",
               "SECOND_NAME": "Dominguez",
@@ -321,6 +328,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1919617132,
               "FIRST_NAME": "Moses",
               "SECOND_NAME": "Acosta",
@@ -333,6 +341,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1448567602,
               "FIRST_NAME": "Phelps",
               "SECOND_NAME": "Moon",
@@ -344,6 +353,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 461144964,
               "FIRST_NAME": "Clarke",
               "SECOND_NAME": "Atkinson",
@@ -357,6 +367,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 493147065,
               "FIRST_NAME": "Horton",
               "SECOND_NAME": "Hunt",
@@ -371,6 +382,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1412808648,
               "FIRST_NAME": "Booth",
               "SECOND_NAME": "Farley",
@@ -553,6 +565,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2571390707,
               "FIRST_NAME": "Rutledge",
               "SECOND_NAME": "Odonnell",
@@ -564,6 +577,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2856843105,
               "FIRST_NAME": "Buchanan",
               "SECOND_NAME": "Pate",
@@ -573,6 +587,7 @@
               "ORGANISATIONS": []
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1449083096,
               "FIRST_NAME": "Leon",
               "SECOND_NAME": "Holder",
@@ -584,6 +599,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2396508420,
               "FIRST_NAME": "Weaver",
               "SECOND_NAME": "Hicks",
@@ -593,6 +609,7 @@
               "ORGANISATIONS": []
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 38095630,
               "FIRST_NAME": "Brooks",
               "SECOND_NAME": "Boyer",
@@ -602,6 +619,7 @@
               "ORGANISATIONS": []
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2058973393,
               "FIRST_NAME": "Reynolds",
               "SECOND_NAME": "Reese",
@@ -617,6 +635,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 915552555,
               "FIRST_NAME": "Barlow",
               "SECOND_NAME": "Whitaker",
@@ -631,6 +650,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1960286890,
               "FIRST_NAME": "Foreman",
               "SECOND_NAME": "Tran",
@@ -784,6 +804,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2658155355,
               "FIRST_NAME": "George",
               "SECOND_NAME": "Hart",
@@ -799,6 +820,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2241408401,
               "FIRST_NAME": "John",
               "SECOND_NAME": "Gallegos",
@@ -812,6 +834,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2747081440,
               "FIRST_NAME": "Moreno",
               "SECOND_NAME": "Dotson",
@@ -823,6 +846,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 19939478,
               "FIRST_NAME": "Mcintyre",
               "SECOND_NAME": "Armstrong",
@@ -946,6 +970,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 450403974,
               "FIRST_NAME": "Adeline",
               "SECOND_NAME": "Maria",
@@ -958,6 +983,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1765561139,
               "FIRST_NAME": "Chasity",
               "SECOND_NAME": "Deann",
@@ -969,6 +995,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 324423439,
               "FIRST_NAME": "Nola",
               "SECOND_NAME": "Ilene",
@@ -980,6 +1007,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2130246151,
               "FIRST_NAME": "Francisca",
               "SECOND_NAME": "Deanna",
@@ -991,6 +1019,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1546598386,
               "FIRST_NAME": "Shelia",
               "SECOND_NAME": "Kasey",
@@ -1192,6 +1221,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2926791769,
               "FIRST_NAME": "Terry",
               "SECOND_NAME": "Rocha",
@@ -1344,6 +1374,7 @@
           "TRANSGENDER_PROCESS_ID": null,
           "ALIASES": [
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1309231198,
               "FIRST_NAME": "Reilly",
               "SECOND_NAME": "Rollins",
@@ -1357,6 +1388,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 668354381,
               "FIRST_NAME": "Petersen",
               "SECOND_NAME": "Phelps",
@@ -1372,6 +1404,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1024836322,
               "FIRST_NAME": "Watts",
               "SECOND_NAME": "Dennis",
@@ -1383,6 +1416,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 1306278064,
               "FIRST_NAME": "Rivers",
               "SECOND_NAME": "Combs",
@@ -1396,6 +1430,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2486493435,
               "FIRST_NAME": "Mullen",
               "SECOND_NAME": "Crawford",
@@ -1407,6 +1442,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2992310860,
               "FIRST_NAME": "Chase",
               "SECOND_NAME": "Avila",
@@ -1419,6 +1455,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 311342327,
               "FIRST_NAME": "Mcknight",
               "SECOND_NAME": "Sellers",
@@ -1431,6 +1468,7 @@
               ]
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 2718788630,
               "FIRST_NAME": "Riggs",
               "SECOND_NAME": "Spence",
@@ -1440,6 +1478,7 @@
               "ORGANISATIONS": []
             },
             {
+              "DATE_OF_BIRTH_DATE": "2002-09-22 00:00:00",
               "ALIAS_ID": 195093403,
               "FIRST_NAME": "Flynn",
               "SECOND_NAME": "Johns",

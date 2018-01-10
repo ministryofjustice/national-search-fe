@@ -7,7 +7,6 @@ const Query = (
 ) => {
   const searchQuery = {
     _source: {},
-    min_score: 5,
     from: page === 1 ? 0 : (page - 1) * pageSize,
     size: pageSize,
     query: {

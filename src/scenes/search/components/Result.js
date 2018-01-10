@@ -11,6 +11,10 @@ type Props = {
 };
 
 export default class Result extends Component<Props> {
+  /**
+   *
+   * @param {Props} props
+   */
   constructor(props: Props) {
     super(props);
 
@@ -20,7 +24,7 @@ export default class Result extends Component<Props> {
   /**
    * Calculate the offender age based on DD/MM/YYYY
    * @param dateString
-   * @returns {number}d
+   * @returns {number} dateString
    */
   static pipeAge(dateString: string): number {
     if (!dateString) {
@@ -91,8 +95,24 @@ export default class Result extends Component<Props> {
     searched.forEach(term => {
       if (data.hasOwnProperty('ALIASES')) {
         data.ALIASES.forEach(alias => {
-          if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
-            deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
+          if (
+            findTerm(
+              [
+                alias.FIRST_NAME,
+                alias.SURNAME,
+                Result.pipeDate(alias.DATE_OF_BIRTH_DATE)
+              ],
+              term
+            )
+          ) {
+            deepItems.add(
+              'Alias: ' +
+                alias.SURNAME +
+                ', ' +
+                alias.FIRST_NAME +
+                ' - ' +
+                Result.pipeDate(alias.DATE_OF_BIRTH_DATE)
+            );
           }
           if (findTerm([alias.SECOND_NAME, alias.THIRD_NAME], term)) {
             deepItems.add(
@@ -203,10 +223,9 @@ export default class Result extends Component<Props> {
                 textToHighlight={data.CRN}
               />
             </span>
-            &nbsp;&nbsp;
             {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
               <span id="risk">
-                Risk&nbsp;
+                &nbsp;Risk&nbsp;
                 <span
                   className={
                     'risk-icon risk-' +

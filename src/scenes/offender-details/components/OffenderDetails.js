@@ -11,6 +11,10 @@ type State = {
 };
 
 export default class OffenderDetails extends Component<Props, State> {
+  /**
+   *
+   * @param props
+   */
   constructor(props: Props) {
     super(props);
     this.state = { offender: props.location.state.offender, addressOpen: -1 };
@@ -19,10 +23,17 @@ export default class OffenderDetails extends Component<Props, State> {
     (this: any).handleAddressClick = this.handleAddressClick.bind(this);
   }
 
+  /**
+   *
+   */
   componentWillMount() {
     window.scrollTo(0, 0);
   }
 
+  /**
+   *
+   * @param event
+   */
   handleAddressClick(event: any) {
     const clickId = parseInt(event.target.id, 10);
 
@@ -31,6 +42,10 @@ export default class OffenderDetails extends Component<Props, State> {
     });
   }
 
+  /**
+   *
+   * @returns {*}
+   */
   render() {
     const offender = this.state.offender,
       restricted = offender.CURRENT_RESTRICTION || offender.CURRENT_EXCLUSION;
@@ -50,10 +65,9 @@ export default class OffenderDetails extends Component<Props, State> {
         </h2>
         <p className="margin-top no-margin-bottom">
           <span className="bold">CRN: {offender.CRN}</span>
-          &nbsp;&nbsp;
           {offender.CURRENT_HIGHEST_RISK_COLOUR !== null && (
             <span id="risk">
-              Risk&nbsp;
+              &nbsp;Risk&nbsp;
               <span
                 className={
                   'risk-icon risk-' +
@@ -65,7 +79,7 @@ export default class OffenderDetails extends Component<Props, State> {
           {!restricted && (
             <span>
               {offender.CURRENT_DISPOSAL > 0 && (
-                <span>&nbsp;|&nbsp;Current offender &nbsp;|&nbsp;</span>
+                <span>&nbsp;|&nbsp;Current offender&nbsp;|&nbsp;</span>
               )}
               {Result.pipeGender(offender.GENDER_ID) +
                 ', ' +
@@ -103,9 +117,11 @@ export default class OffenderDetails extends Component<Props, State> {
             <p className="no-margin-bottom">
               <strong>NI Number:</strong> {offender.NI_NUMBER}
             </p>
-            <p className="no-margin-bottom">
-              <strong>Status:</strong> {offender.CURRENT_REMAND_STATUS}
-            </p>
+            {offender.CURRENT_REMAND_STATUS !== null && (
+              <p className="no-margin-bottom">
+                <strong>Status:</strong> {offender.CURRENT_REMAND_STATUS}
+              </p>
+            )}
 
             <hr />
 
@@ -129,23 +145,29 @@ export default class OffenderDetails extends Component<Props, State> {
               <div>
                 <hr />
 
-                <h3 className="bold margin-bottom">Known addresses</h3>
+                <h3 className="bold margin-bottom">Address history</h3>
 
                 {offender.ADDRESSES.map((address, i) => (
                   <div key={i}>
                     <a
-                      className="clickable no-margin-bottom"
+                      className={
+                        this.state.addressOpen === i
+                          ? 'expand-content clickable no-margin-bottom active'
+                          : 'expand-content clickable no-margin-bottom'
+                      }
                       id={i}
                       onClick={this.handleAddressClick}>
-                      {address.ADDRESS_NUMBER +
-                        ' ' +
-                        address.STREET_NAME +
-                        ', ' +
-                        address.TOWN_CITY +
-                        ', ' +
-                        address.COUNTY +
-                        '. ' +
-                        address.POSTCODE}
+                      {address.NO_FIXED_ABODE === 'Y'
+                        ? 'No fixed abode'
+                        : address.ADDRESS_NUMBER +
+                          ' ' +
+                          address.STREET_NAME +
+                          ', ' +
+                          address.TOWN_CITY +
+                          ', ' +
+                          address.COUNTY +
+                          '. ' +
+                          address.POSTCODE}
                     </a>
 
                     <div
@@ -155,15 +177,12 @@ export default class OffenderDetails extends Component<Props, State> {
                           : 'js-hidden'
                       }>
                       <p className="no-margin-bottom">
-                        <span className="bold">Status:</span>{' '}
-                        {address.ADDRESS_STATUS_ID}
-                      </p>
-                      <p className="no-margin-bottom">
                         <span className="bold">Start date:</span>{' '}
                         {Result.pipeDate(address.START_DATE)}
                       </p>
                       <p className="no-margin-bottom">
-                        <span className="bold">Last updated:</span>{' '}
+                        <span className="bold">End date:</span>{' '}
+                        {address.END_DATE}
                       </p>
                       <p>
                         <span className="bold">Telephone:</span>{' '}
@@ -186,7 +205,11 @@ export default class OffenderDetails extends Component<Props, State> {
 
                 {offender.ALIASES.map((alias, i) => (
                   <p key={i} className="no-margin-bottom">
-                    {alias.SURNAME + ', ' + alias.FIRST_NAME}
+                    {alias.SURNAME +
+                      ', ' +
+                      alias.FIRST_NAME +
+                      ' - ' +
+                      Result.pipeDate(alias.DATE_OF_BIRTH_DATE)}
                   </p>
                 ))}
               </div>

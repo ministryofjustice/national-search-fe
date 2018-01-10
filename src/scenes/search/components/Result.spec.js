@@ -21,6 +21,7 @@ describe('Result', () => {
       CURRENT_DISPOSAL: 0,
       ALIASES: [
         {
+          DATE_OF_BIRTH_DATE: '1997-01-01 00:00:00',
           FIRST_NAME: 'Jack',
           SURNAME: 'Jones'
         }
@@ -112,7 +113,7 @@ describe('Result', () => {
     it('should include additional information based on deep search', () => {
       const additionalResults = wrapper.instance().additionalResults();
       expect(additionalResults.length).toEqual(4);
-      expect(additionalResults[0]).toEqual('Alias: Jones, Jack');
+      expect(additionalResults[0]).toEqual('Alias: Jones, Jack - 01/01/1997');
       expect(additionalResults[1]).toEqual('Previous surname: Jones');
       expect(additionalResults[2]).toEqual('Other names: Simon, Gareth');
       expect(additionalResults[3]).toEqual(
