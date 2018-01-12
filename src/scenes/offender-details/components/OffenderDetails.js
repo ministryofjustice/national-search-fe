@@ -52,7 +52,7 @@ export default class OffenderDetails extends Component<Props, State> {
 
     return (
       <div className="mobile-pad">
-        <h1 className="heading-xlarge">Offender details</h1>
+        <h1 className="heading-xlarge">Offender summary</h1>
 
         <h2 className="font-large">
           {restricted
