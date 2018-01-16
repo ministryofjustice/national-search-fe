@@ -6,6 +6,7 @@ const Query = (
   options?: Object
 ) => {
   const searchQuery = {
+    _source: {},
     from: page === 1 ? 0 : (page - 1) * pageSize,
     size: pageSize,
     query: {
