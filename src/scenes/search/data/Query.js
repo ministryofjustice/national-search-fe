@@ -6,7 +6,6 @@ const Query = (
   options?: Object
 ) => {
   const searchQuery = {
-    _source: {},
     from: page === 1 ? 0 : (page - 1) * pageSize,
     size: pageSize,
     query: {
@@ -63,6 +62,36 @@ const Query = (
       surname: {
         term: {
           field: 'SURNAME'
+        }
+      },
+      secondName: {
+        term: {
+          field: 'SECOND_NAME'
+        }
+      },
+      thirdName: {
+        term: {
+          field: 'THIRD_NAME'
+        }
+      },
+      aliasFirstName: {
+        term: {
+          field: 'ALIASES.FIRST_NAME'
+        }
+      },
+      aliasSurname: {
+        term: {
+          field: 'ALIASES.SURNAME'
+        }
+      },
+      aliasSecondName: {
+        term: {
+          field: 'ALIASES.SECOND_NAME'
+        }
+      },
+      aliasThirdName: {
+        term: {
+          field: 'ALIASES.THIRD_NAME'
         }
       }
     }
