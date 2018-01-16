@@ -7,116 +7,33 @@ const Query = (
 ) => {
   const searchQuery = {
     _source: {},
-    min_score: 5,
     from: page === 1 ? 0 : (page - 1) * pageSize,
     size: pageSize,
     query: {
       bool: {
-        must: {
-          match: {
-            _all: {
-              query: searchParams,
-              fuzziness: 1,
-              operator: 'and'
-            }
-          }
-        },
         should: [
           {
-            match: {
-              CRN: {
-                query: searchParams,
-                fuzziness: 0,
-                boost: 10
-              }
-            }
-          },
-          {
-            match: {
-              SURNAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 10
-              }
-            }
-          },
-          {
-            match: {
-              FIRST_NAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 10
-              }
-            }
-          },
-          {
-            match: {
-              DATE_OF_BIRTH_DATE: {
-                query: searchParams,
-                fuzziness: 2,
-                boost: 6
-              }
-            }
-          },
-          {
-            match: {
-              'ADDRESSES.POSTCODE': {
-                query: searchParams,
-                fuzziness: 0,
-                boost: 3
-              }
-            }
-          },
-          {
-            match: {
-              PREVIOUS_SURNAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 4
-              }
-            }
-          },
-          {
-            match: {
-              TOWN_CITY: {
-                query: searchParams,
-                fuzziness: 1,
-                boost: 2
-              }
-            }
-          },
-          {
-            match: {
-              'ALIASES.FIRST_NAME': {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 6
-              }
-            }
-          },
-          {
-            match: {
-              'ALIASES.SURNAME': {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 6
-              }
-            }
-          },
-          {
-            match: {
-              'ADDRESSES.TOWN': {
-                query: searchParams,
-                boost: 2
-              }
-            }
-          },
-          {
-            match: {
-              'ADDRESSES.STREET_NAME': {
-                query: searchParams,
-                boost: 1
-              }
+            multi_match: {
+              query: searchParams,
+              type: 'cross_fields',
+              operator: 'and',
+              fields: [
+                'CRN^10',
+                'NOMS_NUMBER^8',
+                'NI_NUMBER',
+                'FIRST_NAME^10',
+                'SURNAME^10',
+                'SECOND_NAME^4',
+                'THIRD_NAME^4',
+                'PREVIOUS_SURNAME^6',
+                'ALIASES.FIRST_NAME^6',
+                'ALIASES.SURNAME^6',
+                'DATE_OF_BIRTH_DATE^5',
+                'ALIASES.SECOND_NAME^3',
+                'ALIASES.THIRD_NAME^3',
+                'ADDRESSES.TOWN_CITY',
+                'ADDRESSES.POSTCODE^3'
+              ]
             }
           }
         ]
