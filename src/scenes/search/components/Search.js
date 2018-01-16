@@ -140,7 +140,7 @@ export default class Search extends Component<Props, State> {
         if (results.suggest.hasOwnProperty(i)) {
           results.suggest[i].forEach(suggestion => {
             suggestion.options.forEach(option => {
-              if (option.score >= 0.5) {
+              if (option.score > 0.5) {
                 suggestions.push({
                   text: suggestion.text,
                   option:
