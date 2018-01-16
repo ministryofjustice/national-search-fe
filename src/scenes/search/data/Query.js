@@ -26,7 +26,8 @@ const Query = (
                 'ALIASES.FIRST_NAME^8',
                 'ALIASES.SURNAME^8',
                 'ALIASES.SECOND_NAME^3',
-                'ALIASES.THIRD_NAME^3'
+                'ALIASES.THIRD_NAME^3',
+                'ADDRESSES.TOWN_CITY'
               ]
             }
           },
@@ -42,7 +43,6 @@ const Query = (
                 'DATE_OF_BIRTH_DATE^5',
                 'ALIASES.DATE_OF_BIRTH_DATE^5',
                 'ADDRESSES.STREET_NAME',
-                'ADDRESSES.TOWN_CITY',
                 'ADDRESSES.COUNTY',
                 'ADDRESSES.POSTCODE^3',
                 'E_MAIL_ADDRESS',
