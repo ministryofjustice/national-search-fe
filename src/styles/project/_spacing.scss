@@ -32,6 +32,18 @@
   }
 }
 
+.pad-left {
+  padding-left: 15px;
+}
+
+.pad-right {
+  padding-right: 15px;
+
+  &.small {
+    padding-right: 7px;
+  }
+}
+
 .no-margin-top {
   margin-top: 0;
 }
