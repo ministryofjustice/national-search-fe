@@ -8,6 +8,7 @@ import Navigation from './Navigation';
 import Search from '../scenes/search/components/Search';
 import OffenderDetails from '../scenes/offender-details/components/OffenderDetails';
 import Feedback from '../scenes/feedback/components/Feedback';
+import SubHeader from './SubHeader';
 
 const App = () => (
   <div>
@@ -26,24 +27,27 @@ const App = () => (
       </nav>
     </header>
 
+    <Route exact path="/details" component={SubHeader} />
+
     <div className="grid-flex">
       <div className="column-flex navigation omit-mobile">
         <Navigation />
       </div>
       <div className="column-flex main-content">
-        <main id="content">
-          <main id="content">
-            <PhaseBanner />
-            <Switch>
-              <Route exact path="/" component={Search} />
-              <Route exact path="/details" component={OffenderDetails} />
-              <Route exact path="/feedback" component={Feedback} />
-              <Redirect to="/" />
-            </Switch>
-          </main>
-
-          <div className="margin-top medium">&nbsp;</div>
+        <main
+          id="content"
+          className={
+            window.location.pathname === '/details' ? 'push-down' : ''
+          }>
+          <PhaseBanner />
+          <Switch>
+            <Route exact path="/" component={Search} />
+            <Route exact path="/details" component={OffenderDetails} />
+            <Route exact path="/feedback" component={Feedback} />
+            <Redirect to="/" />
+          </Switch>
         </main>
+        <div className="margin-top medium">&nbsp;</div>
       </div>
     </div>
   </div>

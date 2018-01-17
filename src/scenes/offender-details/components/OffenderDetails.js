@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import Result from '../../search/components/Result';
+import Utils from '../../../utils/Utils';
 
 type Props = {
   location: Object
@@ -61,7 +61,7 @@ export default class OffenderDetails extends Component<Props, State> {
               ', ' +
               offender.FIRST_NAME +
               ' - ' +
-              Result.pipeDate(offender.DATE_OF_BIRTH_DATE)}
+              Utils.pipeDate(offender.DATE_OF_BIRTH_DATE)}
         </h2>
         <p className="margin-top no-margin-bottom">
           <span className="bold">CRN: {offender.CRN}</span>
@@ -81,9 +81,9 @@ export default class OffenderDetails extends Component<Props, State> {
               {offender.CURRENT_DISPOSAL > 0 && (
                 <span>&nbsp;|&nbsp;Current offender&nbsp;|&nbsp;</span>
               )}
-              {Result.pipeGender(offender.GENDER_ID) +
+              {Utils.pipeGender(offender.GENDER_ID) +
                 ', ' +
-                Result.pipeAge(offender.DATE_OF_BIRTH_DATE)}
+                Utils.pipeAge(offender.DATE_OF_BIRTH_DATE)}
             </span>
           )}
         </p>
@@ -178,7 +178,7 @@ export default class OffenderDetails extends Component<Props, State> {
                       }>
                       <p className="no-margin-bottom">
                         <span className="bold">Start date:</span>{' '}
-                        {Result.pipeDate(address.START_DATE)}
+                        {Utils.pipeDate(address.START_DATE)}
                       </p>
                       <p className="no-margin-bottom">
                         <span className="bold">End date:</span>{' '}
@@ -209,7 +209,7 @@ export default class OffenderDetails extends Component<Props, State> {
                       ', ' +
                       alias.FIRST_NAME +
                       ' - ' +
-                      Result.pipeDate(alias.DATE_OF_BIRTH_DATE)}
+                      Utils.pipeDate(alias.DATE_OF_BIRTH_DATE)}
                   </p>
                 ))}
               </div>

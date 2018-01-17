@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import Highlighter from 'react-highlight-words';
+import Utils from '../../../utils/Utils';
 
 type Props = {
   id: number,
@@ -19,47 +20,6 @@ export default class Result extends Component<Props> {
     super(props);
 
     (this: any).additionalResults = this.additionalResults.bind(this);
-  }
-
-  /**
-   * Calculate the offender age based on DD/MM/YYYY
-   * @param dateString
-   * @returns {number} dateString
-   */
-  static pipeAge(dateString: string): number {
-    if (!dateString) {
-      return 0;
-    }
-    const today = new Date(),
-      splitDate = dateString.substr(0, dateString.indexOf(' ')).split('-'),
-      birthDate = new Date(
-        [splitDate[1], splitDate[2], splitDate[0]].join('/')
-      ),
-      m = today.getMonth() - birthDate.getMonth(),
-      age = today.getFullYear() - birthDate.getFullYear();
-
-    return m < 0 || (m === 0 && today.getDate() < birthDate.getDate())
-      ? age - 1
-      : age;
-  }
-
-  /**
-   *
-   * @param dateString
-   * @returns {string}
-   */
-  static pipeDate(dateString: string): string {
-    const splitDate = dateString.substr(0, dateString.indexOf(' ')).split('-');
-    return [splitDate[2], splitDate[1], splitDate[0]].join('/');
-  }
-
-  /**
-   *
-   * @param num
-   * @returns {string}
-   */
-  static pipeGender(num: number) {
-    return num === 545 ? 'Male' : 'Female';
   }
 
   /**
@@ -100,7 +60,7 @@ export default class Result extends Component<Props> {
               [
                 alias.FIRST_NAME,
                 alias.SURNAME,
-                Result.pipeDate(alias.DATE_OF_BIRTH_DATE)
+                Utils.pipeDate(alias.DATE_OF_BIRTH_DATE)
               ],
               term
             )
@@ -111,7 +71,7 @@ export default class Result extends Component<Props> {
                 ', ' +
                 alias.FIRST_NAME +
                 ' - ' +
-                Result.pipeDate(alias.DATE_OF_BIRTH_DATE)
+                Utils.pipeDate(alias.DATE_OF_BIRTH_DATE)
             );
           }
           if (findTerm([alias.SECOND_NAME, alias.THIRD_NAME], term)) {
@@ -208,7 +168,7 @@ export default class Result extends Component<Props> {
                     ', ' +
                     data.FIRST_NAME +
                     ' - ' +
-                    Result.pipeDate(data.DATE_OF_BIRTH_DATE)
+                    Utils.pipeDate(data.DATE_OF_BIRTH_DATE)
               }
             />
           </a>
@@ -248,9 +208,9 @@ export default class Result extends Component<Props> {
                   searchWords={searched}
                   autoEscape={true}
                   textToHighlight={
-                    Result.pipeGender(data.GENDER_ID) +
+                    Utils.pipeGender(data.GENDER_ID) +
                     ', ' +
-                    Result.pipeAge(data.DATE_OF_BIRTH_DATE)
+                    Utils.pipeAge(data.DATE_OF_BIRTH_DATE)
                   }
                 />
               </span>

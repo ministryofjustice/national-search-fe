@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Link } from 'react-router-dom';
 
 const Navigation = () => (
-  <nav>
+  <nav className={window.location.pathname === '/details' ? 'push-down' : ''}>
     <ul>
       <li>
         <span className="far fa-home"> </span> Home

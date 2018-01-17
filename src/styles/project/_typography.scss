@@ -21,6 +21,10 @@ mark {
   background-color: $yellow-25;
 }
 
+.font-xxsmall {
+  @include core-14();
+}
+
 .risk-icon {
   display: inline-block;
   width: 15px;
@@ -38,6 +42,23 @@ mark {
   &.risk-red {
     background: $red;
   }
+}
+
+.risk-icon-top {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border: 3px solid gray;
+  border-radius: 50%;
+  margin-top: 5px;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-blue {
+  color: #2069b8;
 }
 
 .title {

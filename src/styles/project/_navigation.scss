@@ -6,6 +6,10 @@ nav {
   color: white;
   z-index: 1;
 
+  &.push-down {
+    top: 100px;
+  }
+
   li {
     font-size: 14px;
     padding: 8px 10px;
