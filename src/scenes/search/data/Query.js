@@ -11,111 +11,43 @@ const Query = (
     size: pageSize,
     query: {
       bool: {
-        must: {
-          match: {
-            _all: {
-              query: searchParams,
-              fuzziness: 1,
-              operator: 'and'
-            }
-          }
-        },
         should: [
           {
-            match: {
-              CRN: {
-                query: searchParams,
-                fuzziness: 0,
-                boost: 10
-              }
+            multi_match: {
+              query: searchParams,
+              type: 'cross_fields',
+              operator: 'and',
+              fields: [
+                'FIRST_NAME^10',
+                'SURNAME^10',
+                'SECOND_NAME^4',
+                'THIRD_NAME^4',
+                'PREVIOUS_SURNAME^6',
+                'ALIASES.FIRST_NAME^8',
+                'ALIASES.SURNAME^8',
+                'ALIASES.SECOND_NAME^3',
+                'ALIASES.THIRD_NAME^3',
+                'ADDRESSES.TOWN_CITY'
+              ]
             }
           },
           {
-            match: {
-              SURNAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 10
-              }
-            }
-          },
-          {
-            match: {
-              FIRST_NAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 10
-              }
-            }
-          },
-          {
-            match: {
-              DATE_OF_BIRTH_DATE: {
-                query: searchParams,
-                fuzziness: 2,
-                boost: 6
-              }
-            }
-          },
-          {
-            match: {
-              'ADDRESSES.POSTCODE': {
-                query: searchParams,
-                fuzziness: 0,
-                boost: 3
-              }
-            }
-          },
-          {
-            match: {
-              PREVIOUS_SURNAME: {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 4
-              }
-            }
-          },
-          {
-            match: {
-              TOWN_CITY: {
-                query: searchParams,
-                fuzziness: 1,
-                boost: 2
-              }
-            }
-          },
-          {
-            match: {
-              'ALIASES.FIRST_NAME': {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 6
-              }
-            }
-          },
-          {
-            match: {
-              'ALIASES.SURNAME': {
-                query: searchParams,
-                fuzziness: 3,
-                boost: 6
-              }
-            }
-          },
-          {
-            match: {
-              'ADDRESSES.TOWN': {
-                query: searchParams,
-                boost: 2
-              }
-            }
-          },
-          {
-            match: {
-              'ADDRESSES.STREET_NAME': {
-                query: searchParams,
-                boost: 1
-              }
+            multi_match: {
+              query: searchParams,
+              type: 'most_fields',
+              operator: 'or',
+              fields: [
+                'CRN^10',
+                'NOMS_NUMBER^8',
+                'NI_NUMBER^6',
+                'DATE_OF_BIRTH_DATE^5',
+                'ALIASES.DATE_OF_BIRTH_DATE^5',
+                'ADDRESSES.STREET_NAME',
+                'ADDRESSES.COUNTY',
+                'ADDRESSES.POSTCODE^3',
+                'E_MAIL_ADDRESS',
+                'MOBILE_NUMBER'
+              ]
             }
           }
         ]
@@ -131,6 +63,36 @@ const Query = (
       surname: {
         term: {
           field: 'SURNAME'
+        }
+      },
+      secondName: {
+        term: {
+          field: 'SECOND_NAME'
+        }
+      },
+      thirdName: {
+        term: {
+          field: 'THIRD_NAME'
+        }
+      },
+      aliasFirstName: {
+        term: {
+          field: 'ALIASES.FIRST_NAME'
+        }
+      },
+      aliasSurname: {
+        term: {
+          field: 'ALIASES.SURNAME'
+        }
+      },
+      aliasSecondName: {
+        term: {
+          field: 'ALIASES.SECOND_NAME'
+        }
+      },
+      aliasThirdName: {
+        term: {
+          field: 'ALIASES.THIRD_NAME'
         }
       }
     }
