@@ -67,7 +67,7 @@ export default class OffenderDetails extends Component<Props, State> {
           <span className="bold">CRN: {offender.CRN}</span>
           {offender.CURRENT_HIGHEST_RISK_COLOUR !== null && (
             <span id="risk">
-              &nbsp;Risk&nbsp;
+              &nbsp;|&nbsp;Risk&nbsp;
               <span
                 className={
                   'risk-icon risk-' +

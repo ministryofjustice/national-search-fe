@@ -185,7 +185,7 @@ export default class Result extends Component<Props> {
             </span>
             {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
               <span id="risk">
-                &nbsp;Risk&nbsp;
+                &nbsp;|&nbsp;Risk&nbsp;
                 <span
                   className={
                     'risk-icon risk-' +
@@ -200,7 +200,6 @@ export default class Result extends Component<Props> {
                   <span>
                     &nbsp;|&nbsp;
                     <span id="currentDisposal">Current offender</span>
-                    &nbsp;|&nbsp;
                   </span>
                 )}
                 <Highlighter
@@ -208,6 +207,7 @@ export default class Result extends Component<Props> {
                   searchWords={searched}
                   autoEscape={true}
                   textToHighlight={
+                    ' | ' +
                     Utils.pipeGender(data.GENDER_ID) +
                     ', ' +
                     Utils.pipeAge(data.DATE_OF_BIRTH_DATE)
