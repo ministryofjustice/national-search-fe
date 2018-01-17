@@ -79,9 +79,10 @@ export default class OffenderDetails extends Component<Props, State> {
           {!restricted && (
             <span>
               {offender.CURRENT_DISPOSAL > 0 && (
-                <span>&nbsp;|&nbsp;Current offender&nbsp;|&nbsp;</span>
+                <span>&nbsp;|&nbsp;Current offender</span>
               )}
-              {Utils.pipeGender(offender.GENDER_ID) +
+              {' | ' +
+                Utils.pipeGender(offender.GENDER_ID) +
                 ', ' +
                 Utils.pipeAge(offender.DATE_OF_BIRTH_DATE)}
             </span>
