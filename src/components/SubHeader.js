@@ -29,18 +29,19 @@ export default class SubHeader extends Component<Props, State> {
             CRN: <span className="text-blue">{offender.CRN}</span>
             {!restricted && (
               <span>
-                &nbsp;Name:{' '}
+                {' '}
+                Name:{' '}
                 <span className="text-blue">
                   {offender.FIRST_NAME + ' ' + offender.SURNAME}
-                </span>&nbsp; D.O.B:{' '}
-                {Utils.pipeDate(offender.DATE_OF_BIRTH_DATE)} ({Utils.pipeAge(
+                </span>{' '}
+                D.O.B: {Utils.pipeDate(offender.DATE_OF_BIRTH_DATE)} ({Utils.pipeAge(
                   offender.DATE_OF_BIRTH_DATE
                 )}) Offender Manager:{' '}
                 <span className="text-blue">Created, CRC</span> - CRC Created,
                 CPS Manchester
               </span>
             )}
-            {!!restricted && <span>&nbsp;Restricted access</span>}
+            {!!restricted && <span> Restricted access</span>}
           </p>
           {!restricted && (
             <p className="delius text-white font-xxsmall">
@@ -51,11 +52,9 @@ export default class SubHeader extends Component<Props, State> {
           )}
         </div>
         <div className="pull-right pad-right">
-          <span className="risk-icon-top" />&nbsp;
-          <span className="risk-icon-top" />&nbsp;
-          <span className="risk-icon-top" />&nbsp;
-          <span className="risk-icon-top" />&nbsp;
-          <span className="risk-icon-top" />&nbsp;
+          <span className="risk-icon-top" /> <span className="risk-icon-top" />{' '}
+          <span className="risk-icon-top" /> <span className="risk-icon-top" />{' '}
+          <span className="risk-icon-top" />{' '}
         </div>
       </div>
     );

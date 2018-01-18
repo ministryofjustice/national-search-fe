@@ -2,57 +2,6 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 
-const Navigation = () => (
-  <nav className={window.location.pathname === '/details' ? 'push-down' : ''}>
-    <ul>
-      <li>
-        <span className="far fa-home"> </span> Home
-      </li>
-      <SearchMenuItem to={'/'} />
-      <li>
-        <span className="far fa-eye"> </span> National Custody Search
-      </li>
-      <li>
-        <span className="far fa-history"> </span> Recently Viewed
-      </li>
-      <li>
-        <span className="far fa-briefcase"> </span> Case Management
-      </li>
-      <FakeSubmenu to={'/details'} />
-      <li>
-        <span className="far fa-calendar"> </span> Officer Diary
-      </li>
-      <li>
-        <span className="far fa-bank"> </span> Court Diary
-      </li>
-      <li>
-        <span className="far fa-bed"> </span> Approved Premises Diary
-      </li>
-      <li>
-        <span className="far fa-book"> </span> UPW Project Diary
-      </li>
-      <li>
-        <span className="far fa-paint-brush"> </span> UPW Projects
-      </li>
-      <li>
-        <span className="far fa-wrench"> </span> Data Maintenance
-      </li>
-      <li>
-        <span className="far fa-database"> </span> Reference Data
-      </li>
-      <li>
-        <span className="far fa-user"> </span> User Administration
-      </li>
-      <li>
-        <span className="far fa-cog"> </span> User Preferences
-      </li>
-      <li>
-        <span className="far fa-power-off"> </span> Exit
-      </li>
-    </ul>
-  </nav>
-);
-
 const SearchMenuItem = ({ to }) => (
   <Route
     path={to}
@@ -84,6 +33,57 @@ const FakeSubmenu = ({ to }) => (
       </span>
     )}
   />
+);
+
+const Navigation = () => (
+  <nav className={window.location.pathname === '/details' ? 'push-down' : ''}>
+    <ul>
+      <li>
+        <span className="far fa-home" /> Home
+      </li>
+      <SearchMenuItem to={'/'} />
+      <li>
+        <span className="far fa-eye" /> National Custody Search
+      </li>
+      <li>
+        <span className="far fa-history" /> Recently Viewed
+      </li>
+      <li>
+        <span className="far fa-briefcase" /> Case Management
+      </li>
+      <FakeSubmenu to={'/details'} />
+      <li>
+        <span className="far fa-calendar" /> Officer Diary
+      </li>
+      <li>
+        <span className="far fa-bank" /> Court Diary
+      </li>
+      <li>
+        <span className="far fa-bed" /> Approved Premises Diary
+      </li>
+      <li>
+        <span className="far fa-book" /> UPW Project Diary
+      </li>
+      <li>
+        <span className="far fa-paint-brush" /> UPW Projects
+      </li>
+      <li>
+        <span className="far fa-wrench" /> Data Maintenance
+      </li>
+      <li>
+        <span className="far fa-database" /> Reference Data
+      </li>
+      <li>
+        <span className="far fa-user" /> User Administration
+      </li>
+      <li>
+        <span className="far fa-cog" /> User Preferences
+      </li>
+      <li>
+        <span className="far fa-power-off" /> Exit
+      </li>
+    </ul>
+  </nav>
 );
 
 export default Navigation;

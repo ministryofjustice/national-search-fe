@@ -91,7 +91,8 @@ export default class Pagination extends Component<Props, State> {
           className={this.state.currentPage !== 1 ? 'clickable' : ''}
           onClick={this.previousPage}>
           &lt; Previous
-        </a>&nbsp;-&nbsp;
+        </a>{' '}
+        -{' '}
         {this.totalPages <= this.maxPages &&
           this.pagesArray.map((item, i) => (
             <span key={i}>
@@ -100,15 +101,16 @@ export default class Pagination extends Component<Props, State> {
                 className={item !== this.state.currentPage ? 'clickable' : ''}
                 onClick={this.changePage}>
                 {item}
-              </a>&nbsp;
+              </a>{' '}
             </span>
           ))}
         {this.totalPages > this.maxPages && (
           <span id="pages">
             {this.state.currentPage} / {this.totalPages}
           </span>
-        )}
-        &nbsp;-&nbsp;<a
+        )}{' '}
+        -{' '}
+        <a
           id="next-button"
           className={
             this.state.currentPage !== this.totalPages ? 'clickable' : ''

@@ -47,7 +47,7 @@ const App = () => (
             <Redirect to="/" />
           </Switch>
         </main>
-        <div className="margin-top medium">&nbsp;</div>
+        <p className="margin-top medium">&nbsp;</p>
       </div>
     </div>
   </div>

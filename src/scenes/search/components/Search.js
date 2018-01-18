@@ -301,8 +301,7 @@ export default class Search extends Component<Props, State> {
                     </span>
                   )}
                 </span>
-              )}
-            &nbsp;
+              )}{' '}
           </h2>
 
           {this.state.serverError && (

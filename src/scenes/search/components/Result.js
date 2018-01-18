@@ -175,7 +175,7 @@ export default class Result extends Component<Props> {
 
           <p className="no-margin bottom">
             <span className="bold">
-              CRN:&nbsp;
+              CRN:{' '}
               <Highlighter
                 highlightClassName="highlight"
                 searchWords={searched}
@@ -185,7 +185,8 @@ export default class Result extends Component<Props> {
             </span>
             {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
               <span id="risk">
-                &nbsp;|&nbsp;Risk&nbsp;
+                {' '}
+                | Risk{' '}
                 <span
                   className={
                     'risk-icon risk-' +
@@ -198,8 +199,8 @@ export default class Result extends Component<Props> {
               <span>
                 {data.CURRENT_DISPOSAL > 0 && (
                   <span>
-                    &nbsp;|&nbsp;
-                    <span id="currentDisposal">Current offender</span>
+                    {' '}
+                    | <span id="currentDisposal">Current offender</span>
                   </span>
                 )}
                 <Highlighter
@@ -237,7 +238,7 @@ export default class Result extends Component<Props> {
             </a>
           </p>
         </div>
-        <div>&nbsp;</div>
+        <div> </div>
       </div>
     );
   }

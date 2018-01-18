@@ -67,7 +67,8 @@ export default class OffenderDetails extends Component<Props, State> {
           <span className="bold">CRN: {offender.CRN}</span>
           {offender.CURRENT_HIGHEST_RISK_COLOUR !== null && (
             <span id="risk">
-              &nbsp;|&nbsp;Risk&nbsp;
+              {' '}
+              | Risk{' '}
               <span
                 className={
                   'risk-icon risk-' +
@@ -79,7 +80,7 @@ export default class OffenderDetails extends Component<Props, State> {
           {!restricted && (
             <span>
               {offender.CURRENT_DISPOSAL > 0 && (
-                <span>&nbsp;|&nbsp;Current offender</span>
+                <span> | Current offender</span>
               )}
               {' | ' +
                 Utils.pipeGender(offender.GENDER_ID) +
