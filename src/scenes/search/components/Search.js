@@ -273,14 +273,20 @@ export default class Search extends Component<Props, State> {
             </p>
           )}
 
-          <p className="bold margin-top medium no-margin-bottom">
-            Can't find who you are looking for?{' '}
-            <a
-              className="clickable white"
-              onClick={this.handleNewOffenderClick}>
-              Add a new offender
-            </a>
-          </p>
+          {this.state.searchParams.length >= 2 &&
+            this.state.hits !== -1 && (
+              <p className="bold margin-top medium no-margin-bottom">
+                Can't find who you are looking for?{' '}
+                <a
+                  className="clickable white"
+                  onClick={this.handleNewOffenderClick}>
+                  Add a new offender
+                </a>
+              </p>
+            )}
+
+          {this.state.searchParams.length === 0 &&
+            this.state.hits <= 0 && <div>&nbsp;</div>}
         </div>
         <div className="padded mobile-pad">
           <h2 className="heading-medium margin-top medium">
