@@ -255,7 +255,7 @@ export default class Search extends Component<Props, State> {
               <input
                 id="searchParams"
                 className="form-control padded"
-                placeholder="Find names, addresses, date of birth, CRN and more..."
+                placeholder="Enter names, addresses, date of birth, ID numbers and more..."
                 type="text"
                 value={this.state.searchParams}
                 onChange={this.handleChange}
@@ -303,6 +303,36 @@ export default class Search extends Component<Props, State> {
                 </span>
               )}{' '}
           </h2>
+
+          {!this.state.searchParams.length &&
+            !this.state.hits && (
+              <div>
+                <h2 className="heading-medium">
+                  Use this <strong className="phase-tag">PROTOTYPE</strong>service
+                  to search for:
+                </h2>
+                <ul className="list">
+                  <li className="list-bullet">
+                    Offender names and dates of birth
+                  </li>
+                  <li className="list-bullet">
+                    Offender address and previous addresses
+                  </li>
+                  <li className="list-bullet">
+                    Identification numbers such as CRN, PNC and National
+                    Insurance
+                  </li>
+                  <li className="list-bullet">
+                    Offender aliases and dates of birth
+                  </li>
+                </ul>
+
+                <p className="margin-top medium">
+                  You can access the{' '}
+                  <a className="clickable">previous version of the search.</a>
+                </p>
+              </div>
+            )}
 
           {this.state.serverError && (
             <p className="error-message">

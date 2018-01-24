@@ -8,7 +8,7 @@ const SearchMenuItem = ({ to }) => (
     exact={true}
     children={({ match }) => (
       <li className={match ? 'active' : ''}>
-        <span className="far fa-search"> </span>
+        <span className="far fa-search" />
         <Link to={'/'} className="no-underline">
           National Search
         </Link>
