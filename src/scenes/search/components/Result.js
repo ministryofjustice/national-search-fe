@@ -150,96 +150,109 @@ export default class Result extends Component<Props> {
       restricted = data.CURRENT_RESTRICTION || data.CURRENT_EXCLUSION;
 
     return (
-      <div>
-        <div className="panel panel-border-narrow">
-          <a
-            className="clickable heading-large no-underline"
-            onClick={() => {
-              this.props.click(this.props.id);
-            }}>
-            <Highlighter
-              highlightClassName="highlight"
-              searchWords={searched}
-              autoEscape={true}
-              textToHighlight={
-                restricted
-                  ? 'Restricted access'
-                  : data.SURNAME +
-                    ', ' +
-                    data.FIRST_NAME +
-                    ' - ' +
-                    Utils.pipeDate(data.DATE_OF_BIRTH_DATE)
-              }
-            />
-          </a>
-
-          <p className="no-margin bottom">
-            <span className="bold">
-              CRN:{' '}
-              <Highlighter
-                highlightClassName="highlight"
-                searchWords={searched}
-                autoEscape={true}
-                textToHighlight={data.CRN}
+      <table className="full-width no-style" role="presentation">
+        <tbody>
+          <tr>
+            <td width="115" className="omit-mobile">
+              <img
+                className="photo-holder align-left"
+                alt={'Photograph of ' + data.SURNAME + ', ' + data.FIRST_NAME}
+                src="/images/placeholder.jpg"
               />
-            </span>
-            {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
-              <span id="risk">
-                {' '}
-                | Risk{' '}
-                <span
-                  className={
-                    'risk-icon risk-' +
-                    data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
-                  }
-                />
-              </span>
-            )}
-            {!restricted && (
-              <span>
-                {data.CURRENT_DISPOSAL > 0 && (
-                  <span>
-                    {' '}
-                    | <span id="currentDisposal">Current offender</span>
+            </td>
+            <td>
+              <div className="panel panel-border-narrow no-padding-top">
+                <a
+                  className="clickable heading-large no-underline"
+                  onClick={() => {
+                    this.props.click(this.props.id);
+                  }}>
+                  <Highlighter
+                    highlightClassName="highlight"
+                    searchWords={searched}
+                    autoEscape={true}
+                    textToHighlight={
+                      restricted
+                        ? 'Restricted access'
+                        : data.SURNAME +
+                          ', ' +
+                          data.FIRST_NAME +
+                          ' - ' +
+                          Utils.pipeDate(data.DATE_OF_BIRTH_DATE)
+                    }
+                  />
+                </a>
+
+                <p className="margin-top margin-bottom">
+                  <span className="bold">
+                    CRN:{' '}
+                    <Highlighter
+                      highlightClassName="highlight"
+                      searchWords={searched}
+                      autoEscape={true}
+                      textToHighlight={data.CRN}
+                    />
                   </span>
-                )}
-                <Highlighter
-                  highlightClassName="highlight"
-                  searchWords={searched}
-                  autoEscape={true}
-                  textToHighlight={
-                    ' | ' +
-                    Utils.pipeGender(data.GENDER_ID) +
-                    ', ' +
-                    Utils.pipeAge(data.DATE_OF_BIRTH_DATE)
-                  }
-                />
-              </span>
-            )}
-          </p>
+                  {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
+                    <span id="risk">
+                      {' '}
+                      | Risk{' '}
+                      <span
+                        className={
+                          'risk-icon risk-' +
+                          data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
+                        }
+                      />
+                    </span>
+                  )}
+                  {!restricted && (
+                    <span>
+                      {data.CURRENT_DISPOSAL > 0 && (
+                        <span>
+                          {' '}
+                          | <span id="currentDisposal">Current offender</span>
+                        </span>
+                      )}
+                      <Highlighter
+                        highlightClassName="highlight"
+                        searchWords={searched}
+                        autoEscape={true}
+                        textToHighlight={
+                          ' | ' +
+                          Utils.pipeGender(data.GENDER_ID) +
+                          ', ' +
+                          Utils.pipeAge(data.DATE_OF_BIRTH_DATE)
+                        }
+                      />
+                    </span>
+                  )}
+                </p>
 
-          {this.additionalResults().map((item, i) => (
-            <div key={i}>
-              <Highlighter
-                highlightClassName="highlight"
-                searchWords={searched}
-                autoEscape={true}
-                textToHighlight={item}
-              />
-            </div>
-          ))}
+                {this.additionalResults().map((item, i) => (
+                  <div key={i}>
+                    <Highlighter
+                      highlightClassName="highlight"
+                      searchWords={searched}
+                      autoEscape={true}
+                      textToHighlight={item}
+                    />
+                  </div>
+                ))}
 
-          <p>
-            <a
-              id={'contact-' + this.props.id}
-              className="clickable"
-              onClick={this.props.contact}>
-              Add contact
-            </a>
-          </p>
-        </div>
-        <div> </div>
-      </div>
+                <p>
+                  <a
+                    id={'contact-' + this.props.id}
+                    className="clickable"
+                    onClick={this.props.contact}>
+                    Add contact
+                  </a>
+                </p>
+              </div>
+              <div> </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
 }

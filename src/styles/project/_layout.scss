@@ -35,6 +35,18 @@ hr {
   }
 }
 
+table {
+  &.no-style {
+    td {
+      border: 0;
+    }
+  }
+
+  td {
+    vertical-align: top;
+  }
+}
+
 #content {
   padding: 0 15px;
   @include media(tablet) {
@@ -92,6 +104,13 @@ hr {
   }
 }
 
+.photo-holder {
+  width: 100px;
+  height: 120px;
+  background: #c7c7c7;
+  margin: 0 auto;
+}
+
 .expand-content {
   &:before {
     content: '';
@@ -110,6 +129,10 @@ hr {
       border-color: $govuk-blue transparent transparent transparent;
     }
   }
+}
+
+.full-width {
+  width: 100%;
 }
 
 .delius {

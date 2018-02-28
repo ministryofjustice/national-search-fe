@@ -27,7 +27,7 @@ export default class Search extends Component<Props, State> {
     host:
       process.env.REACT_APP_HOST_ENV === 'dev'
         ? 'http://localhost:9200'
-        : 'https://search-prototype-national-search-ba2pawzzqktd6k3dljz3wjf43i.eu-west-2.es.amazonaws.com'
+        : 'https://search-prototype-national-search-6-6yaixttsjlsfkufv4jyawt4asa.eu-west-2.es.amazonaws.com'
   });
 
   /**
