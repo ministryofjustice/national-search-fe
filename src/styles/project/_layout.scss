@@ -43,6 +43,7 @@ table {
   }
 
   td {
+    padding: 0;
     vertical-align: top;
   }
 }
@@ -54,7 +55,7 @@ table {
     padding: 30px 15px 0 15px;
   }
   @include media(mobile) {
-    padding: 30px 0 0 0;
+    padding: 50px 0 0 0;
     margin: 0;
   }
 
@@ -71,6 +72,13 @@ table {
   background: #222222;
   z-index: 9999;
   top: 50px;
+}
+
+.mobile-only {
+  display: none !important;
+  @include media(mobile) {
+    display: inline-block !important;
+  }
 }
 
 .omit-mobile {
@@ -109,6 +117,16 @@ table {
   height: 120px;
   background: #c7c7c7;
   margin: 0 auto;
+}
+
+.panel-border-narrow {
+  @include media(mobile) {
+    border: #f4f4f4 1px solid;
+    border-radius: 5px;
+    padding: 20px !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+    margin-bottom: 10px;
+  }
 }
 
 .expand-content {
