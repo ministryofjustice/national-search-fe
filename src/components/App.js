@@ -13,6 +13,7 @@ import SubHeader from './SubHeader';
 const App = () => (
   <div>
     <header>
+      <span className="title far fa-bars mobile-only" />
       <span className="title">National Delius</span>
       <nav className="top-nav">
         <span className="margin-right medium">
