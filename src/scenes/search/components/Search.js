@@ -27,7 +27,7 @@ export default class Search extends Component<Props, State> {
     host:
       process.env.REACT_APP_HOST_ENV === 'dev'
         ? 'http://localhost:9200'
-        : 'https://search-prototype-national-search-ba2pawzzqktd6k3dljz3wjf43i.eu-west-2.es.amazonaws.com'
+        : 'https://search-prototype-national-search-6-6yaixttsjlsfkufv4jyawt4asa.eu-west-2.es.amazonaws.com'
   });
 
   /**
@@ -183,7 +183,10 @@ export default class Search extends Component<Props, State> {
    */
   handleClick(id: number) {
     const selected = this.state.results[id]['_source'];
-    console.info('Selected:', selected.OFFENDER_ID, selected);
+    this.props.history.push({
+      pathname: '/details',
+      state: { offender: selected }
+    });
   }
 
   /**
@@ -252,7 +255,7 @@ export default class Search extends Component<Props, State> {
               <input
                 id="searchParams"
                 className="form-control padded"
-                placeholder="Find names, addresses, date of birth, CRN and more..."
+                placeholder="Enter names, addresses, date of birth, ID numbers and more..."
                 type="text"
                 value={this.state.searchParams}
                 onChange={this.handleChange}
@@ -270,14 +273,20 @@ export default class Search extends Component<Props, State> {
             </p>
           )}
 
-          <p className="bold margin-top medium no-margin-bottom">
-            Can't find who you are looking for?{' '}
-            <a
-              className="clickable white"
-              onClick={this.handleNewOffenderClick}>
-              Add a new offender
-            </a>
-          </p>
+          {this.state.searchParams.length >= 2 &&
+            this.state.hits !== -1 && (
+              <p className="bold margin-top medium no-margin-bottom">
+                Can't find who you are looking for?{' '}
+                <a
+                  className="clickable white"
+                  onClick={this.handleNewOffenderClick}>
+                  Add a new offender
+                </a>
+              </p>
+            )}
+
+          {this.state.searchParams.length === 0 &&
+            this.state.hits <= 0 && <div>&nbsp;</div>}
         </div>
         <div className="padded mobile-pad">
           <h2 className="heading-medium margin-top medium">
@@ -298,9 +307,38 @@ export default class Search extends Component<Props, State> {
                     </span>
                   )}
                 </span>
-              )}
-            &nbsp;
+              )}{' '}
           </h2>
+
+          {!this.state.searchParams.length &&
+            !this.state.hits && (
+              <div>
+                <h2 className="heading-medium">
+                  Use this <strong className="phase-tag">PROTOTYPE</strong>service
+                  to search for:
+                </h2>
+                <ul className="list">
+                  <li className="list-bullet">
+                    Offender names and dates of birth
+                  </li>
+                  <li className="list-bullet">
+                    Offender address and previous addresses
+                  </li>
+                  <li className="list-bullet">
+                    Identification numbers such as CRN, PNC and National
+                    Insurance
+                  </li>
+                  <li className="list-bullet">
+                    Offender aliases and dates of birth
+                  </li>
+                </ul>
+
+                <p className="margin-top medium">
+                  You can access the{' '}
+                  <a className="clickable">previous version of the search.</a>
+                </p>
+              </div>
+            )}
 
           {this.state.serverError && (
             <p className="error-message">

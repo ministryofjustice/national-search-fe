@@ -61,7 +61,7 @@ export default class Feedback extends Component<Props, State> {
                   />
                 </label>
 
-                <div className="margin-top large">&nbsp;</div>
+                <div className="margin-top large"> </div>
 
                 <label className="form-label-bold">
                   2. If you could change anything what would it be?
@@ -84,7 +84,7 @@ export default class Feedback extends Component<Props, State> {
                 in any way.
               </p>
 
-              <div className="margin-top large">&nbsp;</div>
+              <div className="margin-top large"> </div>
 
               <button className="button" type="submit">
                 Send feedback
@@ -93,7 +93,7 @@ export default class Feedback extends Component<Props, State> {
 
             {this.state.doRedirect && <Redirect to="/" />}
           </div>
-          <div className="column-one-third">&nbsp;</div>
+          <div className="column-one-third"> </div>
         </div>
       </div>
     );

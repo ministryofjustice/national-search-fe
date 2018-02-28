@@ -9,6 +9,7 @@ const Query = (
     _source: {},
     from: page === 1 ? 0 : (page - 1) * pageSize,
     size: pageSize,
+    min_score: 30,
     query: {
       bool: {
         should: [
@@ -38,6 +39,7 @@ const Query = (
               operator: 'or',
               fields: [
                 'CRN^10',
+                'PNC_NUMBER^9',
                 'NOMS_NUMBER^8',
                 'NI_NUMBER^6',
                 'DATE_OF_BIRTH_DATE^5',

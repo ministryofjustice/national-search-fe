@@ -21,6 +21,7 @@ describe('Result', () => {
       CURRENT_DISPOSAL: 0,
       ALIASES: [
         {
+          DATE_OF_BIRTH_DATE: '1997-01-01 00:00:00',
           FIRST_NAME: 'Jack',
           SURNAME: 'Jones'
         }
@@ -35,22 +36,6 @@ describe('Result', () => {
         }
       ]
     };
-
-  describe('should expose static methods', () => {
-    it('pipeAge method should return the numerical age based on DOB', () => {
-      expect(Result.pipeAge()).toEqual(0);
-      expect(typeof Result.pipeAge('1997-02-05 00:00:00')).toEqual('number');
-    });
-
-    it('pipeAge method should return the DOB as DD/MM/YYYY', () => {
-      expect(Result.pipeDate('1997-02-12 00:00:00')).toEqual('12/02/1997');
-    });
-
-    it('pipeGender method should return Male/Female based on the passed gender code 545/546', () => {
-      expect(Result.pipeGender(545)).toEqual('Male');
-      expect(Result.pipeGender(546)).toEqual('Female');
-    });
-  });
 
   describe('when a basic search is performed', () => {
     beforeEach(() => {
@@ -112,7 +97,7 @@ describe('Result', () => {
     it('should include additional information based on deep search', () => {
       const additionalResults = wrapper.instance().additionalResults();
       expect(additionalResults.length).toEqual(4);
-      expect(additionalResults[0]).toEqual('Alias: Jones, Jack');
+      expect(additionalResults[0]).toEqual('Alias: Jones, Jack - 01/01/1997');
       expect(additionalResults[1]).toEqual('Previous surname: Jones');
       expect(additionalResults[2]).toEqual('Other names: Simon, Gareth');
       expect(additionalResults[3]).toEqual(

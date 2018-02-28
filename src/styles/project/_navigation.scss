@@ -6,9 +6,24 @@ nav {
   color: white;
   z-index: 1;
 
+  &.push-down {
+    top: 100px;
+  }
+
   li {
     font-size: 14px;
     padding: 8px 10px;
+
+    span {
+      margin-right: 2px;
+    }
+
+    a.no-underline {
+      span {
+        color: white;
+      }
+      color: white;
+    }
 
     &.sub-item {
       background: #1b3873;
@@ -18,6 +33,13 @@ nav {
     &.active {
       background: #e0e0e0;
       color: black;
+
+      a.no-underline {
+        span {
+          color: black;
+        }
+        color: black;
+      }
     }
   }
 
