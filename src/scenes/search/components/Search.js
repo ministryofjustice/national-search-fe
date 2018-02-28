@@ -289,7 +289,7 @@ export default class Search extends Component<Props, State> {
             this.state.hits <= 0 && <div>&nbsp;</div>}
         </div>
         <div className="padded mobile-pad">
-          <h2 className="heading-medium margin-top medium">
+          <p className="text-grey margin-top medium">
             {this.state.searchParams.length > 0 &&
               this.state.hits !== -1 && (
                 <span>
@@ -308,7 +308,7 @@ export default class Search extends Component<Props, State> {
                   )}
                 </span>
               )}{' '}
-          </h2>
+          </p>
 
           {!this.state.searchParams.length &&
             !this.state.hits && (
