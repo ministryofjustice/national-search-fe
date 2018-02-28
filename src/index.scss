@@ -38,6 +38,7 @@ $path: '/images/';
 @import './styles/fontawesome/screen-reader';
 
 // Import the project specific styles
+@import './styles/project/cards';
 @import './styles/project/components';
 @import './styles/project/forms';
 @import './styles/project/layout';

@@ -1,0 +1,14 @@
+@mixin box-shadow($distance: 1px, $blur: 1px, $color: rgba(0,0,0,0.25)) {
+  -webkit-box-shadow: $distance $distance $blur 0 $color;
+  -moz-box-shadow: $distance $distance $blur 0 $color;
+  box-shadow: $distance $distance $blur 0 $color;
+}
+
+.card {
+  display: inline-block;
+  width: 50%;
+  min-height: 75px;
+  background: #eaeaea;
+  border-radius: 3px;
+  @include box-shadow();
+}

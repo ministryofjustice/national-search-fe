@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import Highlighter from 'react-highlight-words';
+import Utils from '../../../utils/Utils';
 
 type Props = {
   id: number,
@@ -11,51 +12,14 @@ type Props = {
 };
 
 export default class Result extends Component<Props> {
+  /**
+   *
+   * @param {Props} props
+   */
   constructor(props: Props) {
     super(props);
 
     (this: any).additionalResults = this.additionalResults.bind(this);
-  }
-
-  /**
-   * Calculate the offender age based on DD/MM/YYYY
-   * @param dateString
-   * @returns {number}d
-   */
-  static pipeAge(dateString: string): number {
-    if (!dateString) {
-      return 0;
-    }
-    const today = new Date(),
-      splitDate = dateString.substr(0, dateString.indexOf(' ')).split('-'),
-      birthDate = new Date(
-        [splitDate[1], splitDate[2], splitDate[0]].join('/')
-      ),
-      m = today.getMonth() - birthDate.getMonth(),
-      age = today.getFullYear() - birthDate.getFullYear();
-
-    return m < 0 || (m === 0 && today.getDate() < birthDate.getDate())
-      ? age - 1
-      : age;
-  }
-
-  /**
-   *
-   * @param dateString
-   * @returns {string}
-   */
-  static pipeDate(dateString: string): string {
-    const splitDate = dateString.substr(0, dateString.indexOf(' ')).split('-');
-    return [splitDate[2], splitDate[1], splitDate[0]].join('/');
-  }
-
-  /**
-   *
-   * @param num
-   * @returns {string}
-   */
-  static pipeGender(num: number) {
-    return num === 545 ? 'Male' : 'Female';
   }
 
   /**
@@ -91,8 +55,24 @@ export default class Result extends Component<Props> {
     searched.forEach(term => {
       if (data.hasOwnProperty('ALIASES')) {
         data.ALIASES.forEach(alias => {
-          if (findTerm([alias.FIRST_NAME, alias.SURNAME], term)) {
-            deepItems.add('Alias: ' + alias.SURNAME + ', ' + alias.FIRST_NAME);
+          if (
+            findTerm(
+              [
+                alias.FIRST_NAME,
+                alias.SURNAME,
+                Utils.pipeDate(alias.DATE_OF_BIRTH_DATE)
+              ],
+              term
+            )
+          ) {
+            deepItems.add(
+              'Alias: ' +
+                alias.SURNAME +
+                ', ' +
+                alias.FIRST_NAME +
+                ' - ' +
+                Utils.pipeDate(alias.DATE_OF_BIRTH_DATE)
+            );
           }
           if (findTerm([alias.SECOND_NAME, alias.THIRD_NAME], term)) {
             deepItems.add(
@@ -170,96 +150,109 @@ export default class Result extends Component<Props> {
       restricted = data.CURRENT_RESTRICTION || data.CURRENT_EXCLUSION;
 
     return (
-      <div>
-        <div className="panel panel-border-narrow">
-          <a
-            className="clickable heading-large no-underline"
-            onClick={() => {
-              this.props.click(this.props.id);
-            }}>
-            <Highlighter
-              highlightClassName="highlight"
-              searchWords={searched}
-              autoEscape={true}
-              textToHighlight={
-                restricted
-                  ? 'Restricted access'
-                  : data.SURNAME +
-                    ', ' +
-                    data.FIRST_NAME +
-                    ' - ' +
-                    Result.pipeDate(data.DATE_OF_BIRTH_DATE)
-              }
-            />
-          </a>
-
-          <p className="no-margin bottom">
-            <span className="bold">
-              CRN:&nbsp;
-              <Highlighter
-                highlightClassName="highlight"
-                searchWords={searched}
-                autoEscape={true}
-                textToHighlight={data.CRN}
+      <table className="full-width no-style" role="presentation">
+        <tbody>
+          <tr>
+            <td width="115" className="omit-mobile">
+              <img
+                className="photo-holder align-left"
+                alt={'Photograph of ' + data.SURNAME + ', ' + data.FIRST_NAME}
+                src="/images/placeholder.jpg"
               />
-            </span>
-            &nbsp;&nbsp;
-            {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
-              <span id="risk">
-                Risk&nbsp;
-                <span
-                  className={
-                    'risk-icon risk-' +
-                    data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
-                  }
-                />
-              </span>
-            )}
-            {!restricted && (
-              <span>
-                {data.CURRENT_DISPOSAL > 0 && (
-                  <span>
-                    &nbsp;|&nbsp;
-                    <span id="currentDisposal">Current offender</span>
-                    &nbsp;|&nbsp;
+            </td>
+            <td>
+              <div className="panel panel-border-narrow no-padding-top">
+                <a
+                  className="clickable heading-large no-underline"
+                  onClick={() => {
+                    this.props.click(this.props.id);
+                  }}>
+                  <Highlighter
+                    highlightClassName="highlight"
+                    searchWords={searched}
+                    autoEscape={true}
+                    textToHighlight={
+                      restricted
+                        ? 'Restricted access'
+                        : data.SURNAME +
+                          ', ' +
+                          data.FIRST_NAME +
+                          ' - ' +
+                          Utils.pipeDate(data.DATE_OF_BIRTH_DATE)
+                    }
+                  />
+                </a>
+
+                <p className="margin-top margin-bottom">
+                  <span className="bold">
+                    CRN:{' '}
+                    <Highlighter
+                      highlightClassName="highlight"
+                      searchWords={searched}
+                      autoEscape={true}
+                      textToHighlight={data.CRN}
+                    />
                   </span>
-                )}
-                <Highlighter
-                  highlightClassName="highlight"
-                  searchWords={searched}
-                  autoEscape={true}
-                  textToHighlight={
-                    Result.pipeGender(data.GENDER_ID) +
-                    ', ' +
-                    Result.pipeAge(data.DATE_OF_BIRTH_DATE)
-                  }
-                />
-              </span>
-            )}
-          </p>
+                  {data.CURRENT_HIGHEST_RISK_COLOUR !== null && (
+                    <span id="risk">
+                      {' '}
+                      | Risk{' '}
+                      <span
+                        className={
+                          'risk-icon risk-' +
+                          data.CURRENT_HIGHEST_RISK_COLOUR.toLowerCase()
+                        }
+                      />
+                    </span>
+                  )}
+                  {!restricted && (
+                    <span>
+                      {data.CURRENT_DISPOSAL > 0 && (
+                        <span>
+                          {' '}
+                          | <span id="currentDisposal">Current offender</span>
+                        </span>
+                      )}
+                      <Highlighter
+                        highlightClassName="highlight"
+                        searchWords={searched}
+                        autoEscape={true}
+                        textToHighlight={
+                          ' | ' +
+                          Utils.pipeGender(data.GENDER_ID) +
+                          ', ' +
+                          Utils.pipeAge(data.DATE_OF_BIRTH_DATE)
+                        }
+                      />
+                    </span>
+                  )}
+                </p>
 
-          {this.additionalResults().map((item, i) => (
-            <div key={i}>
-              <Highlighter
-                highlightClassName="highlight"
-                searchWords={searched}
-                autoEscape={true}
-                textToHighlight={item}
-              />
-            </div>
-          ))}
+                {this.additionalResults().map((item, i) => (
+                  <div key={i}>
+                    <Highlighter
+                      highlightClassName="highlight"
+                      searchWords={searched}
+                      autoEscape={true}
+                      textToHighlight={item}
+                    />
+                  </div>
+                ))}
 
-          <p>
-            <a
-              id={'contact-' + this.props.id}
-              className="clickable"
-              onClick={this.props.contact}>
-              Add contact
-            </a>
-          </p>
-        </div>
-        <div>&nbsp;</div>
-      </div>
+                <p>
+                  <a
+                    id={'contact-' + this.props.id}
+                    className="clickable"
+                    onClick={this.props.contact}>
+                    Add contact
+                  </a>
+                </p>
+              </div>
+              <div> </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
 }

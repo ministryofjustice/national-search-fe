@@ -2,6 +2,7 @@
 
 [![GitHub version](https://badge.fury.io/gh/ministryofjustice%2Fnational-search-fe.svg)](https://badge.fury.io/gh/ministryofjustice%2Fnational-search-fe)
 [![Dependencies](https://david-dm.org/ministryofjustice/national-search-fe.svg)](https://david-dm.org/ministryofjustice/national-search-fe)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/national-search-fe/tree/master)
@@ -17,7 +18,7 @@ With special thanks to [BrowserStack](https://www.browserstack.com) for providin
 
 ## Setup
 
-Install elasticsearch (v5.6) with [homebrew](https://brew.sh/):
+Install elasticsearch (Tested with v6.1.1) with [homebrew](https://brew.sh/):
 
 You may need to install Xcode Command Line Tools first:
 
@@ -28,7 +29,7 @@ Then upgrade, update and install elasticsearch:
 ```
     brew upgrade
     brew update
-    brew install elasticsearch@5.6
+    brew install elasticsearch
 ```
 
 Edit the configuration file:
