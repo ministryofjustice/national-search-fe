@@ -18,16 +18,28 @@ const Query = (
               type: 'cross_fields',
               operator: 'and',
               fields: [
-                'FIRST_NAME^10',
-                'SURNAME^10',
+                'FIRST_NAME^9',
+                'SURNAME^9',
                 'SECOND_NAME^4',
                 'THIRD_NAME^4',
                 'PREVIOUS_SURNAME^6',
                 'ALIASES.FIRST_NAME^8',
                 'ALIASES.SURNAME^8',
                 'ALIASES.SECOND_NAME^3',
-                'ALIASES.THIRD_NAME^3',
-                'ADDRESSES.TOWN_CITY'
+                'ALIASES.THIRD_NAME^3'
+              ]
+            }
+          },
+          {
+            multi_match: {
+              query: searchParams,
+              type: 'cross_fields',
+              operator: 'and',
+              fields: [
+                'ADDRESSES.STREET_NAME^5',
+                'ADDRESSES.TOWN_CITY^5',
+                'ADDRESSES.COUNTY',
+                'ADDRESSES.POSTCODE^5'
               ]
             }
           },
@@ -38,14 +50,11 @@ const Query = (
               operator: 'or',
               fields: [
                 'CRN^10',
-                'PNC_NUMBER^9',
-                'NOMS_NUMBER^8',
+                'PNC_NUMBER^10',
+                'NOMS_NUMBER^10',
                 'NI_NUMBER^6',
                 'DATE_OF_BIRTH_DATE^5',
                 'ALIASES.DATE_OF_BIRTH_DATE^5',
-                'ADDRESSES.STREET_NAME',
-                'ADDRESSES.COUNTY',
-                'ADDRESSES.POSTCODE^3',
                 'E_MAIL_ADDRESS',
                 'MOBILE_NUMBER'
               ]
