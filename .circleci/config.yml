@@ -2,7 +2,7 @@ version: 2
 jobs:
   build-job:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.3
     working_directory: ~/hmpps-national-search-fe
     steps:
       - checkout
@@ -31,7 +31,7 @@ jobs:
             - build
   deploy-job:
       docker:
-        - image: circleci/node:8.9.4
+        - image: circleci/node:8.11.3
       steps:
         - run:
             name: Install awscli
